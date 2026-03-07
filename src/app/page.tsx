@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button"
 import {
   CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
@@ -44,19 +42,19 @@ export default function Home() {
       <main className="relative">
         <section
           id="home"
-          className="border-b border-white/5 px-0 pb-20 pt-24 md:pb-24 md:pt-32"
+          className="border-b border-white/5 px-0 pb-[100px] pt-[120px]"
         >
           <div className={siteTheme.container}>
             <div className="flex flex-col items-center gap-10 text-center">
-              <div className="space-y-5">
-                <h1 className="font-display text-5xl font-bold tracking-[-0.06em] text-white md:text-7xl xl:text-[80px]">
+              <div className="flex flex-col items-center gap-5">
+                <h1 className="font-display text-[56px] font-bold tracking-[-0.06em] text-white md:text-[80px]">
                   易构 EasyBuild
                 </h1>
-                <p className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--brand)] md:text-4xl">
+                <p className="font-display text-[28px] font-semibold tracking-[-0.04em] text-[var(--brand)] md:text-[36px]">
                   你写业务，基建交给易构
                 </p>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-[#9CA3AF] md:text-lg">
+              <p className="max-w-[700px] text-base leading-[1.8] text-[#9CA3AF] md:text-[18px]">
                 从依赖治理到微服务架构，从后端基建到前端脚手架。
                 <br />
                 让你专注业务创新，而不是反复造轮子。
@@ -65,25 +63,21 @@ export default function Home() {
                 {heroPoints.map((item) => {
                   const Icon = item.icon
                   return (
-                    <Badge
-                      key={item.label}
-                      variant="ghost"
-                      className="h-auto gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-white hover:bg-white/[0.06]"
-                    >
+                    <div key={item.label} className="flex items-center gap-[10px]">
                       <Icon className={cn("size-5", accentTheme[item.tone].text)} />
-                      <span className="text-sm font-medium md:text-[15px]">{item.label}</span>
-                    </Badge>
+                      <span className="text-[15px] font-medium text-white">{item.label}</span>
+                    </div>
                   )
                 })}
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button asChild size="lg" className={cn(siteTheme.primaryButton, "px-9 py-6")}>
+                <Button asChild size="lg" className={cn(siteTheme.primaryButton, "h-auto px-9 py-4")}>
                   <a href={footerMeta.primaryCta.href}>
                     <PrimaryIcon className="size-4" />
                     {footerMeta.primaryCta.label}
                   </a>
                 </Button>
-                <Button asChild size="lg" className={cn(siteTheme.secondaryButton, "px-9 py-6")}>
+                <Button asChild size="lg" className={cn(siteTheme.secondaryButton, "h-auto px-9 py-4")}>
                   <a href="#what-is">查看架构全景</a>
                 </Button>
               </div>
@@ -91,35 +85,38 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="what-is" className={siteTheme.section}>
+        <section id="what-is" className="px-0 pt-14 pb-12">
           <div className={siteTheme.container}>
-            <SectionHeader
-              tag="WHAT IS EASYBUILD"
-              title="什么是易构？一套产品，武装全栈"
-              description="技术底座打地基、业务模块装内核、前端脚手架出界面、AI 加速全流程"
-              tone="yellow"
-            />
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
+              <p className="font-mono text-[12px] font-semibold tracking-[0.28em] text-[var(--brand-yellow)]">
+                WHAT IS EASYBUILD
+              </p>
+              <h2 className="font-display text-[32px] font-bold tracking-[-0.04em] text-white md:text-[40px]">
+                什么是易构？一套产品，武装全栈
+              </h2>
+              <p className="max-w-[650px] text-[16px] leading-[1.6] text-[#9CA3AF]">
+                技术底座打地基、业务模块装内核、前端脚手架出界面、AI 加速全流程
+              </p>
+            </div>
             <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {productCards.map((item) => {
                 const Icon = item.icon
                 return (
                   <PanelCard key={item.title} className="gap-0 p-0">
-                    <CardHeader className="gap-4 px-6 pt-6">
+                    <CardContent className="flex h-full flex-col gap-4 p-6">
                       <div className={cn(siteTheme.iconWrap, accentTheme[item.tone].icon)}>
-                        <Icon className="size-5" />
+                        <Icon className="size-[22px]" />
                       </div>
-                      <CardTitle className="font-display text-xl font-semibold tracking-[-0.03em] text-white">
+                      <CardTitle className="font-display text-[18px] font-semibold tracking-[-0.03em] text-white">
                         {item.title}
                       </CardTitle>
-                      <CardDescription className={siteTheme.body}>
+                      <CardDescription className="text-[14px] leading-[1.6] text-[#9CA3AF]">
                         {item.description}
                       </CardDescription>
-                    </CardHeader>
-                    <CardContent className="px-6 pb-6">
                       <Badge
                         variant="ghost"
                         className={cn(
-                          "h-auto rounded-md px-3 py-1 font-mono text-[11px] hover:bg-transparent",
+                          "h-auto w-fit rounded-[4px] px-[10px] py-1 font-mono text-[11px] font-medium hover:bg-transparent",
                           accentTheme[item.tone].tag
                         )}
                       >
@@ -130,57 +127,61 @@ export default function Home() {
                 )
               })}
             </div>
-            <div className="mt-8 text-center">
-              <Separator className="bg-white/5" />
-              <p className="mt-6 font-mono text-sm font-semibold text-[var(--brand-yellow)]">
+            <div className="mt-6 flex flex-col items-center gap-4 border-t border-white/[0.08] pt-6 text-center">
+              <p className="font-mono text-[14px] font-semibold text-[var(--brand-yellow)]">
                 易构 = 技术基建 + 业务基建 + 工程模板 + 智能生成
               </p>
-              <p className="mt-4 text-base text-[#9CA3AF]">
+              <p className="text-[16px] font-medium text-[#9CA3AF]">
                 它让一个独立开发者，也能拥有高可用、高性能、可扩展的企业级架构能力。
               </p>
             </div>
           </div>
         </section>
 
-        <section className={cn(siteTheme.section, siteTheme.sectionMuted)}>
+        <section className={cn("px-0 py-20", siteTheme.sectionMuted)}>
           <div className={siteTheme.container}>
-            <SectionHeader tag="PAIN POINTS" title="你是不是也这样？" tone="red" />
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
+              <p className="font-mono text-[12px] font-semibold tracking-[0.28em] text-[var(--brand-red)]">
+                PAIN POINTS
+              </p>
+              <h2 className="font-display text-[32px] font-bold tracking-[-0.04em] text-white md:text-[40px]">
+                你是不是也这样？
+              </h2>
+            </div>
             <div className="mt-10 grid gap-4 lg:grid-cols-2">
               {painColumns.map((column) => {
                 const Icon = column.icon
                 return (
-                  <PanelCard key={column.title} className="gap-0 p-0">
-                    <CardHeader className="px-5 pt-5">
-                      <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4">
-                        <Icon className="size-5 text-[var(--brand)]" />
-                        <CardTitle className="font-display text-lg font-semibold text-white">
-                          {column.title}
-                        </CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4 px-5 pb-5">
+                  <div key={column.title} className="flex flex-col gap-4">
+                    <div className="flex items-center gap-[10px] rounded-[10px] border border-white/10 bg-white/[0.06] px-5 py-4">
+                      <Icon className="size-5 text-[var(--brand)]" />
+                      <h3 className="font-display text-[16px] font-semibold text-white">
+                        {column.title}
+                      </h3>
+                    </div>
+                    <div className="flex flex-col gap-4">
                       {column.items.map((item) => (
                         <div
                           key={item}
-                          className="flex items-center gap-3 rounded-xl bg-white/[0.04] px-5 py-3"
+                          className="flex items-center gap-[10px] rounded-[8px] bg-white/[0.04] px-5 py-3"
                         >
                           <span className="text-base text-[var(--brand-red)]">·</span>
-                          <p className="text-sm text-[#9CA3AF] md:text-[15px]">{item}</p>
+                          <p className="text-[14px] text-[#9CA3AF]">{item}</p>
                         </div>
                       ))}
-                    </CardContent>
-                  </PanelCard>
+                    </div>
+                  </div>
                 )
               })}
             </div>
             <div className="mx-auto mt-10 max-w-3xl space-y-4 text-center">
-              <p className="text-base text-[#6B7280]">停一下。</p>
-              <h3 className="font-display text-2xl font-bold leading-[1.5] tracking-[-0.03em] text-white md:text-4xl">
-                你缺的不是能力。你缺的是。
+              <p className="text-[16px] text-[#6B7280]">停一下。</p>
+              <h3 className="font-display text-[28px] font-bold leading-[1.5] tracking-[-0.03em] text-white">
+                你缺的不是能力。你缺的是——
                 <br />
                 一套经过生产验证的标准化技术底座。
               </h3>
-              <p className="text-lg font-semibold text-[var(--brand-red)]">
+              <p className="text-[18px] font-semibold text-[var(--brand-red)]">
                 这正是易构存在的意义。
               </p>
             </div>
@@ -194,21 +195,19 @@ export default function Home() {
               {capabilityCards.map((item) => {
                 const Icon = item.icon
                 return (
-                  <PanelCard key={item.title} className="gap-0 p-0">
-                    <CardHeader className="gap-4 px-6 pt-6">
+                  <PanelCard
+                    key={item.title}
+                    className={cn("gap-0 p-0", item.title === "AI + 易构" && "bg-[#FEBC2E0D]")}
+                  >
+                    <CardContent className="flex h-full flex-col gap-4 p-6">
                       <div className={cn(siteTheme.iconWrap, accentTheme[item.tone].icon)}>
                         <Icon className="size-5" />
                       </div>
-                      <CardTitle className="font-display text-xl font-semibold tracking-[-0.03em] text-white">
+                      <CardTitle className="font-display text-[18px] font-semibold tracking-[-0.03em] text-white">
                         {item.title}
                       </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-6 pb-6">
                       <CardDescription
-                        className={cn(
-                          siteTheme.body,
-                          "whitespace-pre-line text-[13px] md:text-[14px]"
-                        )}
+                        className="whitespace-pre-line text-[13px] leading-[1.8] text-[#9CA3AF]"
                       >
                         {item.description}
                       </CardDescription>
@@ -229,15 +228,13 @@ export default function Home() {
             />
             <div className="mt-10 space-y-4">
               <PanelCard className="gap-0 p-0">
-                <CardHeader className="px-7 pt-7">
+                <CardContent className="space-y-5 p-7">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl">🔥</span>
-                    <CardTitle className="font-display text-2xl font-semibold text-white">
+                    <span className="text-[20px]">🔥</span>
+                    <CardTitle className="font-display text-[20px] font-semibold text-white">
                       时间成本对比
                     </CardTitle>
                   </div>
-                </CardHeader>
-                <CardContent className="px-7 pb-7">
                   <div className="overflow-hidden rounded-2xl border border-white/5">
                     <Table>
                       <TableHeader className="[&_tr]:border-white/5">
@@ -271,54 +268,42 @@ export default function Home() {
                 </CardContent>
               </PanelCard>
               <div className="grid gap-4 lg:grid-cols-2">
-                {whyCards.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <PanelCard key={item.title} className="gap-0 p-0">
-                      <CardHeader className="gap-4 px-6 pt-6">
-                        <div className="flex items-center gap-3">
-                          <Icon className="size-5 text-[var(--brand-red)]" />
-                          <CardTitle className="font-display text-2xl font-semibold text-white">
-                            {item.title}
-                          </CardTitle>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="px-6 pb-6">
-                        <CardDescription
-                          className={cn(
-                            siteTheme.body,
-                            "whitespace-pre-line text-[13px] md:text-[14px]"
-                          )}
-                        >
-                          {item.description}
-                        </CardDescription>
-                      </CardContent>
-                    </PanelCard>
-                  )
-                })}
+                {whyCards.map((item) => (
+                  <PanelCard key={item.title} className="gap-0 p-0">
+                    <CardContent className="flex h-full flex-col gap-4 p-6">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[20px]">🔥</span>
+                        <CardTitle className="font-display text-[20px] font-semibold text-white">
+                          {item.title}
+                        </CardTitle>
+                      </div>
+                      <CardDescription className="whitespace-pre-line text-[13px] leading-[1.8] text-[#9CA3AF]">
+                        {item.description}
+                      </CardDescription>
+                    </CardContent>
+                  </PanelCard>
+                ))}
               </div>
               <PanelCard className="gap-0 p-0">
-                <CardHeader className="gap-4 px-7 pt-7">
+                <CardContent className="space-y-5 p-7">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl">🔥</span>
-                    <CardTitle className="font-display text-2xl font-semibold text-white">
+                    <span className="text-[20px]">🔥</span>
+                    <CardTitle className="font-display text-[20px] font-semibold text-white">
                       统一工程规范
                     </CardTitle>
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-5 px-7 pb-7">
                   <div className="grid gap-3 md:grid-cols-3">
                     {standardItems.map((item) => (
                       <Badge
                         key={item}
                         variant="ghost"
-                        className="flex h-auto items-center justify-center rounded-xl bg-white/[0.06] px-4 py-3 text-center font-mono text-xs text-[#9CA3AF] hover:bg-white/[0.08]"
+                        className="flex h-auto items-center justify-center rounded-xl bg-white/[0.06] px-4 py-2.5 text-center font-mono text-[12px] font-normal text-[#9CA3AF] hover:bg-white/[0.08]"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
-                  <p className="text-center text-base font-semibold text-[var(--brand-red)]">
+                  <p className="text-center text-[16px] leading-[1.6] font-semibold text-[var(--brand-red)]">
                     一个人，也能扛起高性能架构。一支小队，也能交出企业级品质。
                   </p>
                 </CardContent>
@@ -329,22 +314,27 @@ export default function Home() {
 
         <section id="impact" className={siteTheme.section}>
           <div className={siteTheme.container}>
-            <SectionHeader tag="IMPACT" title="易构，改变的不只是效率" tone="yellow" />
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
+              <p className="font-mono text-[12px] font-semibold tracking-[0.28em] text-[var(--brand-yellow)]">
+                IMPACT
+              </p>
+              <h2 className="font-display text-[32px] font-bold tracking-[-0.04em] text-white md:text-[40px]">
+                易构，改变的不只是效率
+              </h2>
+            </div>
             <div className="mt-10 grid gap-4 lg:grid-cols-3">
               {impactCards.map((item) => {
                 const Icon = item.icon
                 return (
                   <PanelCard key={item.title} className="gap-0 p-0">
-                    <CardHeader className="gap-5 px-7 pt-7">
-                      <div className={cn("flex size-12 items-center justify-center rounded-xl", accentTheme[item.tone].icon)}>
+                    <CardContent className="flex h-full flex-col gap-5 p-7">
+                      <div className={cn("flex size-12 items-center justify-center rounded-[12px]", accentTheme[item.tone].icon)}>
                         <Icon className="size-5" />
                       </div>
-                      <CardTitle className="font-display text-xl font-semibold tracking-[-0.03em] text-white">
+                      <CardTitle className="font-display text-[18px] font-semibold tracking-[-0.03em] text-white">
                         {item.title}
                       </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-7 pb-7">
-                      <CardDescription className={cn(siteTheme.body, "whitespace-pre-line")}>
+                      <CardDescription className="whitespace-pre-line text-[14px] leading-[1.8] text-[#9CA3AF]">
                         {item.description}
                       </CardDescription>
                     </CardContent>
@@ -355,29 +345,29 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="get-started" className="px-0 py-20 md:py-24">
+        <section id="get-started" className="px-0 py-[100px]">
           <div className={siteTheme.container}>
-            <div className="flex flex-col items-center gap-6 text-center">
+            <div className="flex flex-col items-center gap-8 text-center">
               <Badge
                 variant="ghost"
-                className="h-auto px-0 py-0 font-mono text-xs uppercase tracking-[0.28em] text-[var(--brand-yellow)] hover:bg-transparent"
+                className="h-auto px-0 py-0 font-mono text-[12px] uppercase tracking-[0.28em] text-[var(--brand-yellow)] hover:bg-transparent"
               >
                 GET STARTED
               </Badge>
-              <h2 className="font-display max-w-4xl text-3xl font-bold tracking-[-0.04em] text-white md:text-5xl">
+              <h2 className="font-display max-w-4xl text-[32px] font-bold tracking-[-0.04em] text-white md:text-[44px]">
                 把复杂留给底座，把专注还给业务
               </h2>
-              <p className="max-w-2xl text-base leading-8 text-[#9CA3AF] md:text-lg">
+              <p className="max-w-[600px] text-[18px] leading-[1.7] text-[#9CA3AF]">
                 无论你是独立开发者、外包团队还是企业技术部，EasyBuild 易构都是你最值得信赖的好基友。
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button asChild size="lg" className={cn(siteTheme.primaryButton, "px-10 py-6")}>
+                <Button asChild size="lg" className={cn(siteTheme.primaryButton, "h-auto px-10 py-4")}>
                   <a href={footerMeta.primaryCta.href}>
                     <PrimaryIcon className="size-4" />
                     {footerMeta.primaryCta.label}
                   </a>
                 </Button>
-                <Button asChild size="lg" className={cn(siteTheme.secondaryButton, "px-10 py-6")}>
+                <Button asChild size="lg" className={cn(siteTheme.secondaryButton, "h-auto px-10 py-4")}>
                   <a href={footerMeta.secondaryCta.href}>
                     <SecondaryIcon className="size-4" />
                     {footerMeta.secondaryCta.label}
