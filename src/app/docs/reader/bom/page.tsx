@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
-import { Search, Copy, Lightbulb, ArrowLeft, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
+import { Search, Copy, Check, Lightbulb, ArrowLeft, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -14,6 +14,7 @@ const sidebarSections: { title?: string; items: { label: string; active?: boolea
     items: [
       { label: "代码生成器", href: "/docs/reader" },
       { label: "BOM", active: true },
+      { label: "基础核心", href: "/docs/reader/core" },
     ],
   },
 ]
@@ -29,13 +30,20 @@ const outlineItems = [
 ]
 
 function CodeBlock({ lang, children }: { lang: string; children: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(children).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
   return (
     <div className="overflow-hidden rounded-[10px] border border-[#1F2937] bg-[#161B22]">
       <div className="flex h-9 items-center justify-between border-b border-[#1F2937] px-4">
         <span className="font-mono text-[11px] font-medium text-[#525252]">{lang}</span>
-        <button type="button" className="flex items-center gap-1.5 text-[#525252] hover:text-[#9CA3AF]">
-          <Copy className="size-3.5" />
-          <span className="text-[11px]">复制</span>
+        <button type="button" onClick={handleCopy} className={cn("flex items-center gap-1.5 transition-colors", copied ? "text-[#00FF88]" : "text-[#525252] hover:text-[#9CA3AF]")}>
+          {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+          <span className="text-[11px]">{copied ? "已复制" : "复制"}</span>
         </button>
       </div>
       <pre className="overflow-x-auto px-5 py-4">
@@ -930,7 +938,13 @@ dependencies {
                   </div>
                   <span className="text-[15px] font-semibold text-[#E5E5E5]">代码生成器</span>
                 </Link>
-                <div className="flex-1" />
+                <Link href="/docs/reader/core" className="flex flex-1 flex-col items-end gap-1 rounded-[10px] border border-[#1F2937] bg-white/[0.024] p-5 transition-colors hover:border-[#374151]">
+                  <div className="flex items-center gap-1.5 text-[12px] text-[#525252]">
+                    <span>下一篇</span>
+                    <ArrowRight className="size-3.5" />
+                  </div>
+                  <span className="text-[15px] font-semibold text-[#E5E5E5]">基础核心</span>
+                </Link>
               </div>
 
             </div>
