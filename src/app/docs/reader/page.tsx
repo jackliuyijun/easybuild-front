@@ -9,11 +9,11 @@ import { cn } from "@/lib/utils"
 
 const tabs = ["后端", "业务", "前端", "移动端"]
 
-const sidebarSections: { title?: string; items: { label: string; active?: boolean }[] }[] = [
+const sidebarSections: { title?: string; items: { label: string; active?: boolean; href?: string }[] }[] = [
   {
     items: [
       { label: "代码生成器", active: true },
-      { label: "BOM" },
+      { label: "BOM", href: "/docs/reader/bom" },
     ],
   },
 ]
@@ -251,19 +251,29 @@ export default function DocReaderPage() {
                     </div>
                   )}
                   {section.items.map((item) => (
-                    <div
-                      key={item.label}
-                      className={cn(
-                        "flex h-9 items-center",
-                        "active" in item && item.active
-                          ? "border-l-[3px] border-[#00FF88] bg-gradient-to-r from-[#00FF8812] to-transparent px-5 text-[13px] font-semibold text-white"
-                          : section.title
-                            ? "px-8 text-[12px] text-[#737373]"
-                            : "px-5 text-[13px] text-[#9CA3AF]"
-                      )}
-                    >
-                      {item.label}
-                    </div>
+                    item.href ? (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex h-9 items-center px-5 text-[13px] text-[#9CA3AF]"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <div
+                        key={item.label}
+                        className={cn(
+                          "flex h-9 items-center",
+                          "active" in item && item.active
+                            ? "border-l-[3px] border-[#00FF88] bg-gradient-to-r from-[#00FF8812] to-transparent px-5 text-[13px] font-semibold text-white"
+                            : section.title
+                              ? "px-8 text-[12px] text-[#737373]"
+                              : "px-5 text-[13px] text-[#9CA3AF]"
+                        )}
+                      >
+                        {item.label}
+                      </div>
+                    )
                   ))}
                 </div>
               ))}
@@ -1514,13 +1524,13 @@ public void refreshDtoAndParam() {
               {/* Page Navigation */}
               <div className="flex gap-4">
                 <div className="flex-1" />
-                <a href="#" className="flex flex-1 flex-col items-end gap-1 rounded-[10px] border border-[#1F2937] bg-white/[0.024] p-5 transition-colors hover:border-[#374151]">
+                <Link href="/docs/reader/bom" className="flex flex-1 flex-col items-end gap-1 rounded-[10px] border border-[#1F2937] bg-white/[0.024] p-5 transition-colors hover:border-[#374151]">
                   <div className="flex items-center gap-1.5 text-[12px] text-[#525252]">
                     <span>下一篇</span>
                     <ArrowRight className="size-3.5" />
                   </div>
                   <span className="text-[15px] font-semibold text-[#E5E5E5]">BOM</span>
-                </a>
+                </Link>
               </div>
 
             </div>
