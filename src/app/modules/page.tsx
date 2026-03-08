@@ -193,12 +193,6 @@ const archFeatures = [
   { num: "10", title: "AI 驱动开发", color: "#00FF88", desc: "规范化代码结构、模板化开发模式、清晰接口契约、低耦合模块设计。结合 AI 编程能力，新模块开发效率提升数倍。" },
 ]
 
-const footerCols = [
-  { title: "核心模块", items: "Auth 权限管理\nUser 会员管理\nGoods 商品管理\nOrder 订单管理\nPayment 支付模块\nTrading 交易模块" },
-  { title: "辅助模块", items: "Merchant 商户\nBanner 广告\nCategory 分类\nDict 字典\nMedia 媒体\nCommon-POJO" },
-  { title: "技术栈", items: "Java 最新版\nSpring Boot\nMyBatis-Plus\nDubbo / Feign\nRedis / RocketMQ\nJWT / RBAC" },
-]
-
 export default function ModulesPage() {
   return (
     <div className="relative isolate min-h-screen bg-[#0B0C0E] text-white">
@@ -419,42 +413,7 @@ export default function ModulesPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[#1F2937] bg-[#080909]">
-        <div className="mx-auto w-full max-w-[1440px] px-6 py-12 md:px-10 xl:px-20">
-          <div className="flex items-start justify-between">
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2.5">
-                <span className="flex size-7 items-center justify-center rounded-md bg-[#00FF88] font-display text-[14px] font-bold text-[#0B0C0E]">
-                  E
-                </span>
-                <span className="font-display text-[16px] font-bold text-white">EasyBuild</span>
-              </div>
-              <p className="max-w-[280px] text-[13px] leading-[1.6] text-[#6B7280]">
-                企业级 Java 技术底座，18+ 个通用业务模块
-                <br />
-                覆盖全场景业务能力
-              </p>
-            </div>
-            <div className="flex gap-12">
-              {footerCols.map((col) => (
-                <div key={col.title} className="flex flex-col gap-3">
-                  <h4 className="text-[13px] font-semibold text-white">{col.title}</h4>
-                  <p className="whitespace-pre-line text-[12px] leading-[1.8] text-[#6B7280]">{col.items}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-8 flex items-center justify-between border-t border-[#1F2937] pt-6">
-            <span className="text-[12px] text-[#4B5563]">© 2026 EasyBuild. All rights reserved.</span>
-            <div className="flex gap-6">
-              <span className="text-[12px] text-[#6B7280]">GitHub</span>
-              <span className="text-[12px] text-[#6B7280]">技术博客</span>
-              <span className="text-[12px] text-[#6B7280]">联系我们</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
