@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Search, Copy, Lightbulb, ArrowLeft, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
 
-import { SiteFooter } from "@/components/site-footer"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
@@ -20,20 +19,20 @@ const sidebarSections: { title?: string; items: { label: string; active?: boolea
 ]
 
 const outlineItems = [
-  { label: "概述", active: true },
-  { label: "环境要求" },
-  { label: "使用方式" },
-  { label: "配置文件详解" },
-  { label: "项目架构类型详解" },
-  { label: "生成代码详解" },
-  { label: "生成命令与 API 参考" },
-  { label: "数据库支持与类型映射" },
-  { label: "Entity 自定义注解" },
-  { label: "文件覆盖策略" },
-  { label: "完整配置示例" },
-  { label: "典型使用场景" },
-  { label: "常见问题" },
-  { label: "附录" },
+  { id: "sec-overview", label: "概述" },
+  { id: "sec-env", label: "环境要求" },
+  { id: "sec-usage", label: "使用方式" },
+  { id: "sec-config", label: "配置文件详解" },
+  { id: "sec-arch", label: "项目架构类型详解" },
+  { id: "sec-codegen", label: "生成代码详解" },
+  { id: "sec-commands", label: "生成命令与 API 参考" },
+  { id: "sec-db", label: "数据库支持与类型映射" },
+  { id: "sec-annotation", label: "Entity 自定义注解" },
+  { id: "sec-overwrite", label: "文件覆盖策略" },
+  { id: "sec-examples", label: "完整配置示例" },
+  { id: "sec-scenarios", label: "典型使用场景" },
+  { id: "sec-faq", label: "常见问题" },
+  { id: "sec-appendix", label: "附录" },
 ]
 
 function CodeBlock({ lang, children }: { lang: string; children: string }) {
@@ -106,9 +105,9 @@ function WarnBox({ children }: { children: React.ReactNode }) {
   )
 }
 
-function H2({ children }: { children: React.ReactNode }) {
+function H2({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3">
+    <div id={id} className="flex items-center gap-3 scroll-mt-4">
       <h2 className="font-display text-[24px] font-bold text-white">{children}</h2>
       <span className="text-[14px] text-[#00FF8860]">✨</span>
     </div>
@@ -159,6 +158,7 @@ export default function DocReaderPage() {
   const [activeTab, setActiveTab] = useState(0)
   const [atTop, setAtTop] = useState(true)
   const [atBottom, setAtBottom] = useState(false)
+  const [activeSection, setActiveSection] = useState(outlineItems[0].id)
   const contentWrapRef = useRef<HTMLDivElement>(null)
   const topRef = useRef<HTMLDivElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -169,13 +169,28 @@ export default function DocReaderPage() {
     const onScroll = () => {
       setAtTop(viewport.scrollTop <= 100)
       setAtBottom(viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 100)
+
+      let current = outlineItems[0].id
+      for (const item of outlineItems) {
+        const el = document.getElementById(item.id)
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= 120) current = item.id
+        }
+      }
+      setActiveSection(current)
     }
     viewport.addEventListener("scroll", onScroll, { passive: true })
     return () => viewport.removeEventListener("scroll", onScroll)
   }, [])
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <div className="relative isolate min-h-screen bg-[#0B0C0E] text-white">
+    <div className="relative isolate h-screen overflow-hidden bg-[#0B0C0E] text-white">
       {/* Custom Doc Nav Bar */}
       <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-[#1F2937] bg-[#0B0C0E] px-6">
         <Link href="/docs" className="inline-flex items-center gap-2.5">
@@ -269,7 +284,7 @@ export default function DocReaderPage() {
               </h1>
               {/* Meta */}
               <div className="flex items-center gap-4 text-[12px] text-[#525252]">
-                <span>版本 3.2.12</span>
+                <span>版本 {'{最新版}'}</span>
                 <span className="size-1 rounded-full bg-[#525252]" />
                 <span>适用于外部开发团队</span>
                 <span className="size-1 rounded-full bg-[#525252]" />
@@ -279,7 +294,7 @@ export default function DocReaderPage() {
               <div className="h-px bg-[#1F2937]" />
 
               {/* ============== 1. 概述 ============== */}
-              <H2>1. 概述</H2>
+              <H2 id="sec-overview">1. 概述</H2>
               <P>
                 EasyFK Generator 是 <Strong>易架构（EasyFK）</Strong> 框架的核心代码生成工具，面向 Java / Spring Boot 技术栈的开发团队，提供 <Strong>配置驱动、数据库感知、全层覆盖</Strong> 的一站式代码生成能力。
               </P>
@@ -300,7 +315,7 @@ export default function DocReaderPage() {
               ]} />
 
               {/* ============== 2. 环境要求 ============== */}
-              <H2>2. 环境要求</H2>
+              <H2 id="sec-env">2. 环境要求</H2>
               <DocTable
                 headers={["项目", "要求"]}
                 rows={[
@@ -311,15 +326,15 @@ export default function DocReaderPage() {
               />
 
               {/* ============== 3. 使用方式 ============== */}
-              <H2>3. 使用方式</H2>
+              <H2 id="sec-usage">3. 使用方式</H2>
 
               <H3>3.1 方式一：CLI 命令行工具（推荐）</H3>
               <P>CLI 工具独立运行，不依赖 Spring Boot 项目环境，适合从零创建新项目或在任意目录快速生成代码。</P>
 
               <H4>3.1.1 安装</H4>
               <NumberList items={[
-                <>获取安装包 <InlineCode>efg-3.2.12.zip</InlineCode> 并解压</>,
-                <>进入 <InlineCode>efg-3.2.12</InlineCode> 目录执行安装</>,
+                <>获取安装包 <InlineCode>efg-{'{最新版}'}.zip</InlineCode> 并解压</>,
+                <>进入 <InlineCode>efg-{'{最新版}'}</InlineCode> 目录执行安装</>,
               ]} />
               <P><Strong>Windows：</Strong></P>
               <CodeBlock lang="bat">{`双击 install.bat`}</CodeBlock>
@@ -328,7 +343,7 @@ export default function DocReaderPage() {
               <P>重新打开终端，验证安装：</P>
               <CodeBlock lang="bash">{`efg -V`}</CodeBlock>
               <P>输出以下内容表示安装成功：</P>
-              <CodeBlock lang="plaintext">{`easyfk-generator 3.2.12`}</CodeBlock>
+              <CodeBlock lang="plaintext">{`easyfk-generator {最新版}`}</CodeBlock>
 
               <H4>3.1.2 卸载</H4>
               <P><Strong>Windows：</Strong> 双击 <InlineCode>uninstall.bat</InlineCode></P>
@@ -352,12 +367,12 @@ efg`}</CodeBlock>
 
               <H4>3.2.1 添加依赖</H4>
               <P><Strong>Gradle：</Strong></P>
-              <CodeBlock lang="groovy">{`testImplementation 'com.mcst:easyfk-generator:3.2.12'`}</CodeBlock>
+              <CodeBlock lang="groovy">{`testImplementation 'com.mcst:easyfk-generator:{最新版}'`}</CodeBlock>
               <P><Strong>Maven：</Strong></P>
               <CodeBlock lang="xml">{`<dependency>
     <groupId>com.mcst</groupId>
     <artifactId>easyfk-generator</artifactId>
-    <version>3.2.12</version>
+    <version>{最新版}</version>
     <scope>test</scope>
 </dependency>`}</CodeBlock>
 
@@ -403,7 +418,7 @@ public class TestApp {
               <P>运行测试方法即可触发代码生成。</P>
 
               {/* ============== 4. 配置文件详解 ============== */}
-              <H2>4. 配置文件详解</H2>
+              <H2 id="sec-config">4. 配置文件详解</H2>
 
               <H3>4.1 配置文件结构</H3>
               <P>无论是 CLI 的 <InlineCode>generator.yml</InlineCode> 还是 Spring Boot 的 <InlineCode>application.yml</InlineCode>，配置结构完全一致，均位于 <InlineCode>easyfk.config.generator</InlineCode> 节点下：</P>
@@ -431,7 +446,7 @@ public class TestApp {
                   ["orm-type", "否", "枚举", "MYBATIS", "ORM 框架：MYBATIS / MYBATIS_FLEX / HIBERNATE"],
                   ["prd-type", "否", "枚举", "none", "PRD / Controller 层策略：none / single / separation"],
                   ["log-type", "否", "枚举", "LOGBACK", "日志框架：LOGBACK / LOG4J2"],
-                  ["framework-version", "否", "String", "3.2.12", "EasyFK 框架版本号"],
+                  ["framework-version", "否", "String", "{最新版}", "EasyFK 框架版本号"],
                   ["project-version", "否", "String", "1.0.0-SNAPSHOT", "生成的项目版本号"],
                   ["create-prd-project", "否", "Boolean", "true", "是否生成 PRD（Controller）子项目"],
                   ["create-repository", "否", "Boolean", "false", "是否生成独立的 Repository 子项目"],
@@ -553,7 +568,7 @@ public class ProductController {
 }`}</CodeBlock>
 
               {/* ============== 5. 项目架构类型详解 ============== */}
-              <H2>5. 项目架构类型详解</H2>
+              <H2 id="sec-arch">5. 项目架构类型详解</H2>
 
               <H3>5.1 SINGLE 单体架构</H3>
               <P><Strong>适用场景：</Strong> 中小型项目、快速原型验证、内部工具系统</P>
@@ -712,7 +727,7 @@ public class ProductController {
               ]} />
 
               {/* ============== 6. 生成代码详解 ============== */}
-              <H2>6. 生成代码详解</H2>
+              <H2 id="sec-codegen">6. 生成代码详解</H2>
               <P>以下以 Model 名为 <InlineCode>Product</InlineCode>、模块名为 <InlineCode>myapp</InlineCode> 为例说明生成的各层代码。</P>
 
               <H3>6.1 Entity 实体类</H3>
@@ -948,7 +963,7 @@ public interface IProductRemote extends IBaseRemote<ProductResp, String, Product
               ]} />
 
               {/* ============== 7. 生成命令与 API 参考 ============== */}
-              <H2>7. 生成命令与 API 参考</H2>
+              <H2 id="sec-commands">7. 生成命令与 API 参考</H2>
 
               <H3>7.1 CLI 命令参考</H3>
               <H4>基本语法</H4>
@@ -1017,7 +1032,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
               />
 
               {/* ============== 8. 数据库支持与类型映射 ============== */}
-              <H2>8. 数据库支持与类型映射</H2>
+              <H2 id="sec-db">8. 数据库支持与类型映射</H2>
 
               <H3>8.1 支持的数据库</H3>
               <DocTable
@@ -1073,7 +1088,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
               </WarnBox>
 
               {/* ============== 9. Entity 自定义注解 ============== */}
-              <H2>9. Entity 自定义注解说明</H2>
+              <H2 id="sec-annotation">9. Entity 自定义注解说明</H2>
               <P>在已生成的 Entity 文件中，可以手动添加以下 EasyFK 框架提供的自定义注解。再次执行代码生成（<InlineCode>efg -s</InlineCode> 或 <InlineCode>efg -d</InlineCode>）时，生成器会自动解析这些注解并在 DTO、Param、Controller 层生成对应的逻辑。</P>
 
               <H3>@SingleUniqueField — 单字段唯一校验</H3>
@@ -1100,7 +1115,7 @@ private LocalDateTime createTime;`}</CodeBlock>
               <P><Strong>效果：</Strong> Controller 层会额外生成 <InlineCode>disable</InlineCode> 接口（启用/禁用），通过修改指定字段值实现。</P>
 
               {/* ============== 10. 文件覆盖策略 ============== */}
-              <H2>10. 文件覆盖策略</H2>
+              <H2 id="sec-overwrite">10. 文件覆盖策略</H2>
               <P>生成器使用两种文件创建策略来保护开发者的手动修改：</P>
               <DocTable
                 headers={["策略", "涉及文件", "行为"]}
@@ -1117,7 +1132,7 @@ private LocalDateTime createTime;`}</CodeBlock>
               ]} />
 
               {/* ============== 11. 完整配置示例 ============== */}
-              <H2>11. 完整配置示例</H2>
+              <H2 id="sec-examples">11. 完整配置示例</H2>
 
               <H3>11.1 单体项目（最小配置）</H3>
               <CodeBlock lang="yaml">{`easyfk:
@@ -1150,7 +1165,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         rpc-type: cloud
         prd-type: single
         build-type: gradle
-        framework-version: 3.2.12
+        framework-version: {最新版}
       code:
         module-name: order
         author: 开发者
@@ -1174,7 +1189,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         rpc-type: dubbo
         prd-type: separation
         build-type: maven
-        framework-version: 3.2.12
+        framework-version: {最新版}
       code:
         module-name: user
         db-type: POSTGRE_SQL
@@ -1204,7 +1219,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         gradle-type: groovy
         orm-type: MYBATIS
         log-type: LOGBACK
-        framework-version: 3.2.12
+        framework-version: {最新版}
         project-version: 1.0.0-SNAPSHOT
         create-prd-project: true
         controller-auto-config: true
@@ -1300,7 +1315,7 @@ private LocalDateTime createTime;`}</CodeBlock>
               ]} />
 
               {/* ============== 12. 典型使用场景 ============== */}
-              <H2>12. 典型使用场景</H2>
+              <H2 id="sec-scenarios">12. 典型使用场景</H2>
 
               <H3>场景一：从零创建新项目</H3>
               <CodeBlock lang="bash">{`mkdir my-project && cd my-project
@@ -1356,7 +1371,7 @@ public void refreshDtoAndParam() {
 }`}</CodeBlock>
 
               {/* ============== 13. 常见问题 ============== */}
-              <H2>13. 常见问题（FAQ）</H2>
+              <H2 id="sec-faq">13. 常见问题（FAQ）</H2>
 
               <H3>Q1: 提示&ldquo;找不到 java&rdquo;</H3>
               <P>请安装 JDK 21 或更高版本。安装后确认 <InlineCode>java -version</InlineCode> 输出的版本 &gt;= 21。</P>
@@ -1435,7 +1450,7 @@ public void refreshDtoAndParam() {
               <P>无需修改任何业务代码。</P>
 
               {/* ============== 14. 附录 ============== */}
-              <H2>14. 附录</H2>
+              <H2 id="sec-appendix">14. 附录</H2>
 
               <H3>14.1 枚举值速查表</H3>
               <DocTable
@@ -1489,7 +1504,7 @@ public void refreshDtoAndParam() {
               {/* Footer note */}
               <div className="rounded-[10px] border border-[#1F2937] bg-white/[0.024] px-5 py-4 text-center">
                 <p className="font-mono text-[13px] italic text-[#525252]">
-                  EasyFK Generator v3.2.12 — 让架构设计直接变成可运行的代码。
+                  EasyFK Generator v{'{最新版}'} — 让架构设计直接变成可运行的代码。
                 </p>
               </div>
 
@@ -1551,17 +1566,19 @@ public void refreshDtoAndParam() {
               <span className="font-mono text-[11px] font-semibold tracking-[1px] text-[#525252]">本页大纲</span>
               <div className="flex flex-col">
                 {outlineItems.map((item) => (
-                  <div
-                    key={item.label}
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => scrollToSection(item.id)}
                     className={cn(
-                      "flex h-8 items-center border-l-2 px-3 text-[12px]",
-                      item.active
+                      "flex h-8 items-center border-l-2 px-3 text-left text-[12px] transition-colors",
+                      activeSection === item.id
                         ? "border-[#00FF88] font-medium text-[#00FF88]"
-                        : "border-transparent text-[#737373]"
+                        : "border-transparent text-[#737373] hover:text-[#9CA3AF]"
                     )}
                   >
                     {item.label}
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -1582,7 +1599,6 @@ public void refreshDtoAndParam() {
         </button>
       </div>
 
-      <SiteFooter />
     </div>
   )
 }
