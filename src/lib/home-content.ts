@@ -52,7 +52,7 @@ export const navLinks: NavLink[] = [
   { label: "业务模块", href: "/modules" },
   { label: "中后台", href: "/admin" },
   { label: "移动端", href: "/mobile" },
-  { label: "AI+", href: "#capabilities" },
+  { label: "AI+", href: "/ai" },
   { label: "技术文档", href: "/docs" },
   { label: "合作咨询", href: "/cooperation" },
 ]

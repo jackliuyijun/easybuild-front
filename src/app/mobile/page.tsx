@@ -171,11 +171,11 @@ export default function MobilePage() {
       <SiteHeader />
       <main className="relative">
         {/* ── Hero Section ── */}
-        <section className="px-0 pb-[60px] pt-[100px]">
-          <div className="mx-auto w-full max-w-[1280px] px-6 md:px-8 xl:px-20">
-            <div className="flex flex-col items-center gap-7 text-center">
+        <section className="px-0 pb-[60px] pt-[120px]">
+          <div className="mx-auto w-full max-w-[1280px] px-6 md:px-8 xl:px-10">
+            <div className="flex flex-col items-center gap-10 text-center">
               {/* Title */}
-              <h1 className="font-display text-[64px] font-bold tracking-[-2px] text-white">
+              <h1 className="font-display text-[56px] font-bold tracking-[-2px] text-white md:text-[72px]">
                 移动端开发，全栈就绪
               </h1>
               {/* Subtitle */}

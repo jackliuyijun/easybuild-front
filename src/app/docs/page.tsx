@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ArrowRight, Blocks, Cpu, Flame, Monitor, Smartphone, TabletSmartphone } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
@@ -13,6 +14,7 @@ const topCards = [
     tagColor: "#00FF88",
     tagBorder: "#00FF8840",
     border: "#00FF8825",
+    href: "/docs/reader",
   },
   {
     icon: Blocks,
@@ -23,6 +25,7 @@ const topCards = [
     tagColor: "#60A5FA",
     tagBorder: "#60A5FA40",
     border: "#60A5FA25",
+    href: "/docs/reader",
   },
 ]
 
@@ -33,6 +36,7 @@ const bottomCards = [
     title: "中后台",
     desc: "Web 端管理系统开发指南\n与最佳实践",
     border: "#FBBF2425",
+    href: "/docs/reader",
   },
   {
     icon: Smartphone,
@@ -40,6 +44,7 @@ const bottomCards = [
     title: "小程序",
     desc: "微信/支付宝小程序\n开发与部署指南",
     border: "#A78BFA25",
+    href: "/docs/reader",
   },
   {
     icon: TabletSmartphone,
@@ -47,6 +52,7 @@ const bottomCards = [
     title: "APP",
     desc: "iOS / Android 原生应用\n开发框架与实践",
     border: "#F472B625",
+    href: "/docs/reader",
   },
 ]
 
@@ -129,9 +135,10 @@ export default function DocsPage() {
                   {topCards.map((c) => {
                     const Icon = c.icon
                     return (
-                      <div
+                      <Link
                         key={c.title}
-                        className="flex h-[240px] flex-col gap-4 rounded-2xl bg-white/[0.024] p-8"
+                        href={c.href}
+                        className="flex h-[240px] flex-col gap-4 rounded-2xl bg-white/[0.024] p-8 transition-colors hover:bg-white/[0.04]"
                         style={{ border: `1px solid ${c.border}` }}
                       >
                         <Icon size={40} style={{ color: c.iconColor }} />
@@ -143,7 +150,7 @@ export default function DocsPage() {
                         >
                           {c.tag}
                         </span>
-                      </div>
+                      </Link>
                     )
                   })}
                 </div>
@@ -153,16 +160,17 @@ export default function DocsPage() {
                   {bottomCards.map((c) => {
                     const Icon = c.icon
                     return (
-                      <div
+                      <Link
                         key={c.title}
-                        className="flex h-[180px] flex-col gap-3 rounded-2xl bg-white/[0.024] p-7"
+                        href={c.href}
+                        className="flex h-[180px] flex-col gap-3 rounded-2xl bg-white/[0.024] p-7 transition-colors hover:bg-white/[0.04]"
                         style={{ border: `1px solid ${c.border}` }}
                       >
                         <Icon size={32} style={{ color: c.iconColor }} />
                         <h3 className="font-display text-[20px] font-bold text-white">{c.title}</h3>
                         <p className="whitespace-pre-line text-[13px] leading-[1.6] text-[#9CA3AF]">{c.desc}</p>
                         <span className="text-[18px]" style={{ color: c.iconColor }}>→</span>
-                      </div>
+                      </Link>
                     )
                   })}
                 </div>
