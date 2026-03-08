@@ -47,8 +47,8 @@ export type CompareRow = {
 }
 
 export const navLinks: NavLink[] = [
-  { label: "首页", href: "#home" },
-  { label: "易架构", href: "#what-is" },
+  { label: "首页", href: "/" },
+  { label: "易架构", href: "/easyfk" },
   { label: "业务模块", href: "#capabilities" },
   { label: "中后台", href: "#capabilities" },
   { label: "移动端", href: "#capabilities" },

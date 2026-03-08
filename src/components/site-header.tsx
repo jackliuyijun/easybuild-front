@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 
 import {
@@ -25,6 +26,7 @@ import { cn } from "@/lib/utils"
 import { SiteLogo } from "@/components/site-logo"
 
 export function SiteHeader() {
+  const pathname = usePathname()
   const mobileMenuOpen = useAppStore((state) => state.mobileMenuOpen)
   const setMobileMenuOpen = useAppStore((state) => state.setMobileMenuOpen)
 
@@ -34,16 +36,24 @@ export function SiteHeader() {
         <SiteLogo />
         <NavigationMenu viewport={false} className="hidden lg:flex">
           <NavigationMenuList className="gap-3">
-            {navLinks.map((item) => (
-              <NavigationMenuItem key={item.label}>
-                <NavigationMenuLink
-                  asChild
-                  className="bg-transparent px-2 py-1.5 text-sm font-medium text-[#9CA3AF] hover:bg-transparent hover:text-white focus:bg-transparent focus:text-white"
-                >
-                  <Link href={item.href}>{item.label}</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+            {navLinks.map((item) => {
+              const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+              return (
+                <NavigationMenuItem key={item.label}>
+                  <NavigationMenuLink
+                    asChild
+                    className={cn(
+                      "bg-transparent px-2 py-1.5 text-sm hover:bg-transparent focus:bg-transparent",
+                      isActive
+                        ? "font-semibold text-[#00FF88] hover:text-[#00FF88] focus:text-[#00FF88]"
+                        : "font-medium text-[#9CA3AF] hover:text-white focus:text-white"
+                    )}
+                  >
+                    <Link href={item.href}>{item.label}</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              )
+            })}
           </NavigationMenuList>
         </NavigationMenu>
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -69,18 +79,26 @@ export function SiteHeader() {
               </SheetDescription>
             </SheetHeader>
             <div className="flex flex-col gap-2 px-0">
-              {navLinks.map((item) => (
-                <Button
-                  key={item.label}
-                  asChild
-                  variant="ghost"
-                  className="h-auto justify-start rounded-xl px-3 py-3 text-sm font-medium text-[#9CA3AF] hover:bg-white/5 hover:text-white"
-                >
-                  <Link href={item.href} onClick={() => setMobileMenuOpen(false)}>
-                    {item.label}
-                  </Link>
-                </Button>
-              ))}
+              {navLinks.map((item) => {
+                const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+                return (
+                  <Button
+                    key={item.label}
+                    asChild
+                    variant="ghost"
+                    className={cn(
+                      "h-auto justify-start rounded-xl px-3 py-3 text-sm",
+                      isActive
+                        ? "font-semibold text-[#00FF88] hover:bg-white/5 hover:text-[#00FF88]"
+                        : "font-medium text-[#9CA3AF] hover:bg-white/5 hover:text-white"
+                    )}
+                  >
+                    <Link href={item.href} onClick={() => setMobileMenuOpen(false)}>
+                      {item.label}
+                    </Link>
+                  </Button>
+                )
+              })}
             </div>
           </SheetContent>
         </Sheet>
