@@ -47,10 +47,10 @@ export default function Home() {
           <div className={siteTheme.container}>
             <div className="flex flex-col items-center gap-10 text-center">
               <div className="flex flex-col items-center gap-5">
-                <h1 className="font-display text-[56px] font-bold tracking-[-0.06em] text-white md:text-[80px]">
+                <h1 className="font-display text-[56px] font-bold tracking-[-0.06em] text-white md:text-[72px]">
                   易构 EasyBuild
                 </h1>
-                <p className="font-display text-[28px] font-semibold tracking-[-0.04em] text-[var(--brand)] md:text-[36px]">
+                <p className="font-display text-[24px] font-semibold tracking-[-0.04em] text-[var(--brand)] md:text-[28px]">
                   你写业务，基建交给易构
                 </p>
               </div>
