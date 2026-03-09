@@ -61,7 +61,7 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
     "@type": "TechArticle",
     headline: title,
     description: subtitle,
-    url: `https://easybuild.mcst.com${pathname}`,
+    url: `https://easybuild.pro${pathname}`,
     publisher: { "@type": "Organization", name: "EasyBuild" },
     inLanguage: "zh-CN",
   }
@@ -75,8 +75,8 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
       {/* Nav Bar */}
       <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-[#1F2937] bg-[#0B0C0E] px-6">
         <Link href="/docs" className="inline-flex items-center gap-2.5">
-          <span className="flex size-7 items-center justify-center rounded-md bg-[#00FF88] font-display text-sm font-bold text-[#0B0C0E]">
-            E
+          <span className="flex size-7 items-center justify-center rounded-md bg-[#00FF88] font-display text-[11px] font-bold text-[#0B0C0E]">
+            EB
           </span>
           <span className="font-display text-[15px] font-bold text-white">EasyBuild Docs</span>
         </Link>

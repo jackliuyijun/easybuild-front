@@ -348,22 +348,33 @@ export default function CooperationPage() {
 
         <section className="py-20">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
-            <div className="flex flex-col items-center gap-8">
-              <h2 className="font-display text-[32px] font-bold text-white">有任何需求或疑问，欢迎随时骚扰</h2>
-              <p className="text-[16px] text-[#9CA3AF]">添加微信时请备注来意，方便我们更快响应您的需求</p>
-
-              <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#00FF8820] bg-white/[0.024] p-8">
-                <Image
-                  src="/images/weixin002.png"
-                  alt="微信二维码"
-                  width={160}
-                  height={160}
-                  className="rounded-xl"
-                />
-                <span className="text-[14px] text-[#9CA3AF]">扫码添加微信</span>
+            <div className="flex flex-col items-center gap-10">
+              <div className="flex flex-col items-center gap-3 text-center">
+                <p className="font-mono text-[12px] font-semibold tracking-[2px] text-[#00FF88]">CONTACT US</p>
+                <h2 className="font-display text-[36px] font-bold tracking-[-1px] text-white">有任何需求或疑问，欢迎随时骚扰</h2>
+                <p className="text-[16px] text-[#9CA3AF]">添加微信时请备注来意，方便我们更快响应您的需求</p>
               </div>
 
-              <div className="flex items-center justify-center rounded-lg bg-[#00FF88] px-10 py-3.5">
+              <div className="relative overflow-hidden rounded-3xl border border-[#00FF8825] bg-gradient-to-b from-[#00FF8808] to-transparent p-10">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,255,136,0.08),transparent_60%)]" />
+                <div className="relative flex flex-col items-center gap-6">
+                  <div className="rounded-2xl border border-[#00FF8815] bg-white p-3 shadow-[0_0_40px_rgba(0,255,136,0.06)]">
+                    <Image
+                      src="/images/10004.png"
+                      alt="微信二维码"
+                      width={200}
+                      height={200}
+                      className="rounded-lg"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="text-[15px] font-medium text-white">扫码添加微信</span>
+                    <span className="text-[13px] text-[#525252]">微信号：eb-jack</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center rounded-lg bg-[#00FF88] px-10 py-3.5 shadow-[0_0_30px_rgba(0,255,136,0.15)] transition-shadow hover:shadow-[0_0_40px_rgba(0,255,136,0.25)]">
                 <span className="text-[15px] font-semibold text-[#0B0C0E]">添加微信，聊聊您的需求或想法</span>
               </div>
 

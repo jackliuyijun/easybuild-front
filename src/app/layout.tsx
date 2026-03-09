@@ -18,7 +18,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://easybuild.mcst.com"),
+  metadataBase: new URL("https://easybuild.pro"),
   title: {
     default: "EasyBuild 易构 — 企业级 Java 快速开发平台",
     template: "%s | EasyBuild 易构",

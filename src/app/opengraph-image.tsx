@@ -38,12 +38,12 @@ export default function OgImage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "36px",
+              fontSize: "32px",
               fontWeight: 800,
               color: "#0B0C0E",
             }}
           >
-            E
+            EB
           </div>
           <span
             style={{

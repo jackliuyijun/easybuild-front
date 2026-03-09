@@ -19,16 +19,17 @@ export default function Icon() {
       >
         <span
           style={{
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: 800,
             color: "#0B0C0E",
             lineHeight: 1,
           }}
         >
-          E
+          EB
         </span>
       </div>
     ),
     { ...size }
+    
   )
 }
