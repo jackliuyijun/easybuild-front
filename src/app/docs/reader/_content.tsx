@@ -208,7 +208,6 @@ export default function DocReaderPage() {
           <span className="flex size-7 items-center justify-center rounded-md bg-[#00FF88] font-display text-sm font-bold text-[#0B0C0E]">
             E
           </span>
-          <span className="size-[5px] rounded-full bg-[#00FF88]" />
           <span className="font-display text-[15px] font-bold text-white">EasyBuild Docs</span>
         </Link>
         <div className="flex items-center gap-2 text-[13px] text-[#525252]">

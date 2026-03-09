@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import { GraduationCap, Handshake, Package, Rocket, UserCog, Users } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
@@ -352,9 +353,13 @@ export default function CooperationPage() {
               <p className="text-[16px] text-[#9CA3AF]">添加微信时请备注来意，方便我们更快响应您的需求</p>
 
               <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#00FF8820] bg-white/[0.024] p-8">
-                <div className="flex size-40 items-center justify-center rounded-xl bg-white">
-                  <span className="text-[14px] text-[#9CA3AF]">微信二维码</span>
-                </div>
+                <Image
+                  src="/images/weixin002.png"
+                  alt="微信二维码"
+                  width={160}
+                  height={160}
+                  className="rounded-xl"
+                />
                 <span className="text-[14px] text-[#9CA3AF]">扫码添加微信</span>
               </div>
 
