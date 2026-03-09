@@ -178,3 +178,21 @@ pre {
   scrollbar-width: thin;
   scrollbar-color: #1F2937 transparent;
 }
+
+.overflow-x-auto::-webkit-scrollbar {
+  height: 5px;
+}
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 3px;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #1F2937 transparent;
+}

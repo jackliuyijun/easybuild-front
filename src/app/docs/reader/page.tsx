@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
-import { Search, Copy, Check, Lightbulb, ArrowLeft, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
+import { Search, Copy, Check, Lightbulb, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -10,13 +10,16 @@ import { cn } from "@/lib/utils"
 const tabs = ["后端", "业务", "前端", "移动端"]
 
 const sidebarSections: { title?: string; items: { label: string; active?: boolean; href?: string }[] }[] = [
-  {
-    items: [
-      { label: "代码生成器", active: true },
-      { label: "BOM", href: "/docs/reader/bom" },
-      { label: "基础核心", href: "/docs/reader/core" },
-    ],
-  },
+  { title: "基础模块", items: [{ label: "基础核心", href: "/docs/reader/core" },{ label: "BOM", href: "/docs/reader/bom" },{ label: "认证鉴权", href: "/docs/reader/auth" },{ label: "网关", href: "/docs/reader/gateway" }]},
+  { title: "开发工具", items: [{ label: "代码生成器", active: true }]},
+  { title: "Web 开发", items: [{ label: "Web 应用", href: "/docs/reader/web-prd" },{ label: "微服务 Web", href: "/docs/reader/web-micro" },{ label: "WebSocket", href: "/docs/reader/websocket" }]},
+  { title: "ORM 数据访问", items: [{ label: "Hibernate", href: "/docs/reader/orm-hibernate" },{ label: "MyBatis", href: "/docs/reader/orm-mybatis" },{ label: "MyBatis-Flex", href: "/docs/reader/orm-flex" },{ label: "ShardingSphere", href: "/docs/reader/orm-sharding" }]},
+  { title: "数据库", items: [{ label: "Redis", href: "/docs/reader/db-redis" },{ label: "MongoDB", href: "/docs/reader/db-mongo" },{ label: "ClickHouse", href: "/docs/reader/db-clickhouse" }]},
+  { title: "缓存与ID", items: [{ label: "Caffeine 缓存", href: "/docs/reader/cache-caffeine" },{ label: "Redis 自增ID", href: "/docs/reader/autoid-redis" }]},
+  { title: "消息队列", items: [{ label: "RocketMQ", href: "/docs/reader/mq-rocket" },{ label: "RabbitMQ", href: "/docs/reader/mq-rabbit" },{ label: "Kafka", href: "/docs/reader/mq-kafka" }]},
+  { title: "RPC 远程调用", items: [{ label: "Dubbo", href: "/docs/reader/rpc-dubbo" },{ label: "Spring Cloud", href: "/docs/reader/rpc-cloud" }]},
+  { title: "分布式", items: [{ label: "Redisson 分布式锁", href: "/docs/reader/lock-redisson" }]},
+  { title: "高性能组件", items: [{ label: "线程池", href: "/docs/reader/thread" },{ label: "Disruptor", href: "/docs/reader/disruptor" },{ label: "Fory 序列化", href: "/docs/reader/fory" },{ label: "Chronicle Map", href: "/docs/reader/chronicle-map" }]},
 ]
 
 const outlineItems = [
@@ -253,7 +256,7 @@ export default function DocReaderPage() {
                 <div key={si}>
                   {section.title && (
                     <div className="flex h-9 items-center px-4">
-                      <span className="font-mono text-[11px] font-semibold tracking-[1px] text-[#525252]">
+                      <span className="font-mono text-[13px] font-semibold tracking-[0.5px] text-[#9CA3AF]">
                         {section.title}
                       </span>
                     </div>
@@ -772,7 +775,7 @@ public class Product extends BaseMyBatisPlusEntity<Product> {
               <H4>特点</H4>
               <BulletList items={[
                 <>使用 <InlineCode>@AutoMapper</InlineCode> 注解实现 Entity 与 DTO 的自动转换（基于 MapStruct-Plus）</>,
-                <>使用 <InlineCode>@Column(comment = "...")</InlineCode> 记录字段注释</>,
+                <>使用 <InlineCode>{'@Column(comment = "...")'}</InlineCode> 记录字段注释</>,
                 <>使用 <InlineCode>@PrimaryKey</InlineCode> 标注主键字段</>,
                 <>继承框架基类，自动获得 <InlineCode>deleted</InlineCode>、<InlineCode>insertTime</InlineCode>、<InlineCode>lastUpdateTime</InlineCode> 字段</>,
               ]} />

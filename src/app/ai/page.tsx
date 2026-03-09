@@ -246,7 +246,7 @@ export default function AiPage() {
                 为什么配合 AI 更高效？
               </h2>
               <p className="max-w-[700px] text-center text-[16px] leading-[1.7] text-[#9CA3AF]">
-                AI 编程最大的痛点是"不知道你的项目结构"。EasyBuild 锁死了分层和规范，AI 闭着眼都能写对。
+                AI 编程最大的痛点是{'"'}不知道你的项目结构{'"'}。EasyBuild 锁死了分层和规范，AI 闭着眼都能写对。
               </p>
               {/* VS Cards */}
               <div className="flex w-full gap-6">
