@@ -14,7 +14,7 @@ const topCards = [
     tagColor: "#00FF88",
     tagBorder: "#00FF8840",
     border: "#00FF8825",
-    href: "/docs/reader",
+    href: "/docs/reader/core",
   },
   {
     icon: Blocks,
@@ -25,7 +25,7 @@ const topCards = [
     tagColor: "#60A5FA",
     tagBorder: "#60A5FA40",
     border: "#60A5FA25",
-    href: "/docs/reader",
+    href: "/docs/reader/auth",
   },
 ]
 
