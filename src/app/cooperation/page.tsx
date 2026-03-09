@@ -60,7 +60,7 @@ const ecoCards = [
     slogan: "共享技术红利，最高 30%~50% 佣金分成",
     sloganColor: "#FBBF2490",
     border: "#FBBF2425",
-    highlight: { emoji: "💰", text: "超高佣金分成比例", color: "#FBBF24", bg: "#FBBF240A", border: "#FBBF2420", fontSize: 20 },
+    highlight: { emoji: "💰", text: "超高佣金分成比例", color: "#FBBF24", bg: "#FBBF240A", border: "#FBBF2420", fontSize: 14 },
     items: [
       { emoji: "📢", text: "技术博主/UP主：文章/视频植入，专属链接成交" },
       { emoji: "🤝", text: "线下代理：作为解决方案组件，可贴牌推销" },
@@ -112,7 +112,7 @@ const ecoCards = [
     slogan: "你有客户，我有技术，一起落地",
     sloganColor: "#06B6D490",
     border: "#06B6D425",
-    highlight: { emoji: "🚀", text: "你接单，我交付，利润共享", color: "#06B6D4", bg: "#06B6D40A", border: "#06B6D420", fontSize: 18 },
+    highlight: { emoji: "🚀", text: "你接单，我交付，利润共享", color: "#06B6D4", bg: "#06B6D40A", border: "#06B6D420", fontSize: 14 },
     items: [
       { emoji: "💼", text: "销售/BD：有客户需求但缺技术团队，我来做开发交付" },
       { emoji: "🎯", text: "行业人脉：客户转介绍即可获得项目分成" },
@@ -244,10 +244,12 @@ export default function CooperationPage() {
                   return (
                     <div
                       key={c.title}
-                      className="flex min-h-[480px] flex-col gap-4 rounded-2xl bg-white/[0.024] p-7 xl:h-[480px]"
+                      className="flex flex-col gap-5 rounded-2xl bg-white/[0.024] p-7"
                       style={{ border: `1px solid ${c.border}` }}
                     >
-                      <Icon size={36} style={{ color: c.iconColor }} />
+                      <div className="flex size-10 items-center justify-center">
+                        <Icon size={28} style={{ color: c.iconColor }} />
+                      </div>
                       <h3 className="font-display text-[20px] font-bold text-white">{c.title}</h3>
                       <p className="text-[13px] font-medium" style={{ color: c.sloganColor }}>{c.slogan}</p>
 
@@ -273,20 +275,22 @@ export default function CooperationPage() {
                         ))}
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-[11px] text-[#525252]">适合：</span>
+                      <div className="mt-auto flex flex-col gap-4">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          {c.targets.map((t) => (
-                            <span key={t} className="rounded bg-white/[0.03] px-2 py-[3px] text-[10px] text-[#737373]">{t}</span>
-                          ))}
+                          <span className="text-[11px] text-[#525252]">适合：</span>
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            {c.targets.map((t) => (
+                              <span key={t} className="rounded bg-white/[0.03] px-2 py-[3px] text-[10px] text-[#737373]">{t}</span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      <div
-                        className="flex h-10 w-full shrink-0 items-center justify-center rounded-lg text-[13px] font-semibold"
-                        style={{ color: c.btnColor, border: `1px solid ${c.btnColor}` }}
-                      >
-                        {c.btnText}
+                        <div
+                          className="flex h-10 w-full shrink-0 items-center justify-center rounded-lg text-[13px] font-semibold"
+                          style={{ color: c.btnColor, border: `1px solid ${c.btnColor}` }}
+                        >
+                          {c.btnText}
+                        </div>
                       </div>
                     </div>
                   )

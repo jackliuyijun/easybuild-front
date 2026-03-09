@@ -64,7 +64,6 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
           <span className="flex size-7 items-center justify-center rounded-md bg-[#00FF88] font-display text-sm font-bold text-[#0B0C0E]">
             E
           </span>
-          <span className="size-[5px] rounded-full bg-[#00FF88]" />
           <span className="font-display text-[15px] font-bold text-white">EasyBuild Docs</span>
         </Link>
         <div className="flex items-center gap-2 text-[13px] text-[#525252]">
@@ -229,7 +228,7 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
         </aside>
       </div>
 
-      {/* AI Floating Button */}
+      {/* AI Floating Button - 暂时隐藏，待功能实现后启用
       <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3">
         <div className="rounded-lg border border-[#1F2937] bg-[#161B22] px-3.5 py-2 text-[12px] text-[#9CA3AF]">
           对文档有疑问？问 AI
@@ -241,6 +240,7 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
           <Sparkles className="size-6 text-[#0B0C0E]" />
         </button>
       </div>
+      */}
     </div>
   )
 }
