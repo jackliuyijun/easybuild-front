@@ -1,5 +1,12 @@
+import type { Metadata } from "next"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "AI+ 智能开发 — AI 驱动的高效编码体验",
+  description:
+    "EasyBuild 结合 AI 能力，通过标准化工程结构与代码生成，让 AI 编码效率提升数倍，从噪音到信号，让 AI 真正读懂你的项目。",
+}
 
 const noiseTree = [
   { text: "src/", color: "#9CA3AF" },

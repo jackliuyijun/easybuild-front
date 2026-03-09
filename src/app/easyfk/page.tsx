@@ -1,7 +1,14 @@
+import type { Metadata } from "next"
 import type { LucideIcon } from "lucide-react"
 import { BookOpen, Boxes, FileCode, Repeat, Rocket, ShieldCheck, Sparkles, Zap } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
+
+export const metadata: Metadata = {
+  title: "易架构 EasyFK — 企业级 Java 技术底座",
+  description:
+    "EasyFK 覆盖核心框架、全栈代码生成、40+ 可插拔组件与统一依赖治理，一次建设全局复用，告别重复基础设施建设。",
+}
 import { SiteHeader } from "@/components/site-header"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"

@@ -1,8 +1,15 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Blocks, Cpu, Flame, Monitor, Smartphone, TabletSmartphone } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "技术文档中心 — EasyBuild 开发指南",
+  description:
+    "EasyBuild 全栈技术文档，涵盖核心框架、ORM、缓存、消息队列、RPC、分布式锁、网关等 28 个模块的详细使用指南。",
+}
 
 const topCards = [
   {

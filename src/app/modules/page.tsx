@@ -1,7 +1,14 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "业务模块 — 18+ 开箱即用的企业级业务组件",
+  description:
+    "EasyBuild 提供权限管理、会员体系、商品管理、订单交易、支付模块、商户管理等 18+ 业务模块，支持 RBAC、SaaS 多租户与 DDD 领域驱动。",
+}
 
 const stats = [
   { value: "18+", label: "业务模块", color: "#28C840" },

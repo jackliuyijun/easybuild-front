@@ -1,5 +1,12 @@
+import type { Metadata } from "next"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "EasyBuild 易构 — 企业级 Java 快速开发平台",
+  description:
+    "告别重复造轮子，EasyBuild 提供代码生成、微服务架构、ORM、缓存、消息队列等开箱即用能力，让团队专注业务创新。",
+}
 import { PanelCard } from "@/components/home/panel-card"
 import { SectionHeader } from "@/components/home/section-header"
 import { Badge } from "@/components/ui/badge"

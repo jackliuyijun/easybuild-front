@@ -56,8 +56,22 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
     el?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: title,
+    description: subtitle,
+    url: `https://easybuild.mcst.com${pathname}`,
+    publisher: { "@type": "Organization", name: "EasyBuild" },
+    inLanguage: "zh-CN",
+  }
+
   return (
     <div className="relative isolate h-screen overflow-hidden bg-[#0B0C0E] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Nav Bar */}
       <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-[#1F2937] bg-[#0B0C0E] px-6">
         <Link href="/docs" className="inline-flex items-center gap-2.5">

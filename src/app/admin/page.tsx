@@ -1,7 +1,14 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "中后台管理系统 — Next.js 15 + React 19 企业级后台",
+  description:
+    "基于 Next.js 15、React 19、Shadcn/ui 构建的企业级中后台管理系统，40+ UI 组件、20+ 主题色、RBAC 权限体系，5 分钟完成 CRUD 联调。",
+}
 
 const stats = [
   { value: "40+", label: "UI组件", color: "#28C840" },

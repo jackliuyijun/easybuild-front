@@ -1,7 +1,14 @@
+import type { Metadata } from "next"
 import { GraduationCap, Handshake, Package, Rocket, UserCog, Users } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "合作咨询 — 商业授权与技术服务",
+  description:
+    "EasyBuild 提供商业源码授权、项目外包开发、技术顾问驻场、企业内训等多种合作模式，灵活长期保障，助力团队快速交付。",
+}
 
 const heroStats = [
   { value: "灵活", color: "#00FF88", label: "多种合作模式，总有一款适合你" },
