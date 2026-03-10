@@ -5,6 +5,12 @@ export type DocMetaItem = {
 }
 
 export const docMeta: Record<string, DocMetaItem> = {
+  "dev-env": {
+    title: "开发环境配置 — EasyBuild 环境搭建指南",
+    description:
+      "EasyBuild 开发环境配置说明，涵盖 JDK、Maven、Gradle 环境准备与项目初始化配置。",
+    keywords: ["开发环境", "环境配置", "Maven", "Gradle", "JDK"],
+  },
   "core": {
     title: "基础核心模块 easyfk-core",
     description:
