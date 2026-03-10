@@ -101,6 +101,18 @@ export const docMeta: Record<string, DocMetaItem> = {
       "EasyBuild ClickHouse 高性能列式分析数据库集成，适用于大规模 OLAP 实时分析场景。",
     keywords: ["ClickHouse", "列式数据库", "OLAP", "数据分析"],
   },
+  "cache-redis": {
+    title: "Redis 分布式缓存 cache-redis",
+    description:
+      "EasyBuild Redis 分布式缓存组件，基于 Spring Cache + Redis，注解驱动 + 编程式双模式，支持多数据源与独立 TTL。",
+    keywords: ["Redis缓存", "分布式缓存", "Spring Cache", "TTL"],
+  },
+  "cache-mult": {
+    title: "多级缓存 cache-mult",
+    description:
+      "EasyBuild 多级缓存组件，基于 XXL-CACHE 实现 L1 本地 + L2 Redis 多级缓存架构，高命中率与强一致性。",
+    keywords: ["多级缓存", "L1", "L2", "Caffeine", "Redis"],
+  },
   "cache-caffeine": {
     title: "Caffeine 本地缓存 easyfk-cache-caffeine",
     description:
@@ -166,6 +178,12 @@ export const docMeta: Record<string, DocMetaItem> = {
     description:
       "EasyBuild Fory 高性能对象序列化框架，比 JSON 快数十倍，适用于 RPC、缓存等场景。",
     keywords: ["Fory", "序列化", "高性能", "RPC"],
+  },
+  "chronicle-queue": {
+    title: "Chronicle Queue 高性能队列 easyfk-chronicle-queue",
+    description:
+      "EasyBuild Chronicle Queue 高性能持久化消息队列组件，基于内存映射文件，零 GC 压力，微秒级延迟。",
+    keywords: ["Chronicle Queue", "消息队列", "高性能", "内存映射", "零GC"],
   },
   "chronicle-map": {
     title: "Chronicle Map 堆外存储 easyfk-chronicle-map",

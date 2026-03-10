@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import { GraduationCap, Handshake, Package, Rocket, UserCog, Users } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { QrCodeZoom } from "@/components/qr-code-zoom"
 
 export const metadata: Metadata = {
   title: "合作咨询 — 商业授权与技术服务",
@@ -359,13 +359,7 @@ export default function CooperationPage() {
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,255,136,0.08),transparent_60%)]" />
                 <div className="relative flex flex-col items-center gap-6">
                   <div className="rounded-2xl border border-[#00FF8815] bg-white p-3 shadow-[0_0_40px_rgba(0,255,136,0.06)]">
-                    <Image
-                      src="/images/10004.png"
-                      alt="微信二维码"
-                      width={200}
-                      height={200}
-                      className="rounded-lg"
-                    />
+                    <QrCodeZoom src="/images/10004.png" alt="微信二维码" size={200} />
                   </div>
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-[15px] font-medium text-white">扫码添加微信</span>
