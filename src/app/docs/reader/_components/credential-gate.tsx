@@ -18,7 +18,7 @@ export function CredentialGate() {
           扫码加入 <span className="font-semibold text-[#E5E5E5]">EasyBuild 技术交流群</span>，群公告中获取 Maven / Gradle 仓库配置信息（仓库地址、用户名、密码）
         </p>
         <div className="overflow-hidden rounded-lg border border-[#1F2937] bg-white p-2">
-          <QrCodeZoom src="/images/easybuild-gruop.png" alt="扫码加入 EasyBuild 技术交流群" size={180} />
+          <QrCodeZoom src="/images/10004.png" alt="扫码加入 EasyBuild 技术交流群" size={180} />
         </div>
         <p className="text-[11px] text-[#525252]">点击二维码可放大查看</p>
       </div>
