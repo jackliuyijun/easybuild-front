@@ -377,7 +377,6 @@ export default function CooperationPage() {
               <div className="flex items-center justify-center rounded-lg bg-[#00FF88] px-10 py-3.5 shadow-[0_0_30px_rgba(0,255,136,0.15)] transition-shadow hover:shadow-[0_0_40px_rgba(0,255,136,0.25)]">
                 <span className="text-[15px] font-semibold text-[#0B0C0E]">添加微信，聊聊您的需求或想法</span>
               </div>
-
               <p className="text-[12px] text-[#525252]">商务咨询免费，不强制销售，只提供专业建议</p>
             </div>
           </div>

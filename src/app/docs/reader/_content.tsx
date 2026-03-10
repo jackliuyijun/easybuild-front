@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
-import { Search, Copy, Check, Lightbulb, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle } from "lucide-react"
+import { Search, Copy, Check, Lightbulb, ArrowRight, ArrowDown, ArrowUp, Sparkles, AlertTriangle, Download } from "lucide-react"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -304,9 +304,7 @@ export default function DocReaderPage() {
               </h1>
               {/* Meta */}
               <div className="flex items-center gap-4 text-[12px] text-[#525252]">
-                <span>版本 {'{最新版}'}</span>
-                <span className="size-1 rounded-full bg-[#525252]" />
-                <span>适用于外部开发团队</span>
+                <span>最新版：3.2.12</span>
                 <span className="size-1 rounded-full bg-[#525252]" />
                 <span>阅读时间 ~30 min</span>
               </div>
@@ -352,9 +350,20 @@ export default function DocReaderPage() {
               <P>CLI 工具独立运行，不依赖 Spring Boot 项目环境，适合从零创建新项目或在任意目录快速生成代码。</P>
 
               <H4>3.1.1 安装</H4>
+              <a
+                href="/downloads/efg-3.2.12.zip"
+                download
+                className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
+              >
+                <Download className="size-5 shrink-0 text-[#00FF88]" />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[14px] font-semibold text-white">下载 efg-3.2.12.zip</span>
+                  <span className="text-[12px] text-[#9CA3AF]">CLI 安装包 · 约 31 MB</span>
+                </div>
+              </a>
               <NumberList items={[
-                <>获取安装包 <InlineCode>efg-{'{最新版}'}.zip</InlineCode> 并解压</>,
-                <>进入 <InlineCode>efg-{'{最新版}'}</InlineCode> 目录执行安装</>,
+                <>下载上方安装包 <InlineCode>efg-3.2.12.zip</InlineCode> 并解压</>,
+                <>进入 <InlineCode>efg-3.2.12</InlineCode> 目录执行安装</>,
               ]} />
               <P><Strong>Windows：</Strong></P>
               <CodeBlock lang="bat">{`双击 install.bat`}</CodeBlock>
@@ -1606,7 +1615,7 @@ public void refreshDtoAndParam() {
         </aside>
       </div>
 
-      {/* AI Floating Button */}
+      {/* AI Floating Button - 暂时隐藏，待功能实现后启用
       <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3">
         <div className="rounded-lg border border-[#1F2937] bg-[#161B22] px-3.5 py-2 text-[12px] text-[#9CA3AF]">
           对文档有疑问？问 AI
@@ -1618,6 +1627,7 @@ public void refreshDtoAndParam() {
           <Sparkles className="size-6 text-[#0B0C0E]" />
         </button>
       </div>
+      */}
 
     </div>
   )
