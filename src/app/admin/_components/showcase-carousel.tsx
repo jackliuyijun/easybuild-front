@@ -54,7 +54,7 @@ export function ShowcaseCarousel() {
                 src={slide.src}
                 alt={slide.alt}
                 width={1920}
-                height={1080}
+                height={869}
                 className="w-full"
                 sizes="(max-width: 1280px) 100vw, 1280px"
               />
