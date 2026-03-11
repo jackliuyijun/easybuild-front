@@ -21,17 +21,16 @@ export default function DevEnvContent() {
       subtitle="开发环境搭建与仓库配置"
       readingTime="~5 min"
     >
+      {/* ============== 1. 环境准备 ============== */}
+      <H2 id="sec-env">1. 环境准备</H2>
+      <P>JDK 必须大于等于 21，JDK 21+</P>
+      <P>Java 环境变量，Maven 环境变量，Gradle 环境变量等，可自行参考网上资料或使用 AI，配置好本地的开发环境。</P>
 
-              {/* ============== 1. 环境准备 ============== */}
-              <H2 id="sec-env">1. 环境准备</H2>
-              <P>JDK 必须大于等于 21，JDK 21+</P>
-              <P>Java 环境变量，Maven 环境变量，Gradle 环境变量等，可自行参考网上资料或使用 AI，配置好本地的开发环境。</P>
-
-              {/* ============== 2. Maven 配置 ============== */}
-              <H2 id="sec-maven">2. Maven 配置</H2>
-              <P>请将以下配置添加到您的 Maven settings.xml 中，仓库凭证请扫码入群获取：</P>
-              <CredentialGate />
-              <CodeBlock lang="xml">{`<?xml version="1.0" encoding="UTF-8"?>
+      {/* ============== 2. Maven 配置 ============== */}
+      <H2 id="sec-maven">2. Maven 配置</H2>
+      <P>请将以下配置添加到您的 Maven settings.xml 中，仓库凭证请扫码入群获取：</P>
+      <CredentialGate />
+      <CodeBlock lang="xml">{`<?xml version="1.0" encoding="UTF-8"?>
 
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -68,12 +67,12 @@ export default function DevEnvContent() {
     </profile>
   </profiles>
 </settings>`}</CodeBlock>
-              <P>可以新建配置，也可以把以上内容添加到已有的 setting.xml 文件中</P>
+      <P>可以新建配置，也可以把以上内容添加到已有的 setting.xml 文件中</P>
 
-              {/* ============== 3. Gradle 配置 ============== */}
-              <H2 id="sec-gradle">3. Gradle 配置</H2>
-              <P>请将下列配置添加到您项目的 build.gradle 文件中或全局配置文件中，仓库凭证同样在群内获取</P>
-              <CodeBlock lang="groovy">{`repositories {
+      {/* ============== 3. Gradle 配置 ============== */}
+      <H2 id="sec-gradle">3. Gradle 配置</H2>
+      <P>请将下列配置添加到您项目的 build.gradle 文件中或全局配置文件中，仓库凭证同样在群内获取</P>
+      <CodeBlock lang="groovy">{`repositories {
      maven {
          url 【扫码入群获取仓库地址】
          credentials {
@@ -82,14 +81,14 @@ export default function DevEnvContent() {
      }
 }`}</CodeBlock>
 
-              {/* ============== 4. 创建项目 ============== */}
-              <H2 id="sec-project">4. 创建项目</H2>
-              <P>手动创建，或使用 EasyBuild 提供的自动代码生成工具创建项目，自动代码生成可参考<Link href="/docs/reader" className="text-[#00FF88] underline underline-offset-2 hover:text-[#00FF88]/80">代码生成文档</Link>。</P>
+      {/* ============== 4. 创建项目 ============== */}
+      <H2 id="sec-project">4. 创建项目</H2>
+      <P>手动创建，或使用 EasyBuild 提供的自动代码生成工具创建项目，自动代码生成可参考<Link href="/docs/reader" className="text-[#00FF88] underline underline-offset-2 hover:text-[#00FF88]/80">代码生成文档</Link>。</P>
 
-              <H3>4.1 项目配置</H3>
-              <P>以 Maven 项目为例：手动创建项目后，可以根据以下说明配置项目</P>
-              <P>在项目根目录的 pom.xml 中按照以下配置：</P>
-              <CodeBlock lang="xml">{`<properties>
+      <H3>4.1 项目配置</H3>
+      <P>以 Maven 项目为例：手动创建项目后，可以根据以下说明配置项目</P>
+      <P>在项目根目录的 pom.xml 中按照以下配置：</P>
+      <CodeBlock lang="xml">{`<properties>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -122,7 +121,7 @@ export default function DevEnvContent() {
         <artifactId>easyfk-core</artifactId>
     </dependency>
 </dependencies>`}</CodeBlock>
-              <P>其他模块，按需引入，无需设置版本号，由易架构的 easyfk-dependencies 统一管理版本。</P>
+      <P>其他模块，按需引入，无需设置版本号，由易架构的 easyfk-dependencies 统一管理版本。</P>
 
     </DocLayout>
   )
