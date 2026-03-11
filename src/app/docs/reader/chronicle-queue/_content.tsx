@@ -740,7 +740,7 @@ public void cleanOldData() {
               <CodeBlock lang="plaintext">{`每日磁盘用量 ≈ 每日消息条数 × 平均消息大小 × 1.1（元数据开销约 10%）`}</CodeBlock>
 
               <H3>Q8: 队列可以动态创建吗？</H3>
-              <P>可以。首次调用 <InlineCode>writeText("new-queue", "msg")</InlineCode> 时自动创建。也可通过 <InlineCode>ChronicleQueueManager.getOrCreateQueue()</InlineCode> 手动创建。</P>
+              <P>可以。首次调用 <InlineCode>{`writeText("new-queue", "msg")`}</InlineCode> 时自动创建。也可通过 <InlineCode>ChronicleQueueManager.getOrCreateQueue()</InlineCode> 手动创建。</P>
 
               <H3>Q9: 与 chronicle-map 组件有什么区别？</H3>
               <DocTable

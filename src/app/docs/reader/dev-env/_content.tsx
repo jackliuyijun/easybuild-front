@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { DocLayout } from "../_components/doc-layout"
-import { CodeBlock, TipBox, H2, H3, P, BulletList, InlineCode, Strong } from "../_components/doc-components"
+import { CodeBlock, H2, H3, P } from "../_components/doc-components"
 import { CredentialGate } from "../_components/credential-gate"
 
 const outlineItems = [

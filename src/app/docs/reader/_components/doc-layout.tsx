@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Search, ArrowDown, ArrowUp, Sparkles } from "lucide-react"
+import { Search, ArrowDown, ArrowUp } from "lucide-react"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"

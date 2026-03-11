@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable react/jsx-key */
 
 import { DocLayout } from "../_components/doc-layout"
 import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong } from "../_components/doc-components"
@@ -352,7 +353,7 @@ log.info("Token 剩余有效期: {} 秒", ttl);`}</CodeBlock>
               ]} />
 
               <H3>6.3 @Cacheable 的 value 与 caches 配置的对应关系</H3>
-              <P><InlineCode>@Cacheable(value = "users")</InlineCode> 中的 <InlineCode>value</InlineCode> 对应 YAML 配置中 <InlineCode>caches</InlineCode> 列表里的 <InlineCode>cache-name</InlineCode>：</P>
+              <P><InlineCode>{`@Cacheable(value = "users")`}</InlineCode> 中的 <InlineCode>value</InlineCode> 对应 YAML 配置中 <InlineCode>caches</InlineCode> 列表里的 <InlineCode>cache-name</InlineCode>：</P>
               <CodeBlock lang="yaml">{`caches:
   - cache-name: users
     time-to-live: 2h`}</CodeBlock>
