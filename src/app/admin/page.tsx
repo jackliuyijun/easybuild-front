@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { ShowcaseCarousel } from "./_components/showcase-carousel"
 
 export const metadata: Metadata = {
   title: "中后台管理系统 — Next.js 15 + React 19 企业级后台",
@@ -446,10 +447,7 @@ export default function AdminPage() {
           <div className="mx-auto w-full max-w-[1280px] px-6 md:px-8 xl:px-10">
             <div className="flex flex-col items-center gap-12">
               <SectionHeader tag="SHOWCASE" title="效果展示" desc="实际项目效果预览，眼见为实" />
-              <div className="flex h-[480px] w-full flex-col items-center justify-center gap-4 rounded-2xl border border-[#1F293780] bg-[#0D1117]">
-                <span className="font-display text-[28px] font-bold text-[#374151]">效果图占位区域</span>
-                <span className="text-[16px] text-[#4B5563]">此区域将放置实际项目的 UI 效果截图</span>
-              </div>
+              <ShowcaseCarousel />
             </div>
           </div>
         </section>
