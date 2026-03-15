@@ -61,31 +61,29 @@ export default function CacheRedisDocPage() {
     <artifactId>cache-redis</artifactId>
 </dependency>`}</CodeBlock>
               <TipBox>
-                版本由 EasyFK BOM（<InlineCode>com.mcst:easyfk-dependencies</InlineCode>）统一管理，无需手动指定版本号。
+                版本由 EasyFK BOM 统一管理，无需手动指定版本号。
               </TipBox>
-              <P><Strong>前置条件</Strong>：项目中需要已配置好 <InlineCode>db-redis</InlineCode> 的 Redis 数据源连接信息。</P>
 
               <H3>2.2 基础配置</H3>
-              <CodeBlock lang="yaml">{`# 1. 先配置 Redis 数据源（db-redis 组件）
+              <P>默认情况下，使用 Spring Boot 标准的 Redis 配置即可：</P>
+              <CodeBlock lang="yaml">{`# Spring Redis 标准配置
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: your-password
+      database: 0
+
+# cache-redis 缓存配置
 easyfk:
   config:
-    db:
+    cache:
       redis:
-        datasources:
-          default:
-            databases:
-              default:
-                host: 127.0.0.1
-                port: 6379
-                password: your-password
-                database: 0
-
-# 2. 配置 Redis 缓存（cache-redis 组件）
-  cache:
-    redisson:
-      datasource: default
-      database-name: default
-      time-to-live: 30m`}</CodeBlock>
+        time-to-live: 30m                  # 全局默认 TTL`}</CodeBlock>
+              <TipBox>
+                如需多数据源支持，可通过 <InlineCode>db-redis</InlineCode> 组件的自定义配置指定缓存使用的数据源，详见多数据源场景。
+              </TipBox>
 
               <H3>2.3 使用示例</H3>
               <H4>注解方式</H4>
@@ -115,9 +113,9 @@ public class UserService {
 
         // 缓存未命中，查询数据库
         user = userMapper.selectById(userId);
-
-        // 写入缓存，30 分钟过期
-        cacheService.cacheObject(key, user, Duration.ofMinutes(30), "user-ns");
+        if (user != null) {
+            cacheService.cacheObject(key, user, Duration.ofMinutes(30), "user-ns");
+        }
         return user;
     }
 }`}</CodeBlock>
@@ -126,7 +124,8 @@ public class UserService {
               <H2 id="sec-config">三、配置详解</H2>
 
               <H3>3.1 全局配置</H3>
-              <P>配置前缀：<InlineCode>easyfk.config.cache.redisson</InlineCode></P>
+              <P>配置前缀：<InlineCode>easyfk.config.cache.redis</InlineCode></P>
+              <P>对应属性类：<InlineCode>RedisCacheProperties</InlineCode></P>
               <DocTable
                 headers={["配置项", "类型", "默认值", "说明"]}
                 rows={[
@@ -150,17 +149,13 @@ public class UserService {
               <CodeBlock lang="yaml">{`easyfk:
   config:
     cache:
-      redisson:
-        datasource: default
-        database-name: default
+      redis:
         time-to-live: 30m
         caches:
           - cache-name: users
             time-to-live: 2h
           - cache-name: verify-code
             time-to-live: 5m
-          - cache-name: products
-            time-to-live: 30m
           - cache-name: dict
             time-to-live: 1d`}</CodeBlock>
               <H4>字段说明</H4>
@@ -172,35 +167,47 @@ public class UserService {
                 ]}
               />
 
-              <H3>3.3 配置优先级</H3>
-              <CodeBlock lang="plaintext">{`缓存空间级 TTL（caches 中的 time-to-live）
-        ↓ 未配置则使用
-全局默认 TTL（time-to-live）
-        ↓ 值为 0 表示
-永不过期`}</CodeBlock>
+              <H3>3.3 caches 配置与未配置的行为差异</H3>
+              <WarnBox>
+                <Strong>配置了 <InlineCode>caches</InlineCode> 列表时</Strong>：<InlineCode>RedisCacheManager</InlineCode> 仅对列表中声明的缓存空间应用自定义 TTL 和序列化配置。<Strong>未在列表中声明的缓存空间将使用 Spring Cache 的默认行为（无 TTL，允许缓存 null 值）</Strong>。
+              </WarnBox>
+              <TipBox>
+                <Strong>未配置 <InlineCode>caches</InlineCode> 时</Strong>：全局配置（包含 <InlineCode>time-to-live</InlineCode>、序列化器、禁止缓存 null 值）将通过 <InlineCode>cacheDefaults</InlineCode> 应用到所有缓存空间，并启用事务感知（<InlineCode>transactionAware</InlineCode>）。
+              </TipBox>
+              <P>如果需要让所有缓存空间都使用全局配置，<Strong>不要配置 <InlineCode>caches</InlineCode> 列表</Strong>，仅设置全局 <InlineCode>time-to-live</InlineCode> 即可。</P>
 
-              <H3>3.4 多数据源支持</H3>
-              <P><InlineCode>cache-redis</InlineCode> 可以指定使用 <InlineCode>db-redis</InlineCode> 中任意已配置的数据源和数据库：</P>
+              <H3>3.4 多数据源场景（进阶）</H3>
+              <P>默认情况下，使用 Spring Boot 标准 Redis 配置（<InlineCode>spring.data.redis.*</InlineCode>）即可，无需额外配置数据源。当需要多 Redis 数据源时，可通过 <InlineCode>db-redis</InlineCode> 组件管理多个数据源，并在 <InlineCode>cache-redis</InlineCode> 中通过 <InlineCode>datasource</InlineCode> + <InlineCode>database-name</InlineCode> 指定缓存使用哪个数据源和数据库：</P>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     db:
       redis:
-        datasources:
+        redis-serializer: FastJSON           # 序列化器，可选：DEFAULT / FastJSON / KRYO
+        default-data-source: default
+        datasource:
           default:
+            host: 127.0.0.1
+            port: 6379
+            password: your-password
+            database: 0
             databases:
-              default:
-                host: 127.0.0.1
-                port: 6379
-          cache-ds:
-            databases:
-              cache-db:
-                host: 192.168.1.100
-                port: 6379
-                database: 2
+              default: 0
+              cache-db: 1                    # 数据库别名 cache-db → 索引 1
+
     cache:
-      redisson:
-        datasource: cache-ds
-        database-name: cache-db`}</CodeBlock>
+      redis:
+        datasource: default                  # 指定使用 db-redis 中的数据源名称
+        database-name: cache-db              # 指定使用数据源中别名为 cache-db 的库（索引 1）
+        time-to-live: 30m
+        caches:
+          - cache-name: users
+            time-to-live: 2h
+          - cache-name: verify-code
+            time-to-live: 5m`}</CodeBlock>
+              <BulletList items={[
+                <><InlineCode>datasource</InlineCode> 和 <InlineCode>database-name</InlineCode> 的默认值均为 <InlineCode>default</InlineCode>，单数据源场景下无需配置</>,
+                <><InlineCode>database-name</InlineCode> 对应数据源配置中 <InlineCode>databases</InlineCode> Map 的 key（别名），而不是 Redis 数据库索引数字</>,
+              ]} />
               <TipBox>
                 <Strong>建议</Strong>：在生产环境中，如果缓存数据量大，建议使用独立的 Redis 实例，避免与业务数据争抢资源。
               </TipBox>
@@ -341,8 +348,8 @@ log.info("Token 剩余有效期: {} 秒", ttl);`}</CodeBlock>
               {/* ============== 六、注意事项 ============== */}
               <H2 id="sec-notes">六、注意事项</H2>
 
-              <H3>6.1 db-redis 组件是前置依赖</H3>
-              <P><InlineCode>cache-redis</InlineCode> 依赖 <InlineCode>db-redis</InlineCode> 组件的连接管理能力。<Strong>必须先正确配置 db-redis 的 Redis 数据源</Strong>，否则 <InlineCode>RedisCacheManager</InlineCode> 初始化会失败。</P>
+              <H3>6.1 Redis 连接配置</H3>
+              <P>默认情况下使用 Spring Boot 标准 Redis 配置（<InlineCode>spring.data.redis.*</InlineCode>）。如果需要多数据源，通过 <InlineCode>db-redis</InlineCode> 组件的自定义配置（<InlineCode>easyfk.config.db.redis</InlineCode>）管理，详见多数据源场景。</P>
 
               <H3>6.2 null 值不会被缓存</H3>
               <P>组件默认配置了 <InlineCode>disableCachingNullValues()</InlineCode>，这意味着：</P>
@@ -357,25 +364,30 @@ log.info("Token 剩余有效期: {} 秒", ttl);`}</CodeBlock>
               <CodeBlock lang="yaml">{`caches:
   - cache-name: users
     time-to-live: 2h`}</CodeBlock>
-              <P>如果使用了未在 <InlineCode>caches</InlineCode> 中定义的 <InlineCode>value</InlineCode>，该缓存空间将使用全局默认的 <InlineCode>time-to-live</InlineCode>。</P>
+              <WarnBox>
+                如果使用了未在 <InlineCode>caches</InlineCode> 中声明的缓存名称，该缓存空间将使用 <Strong>Spring Cache 的默认行为（无 TTL，允许缓存 null 值）</Strong>，而非全局 <InlineCode>time-to-live</InlineCode>。
+              </WarnBox>
 
-              <H3>6.4 注解方式与编程方式的 Key 隔离</H3>
+              <H3>6.4 注解方式与编程方式的 Key 格式不同</H3>
               <BulletList items={[
-                <><Strong>注解方式</Strong>：Key 格式为 <InlineCode>cacheName::key</InlineCode>（Spring Cache 默认），例如 <InlineCode>users::10001</InlineCode></>,
-                <><Strong>编程方式</Strong>：Key 格式取决于 <InlineCode>RedisArgsHelper</InlineCode> 的组装规则（含 <InlineCode>namespace</InlineCode> 前缀）</>,
+                <><Strong>注解方式</Strong>：Key 格式为 <InlineCode>cacheName::key</InlineCode>（Spring Cache 默认的 <InlineCode>::</InlineCode> 分隔）</>,
+                <><Strong>编程方式</Strong>：Key 格式为 <InlineCode>namespace::key</InlineCode>（由 <InlineCode>RedisUtil.wrapKey()</InlineCode> 拼接）</>,
               ]} />
               <WarnBox>
                 两种方式的 Key <Strong>不互通</Strong>，不要混用来读写同一个缓存数据。选择一种方式并保持统一。
               </WarnBox>
 
-              <H3>6.5 缓存对象的序列化</H3>
-              <BulletList items={[
-                "使用注解方式时，Value 序列化器跟随 db-redis 全局配置（如 JSON、JDK 等）",
-                <>使用编程方式时，序列化由 <InlineCode>RedisOptManager</InlineCode> 内部处理</>,
-                <><Strong>确保缓存对象可被配置的序列化器正确序列化/反序列化</Strong></>,
-                <>如果使用 JDK 序列化，对象必须实现 <InlineCode>Serializable</InlineCode></>,
-                "如果使用 JSON 序列化，对象必须有无参构造函数且字段有 getter/setter",
-              ]} />
+              <H3>6.5 序列化器配置</H3>
+              <P>Value 序列化器由 <InlineCode>db-redis</InlineCode> 的 <InlineCode>easyfk.config.db.redisson.redis-serializer</InlineCode> 全局控制，可选值为 <InlineCode>RedisValueSerializer</InlineCode> 枚举：</P>
+              <DocTable
+                headers={["值", "说明"]}
+                rows={[
+                  [<InlineCode>DEFAULT</InlineCode>, "默认序列化器（SmartRedisSerializer）"],
+                  [<InlineCode>FastJSON</InlineCode>, "FastJSON 序列化"],
+                  [<InlineCode>KRYO</InlineCode>, "Kryo 序列化"],
+                ]}
+              />
+              <P><Strong>确保缓存对象可被配置的序列化器正确序列化/反序列化。</Strong></P>
 
               <H3>6.6 缓存空间名称（cacheName）命名规范</H3>
               <P>建议使用<Strong>小写字母 + 短横线</Strong>的命名规范：</P>
@@ -450,7 +462,7 @@ public class CacheWarmer implements CommandLineRunner {
 
               <H3>Q1: 报错 No qualifying bean of type &lsquo;RedisConnectionManager&rsquo;</H3>
               <P>原因：未配置 <InlineCode>db-redis</InlineCode> 组件的 Redis 数据源。<InlineCode>cache-redis</InlineCode> 依赖 <InlineCode>db-redis</InlineCode> 提供连接管理。</P>
-              <P>解决：在 <InlineCode>application.yml</InlineCode> 中添加 <InlineCode>easyfk.config.db.redis.datasources</InlineCode> 配置。</P>
+              <P>解决：在 <InlineCode>application.yml</InlineCode> 中添加 <InlineCode>easyfk.config.db.redis.datasource</InlineCode> 配置。</P>
 
               <H3>Q2: @Cacheable 不生效？</H3>
               <P>常见原因：</P>

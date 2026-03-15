@@ -185,6 +185,12 @@ export const docMeta: Record<string, DocMetaItem> = {
       "EasyBuild Chronicle Queue 高性能持久化消息队列组件，基于内存映射文件，零 GC 压力，微秒级延迟。",
     keywords: ["Chronicle Queue", "消息队列", "高性能", "内存映射", "零GC"],
   },
+  "oss": {
+    title: "OSS 文件存储服务 easyfk-oss",
+    description:
+      "EasyBuild 统一文件存储服务，支持多种云存储平台、大文件分片上传、断点续传、秒传等功能。",
+    keywords: ["OSS", "文件存储", "分片上传", "断点续传", "MinIO", "对象存储"],
+  },
   "chronicle-map": {
     title: "Chronicle Map 堆外存储 easyfk-chronicle-map",
     description:

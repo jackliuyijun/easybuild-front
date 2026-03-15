@@ -52,9 +52,12 @@ export default function DbRedisDocPage() {
               <H3>3.1 配置模式</H3>
               <P>模块支持两种配置模式，通过 <InlineCode>enable-dynamic</InlineCode> 属性切换：</P>
 
-                            <DocTable
-                headers={["**简单模式**", "`false`（默认）", "使用 Spring Boot 默认 Redis 配置，适合单数据源场景"]}
-                rows={[]}
+              <DocTable
+                headers={["模式", "属性值", "说明"]}
+                rows={[
+                  ["简单模式", <InlineCode>false</InlineCode>, "使用 Spring Boot 默认 Redis 配置，适合单数据源场景"],
+                  ["动态模式", <InlineCode>true</InlineCode>, "支持多数据源、多数据库隔离配置，适合复杂业务场景"],
+                ]}
               />
 
               <H3>3.2 简单模式配置</H3>
@@ -70,16 +73,16 @@ export default function DbRedisDocPage() {
 easyfk:
   config:
     db:
-      redisson:
+      redis:
         enable-dynamic: false
         redis-serializer: DEFAULT`}</CodeBlock>
 
               <H3>3.3 动态多数据源配置</H3>
-              <P>动态模式下通过 <InlineCode>easyfk.config.db.redisson</InlineCode> 前缀进行配置：</P>
+              <P>动态模式下通过 <InlineCode>easyfk.config.db.redis</InlineCode> 前缀进行配置：</P>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     db:
-      redisson:
+      redis:
         enable-dynamic: true
         default-data-source: primary
         redis-serializer: DEFAULT
@@ -108,7 +111,7 @@ easyfk:
               <CodeBlock lang="yaml">{`easyfk:
   config:
     db:
-      redisson:
+      redis:
         enable-dynamic: true
         default-data-source: cluster
         datasource:
@@ -132,7 +135,7 @@ easyfk:
               <CodeBlock lang="yaml">{`easyfk:
   config:
     db:
-      redisson:
+      redis:
         enable-dynamic: true
         default-data-source: sentinel
         datasource:
@@ -150,36 +153,42 @@ easyfk:
               <H3>3.6 配置属性参考</H3>
               <H4>{'数据源配置（`datasource.{name}`）'}</H4>
 
-                            <DocTable
-                headers={["`host`", "String", "`localhost`", "Redis 服务器地址"]}
+              <DocTable
+                headers={["属性", "类型", "默认值", "说明"]}
                 rows={[
-                  ["`database`", "Integer", "`0`", "默认数据库索引（0-15）"],
-                  ["`databases`", "Map", "—", "多数据库配置（别名 → 索引），如 `cache: 1`"],
-                  ["`password`", "String", "—", "连接密码"],
-                  ["`timeout`", "Duration", "`2000ms`", "连接超时时间"],
-                  ["`ssl`", "Boolean", "`false`", "是否启用 SSL"],
+                  [<InlineCode>host</InlineCode>, "String", <InlineCode>localhost</InlineCode>, "Redis 服务器地址"],
+                  [<InlineCode>port</InlineCode>, "Integer", <InlineCode>6379</InlineCode>, "Redis 服务器端口"],
+                  [<InlineCode>database</InlineCode>, "Integer", <InlineCode>0</InlineCode>, "默认数据库索引（0-15）"],
+                  [<InlineCode>databases</InlineCode>, "Map", "—", "多数据库配置（别名 → 索引），如 cache: 1"],
+                  [<InlineCode>password</InlineCode>, "String", "—", "连接密码"],
+                  [<InlineCode>timeout</InlineCode>, "Duration", <InlineCode>2000ms</InlineCode>, "连接超时时间"],
+                  [<InlineCode>ssl</InlineCode>, "Boolean", <InlineCode>false</InlineCode>, "是否启用 SSL"],
                 ]}
               />
               <H4>{'连接池配置（`datasource.{name}.pool`）'}</H4>
 
-                            <DocTable
-                headers={["`max-active`", "Integer", "`32`", "最大连接数"]}
+              <DocTable
+                headers={["属性", "类型", "默认值", "说明"]}
                 rows={[
-                  ["`min-idle`", "Integer", "`4`", "最小空闲连接数"],
-                  ["`max-wait`", "Duration", "`1s`", "获取连接最大等待时间"],
-                  ["`test-on-borrow`", "Boolean", "`false`", "获取连接时是否验证"],
-                  ["`test-while-idle`", "Boolean", "`true`", "空闲时是否验证连接"],
-                  ["`time-between-eviction-runs`", "Duration", "`30s`", "空闲连接检测间隔"],
+                  [<InlineCode>max-active</InlineCode>, "Integer", <InlineCode>32</InlineCode>, "最大连接数"],
+                  [<InlineCode>max-idle</InlineCode>, "Integer", <InlineCode>16</InlineCode>, "最大空闲连接数"],
+                  [<InlineCode>min-idle</InlineCode>, "Integer", <InlineCode>4</InlineCode>, "最小空闲连接数"],
+                  [<InlineCode>max-wait</InlineCode>, "Duration", <InlineCode>1s</InlineCode>, "获取连接最大等待时间"],
+                  [<InlineCode>test-on-borrow</InlineCode>, "Boolean", <InlineCode>false</InlineCode>, "获取连接时是否验证"],
+                  [<InlineCode>test-while-idle</InlineCode>, "Boolean", <InlineCode>true</InlineCode>, "空闲时是否验证连接"],
+                  [<InlineCode>time-between-eviction-runs</InlineCode>, "Duration", <InlineCode>30s</InlineCode>, "空闲连接检测间隔"],
                 ]}
               />
 
               <H3>3.7 序列化器选择</H3>
               <P>通过 <InlineCode>redis-serializer</InlineCode> 配置序列化策略：</P>
 
-                            <DocTable
-                headers={["`DEFAULT`（或不配置）", "Jackson 序列化（含多态类型和 Java 8 时间支持）", "通用场景，可读性好"]}
+              <DocTable
+                headers={["值", "说明", "适用场景"]}
                 rows={[
-                  ["`KRYO`", "Kryo 高性能二进制序列化", "追求极致性能，不关心可读性"],
+                  [<InlineCode>DEFAULT</InlineCode>, "Jackson 序列化（含多态类型和 Java 8 时间支持）", "通用场景，可读性好"],
+                  [<InlineCode>FastJSON</InlineCode>, "Alibaba FastJSON2 序列化", "追求序列化速度"],
+                  [<InlineCode>KRYO</InlineCode>, "Kryo 高性能二进制序列化", "追求极致性能，不关心可读性"],
                 ]}
               />
               <P>&gt; 模块内置 <InlineCode>SmartRedisSerializer</InlineCode> 智能序列化器，自动检测数据格式（字符串/JSON/二进制），兼容历史数据。</P>
@@ -193,10 +202,12 @@ easyfk:
   └─ NamespaceArgs   — + 命名空间
       └─ KeyArgs     — + 键名`}</CodeBlock>
 
-                            <DocTable
-                headers={["`DsAndDbArgs`", "datasource, databaseName", "Pipeline、事务等不指定 key 的操作"]}
+              <DocTable
+                headers={["参数类型", "包含信息", "使用场景"]}
                 rows={[
-                  ["`KeyArgs`", "datasource, databaseName, namespace, key", "单键 K-V、Hash、List、Set、ZSet 操作"],
+                  [<InlineCode>DsAndDbArgs</InlineCode>, "datasource, databaseName", "Pipeline、事务等不指定 key 的操作"],
+                  [<InlineCode>NamespaceArgs</InlineCode>, "datasource, databaseName, namespace", "批量操作、事务、Lua 脚本等"],
+                  [<InlineCode>KeyArgs</InlineCode>, "datasource, databaseName, namespace, key", "单键 K-V、Hash、List、Set、ZSet 操作"],
                 ]}
               />
 
@@ -235,88 +246,100 @@ public class MyService {
 
               <H3>5.2 全局键操作</H3>
 
-                            <DocTable
-                headers={["`getKeys(pattern, args)`", "模式, KeyArgs", "`Set&lt;String&gt;`", "按模式匹配获取所有键"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`deleteKey(args)`", "KeyArgs", "`BaseResult&lt;?&gt;`", "删除键"],
-                  ["`expireKey(args, duration)`", "KeyArgs, Duration", "void", "设置过期时间"],
-                  ["`expireKeyAt(args, date)`", "KeyArgs, Date", "void", "设置在指定时间点过期"],
-                  ["`getKeyExpire(args)`", "KeyArgs", "`long`", "获取过期时间（秒）"],
-                  ["`autoId(args)`", "KeyArgs", "`Long`", "自动递增 ID"],
-                  ["`autoIdByExpire(args, duration)`", "KeyArgs, Duration", "`Long`", "带过期时间的自动递增 ID"],
+                  [<InlineCode>getKeys(pattern, args)</InlineCode>, "模式, KeyArgs", <InlineCode>{"Set<String>"}</InlineCode>, "按模式匹配获取所有键"],
+                  [<InlineCode>existKey(args)</InlineCode>, "KeyArgs", <InlineCode>boolean</InlineCode>, "检查键是否存在"],
+                  [<InlineCode>deleteKey(args)</InlineCode>, "KeyArgs", <InlineCode>{"BaseResult<?>"}</InlineCode>, "删除键"],
+                  [<InlineCode>expireKey(args, duration)</InlineCode>, "KeyArgs, Duration", <InlineCode>void</InlineCode>, "设置过期时间"],
+                  [<InlineCode>expireKeyAt(args, date)</InlineCode>, "KeyArgs, Date", <InlineCode>void</InlineCode>, "设置在指定时间点过期"],
+                  [<InlineCode>getKeyExpire(args)</InlineCode>, "KeyArgs", <InlineCode>long</InlineCode>, "获取过期时间（秒）"],
+                  [<InlineCode>autoId(args)</InlineCode>, "KeyArgs", <InlineCode>Long</InlineCode>, "自动递增 ID"],
+                  [<InlineCode>autoIdByExpire(args, duration)</InlineCode>, "KeyArgs, Duration", <InlineCode>Long</InlineCode>, "带过期时间的自动递增 ID"],
                 ]}
               />
 
               <H3>5.3 K-V 操作</H3>
 
-                            <DocTable
-                headers={["`putObject(args, value)`", "KeyArgs, Object", "`BaseResult&lt;?&gt;`", "存储对象"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`getObject(args)`", "KeyArgs", "`&lt;T&gt;`", "获取对象"],
-                  ["`multiSetForValue(map, args)`", "Map, NamespaceArgs", "`BaseResult&lt;?&gt;`", "批量设置"],
-                  ["`multiSetIfNotExistsForValue(map, args)`", "Map, NamespaceArgs", "`BaseResult&lt;?&gt;`", "批量设置（仅全部不存在时，原子操作）"],
-                  ["`multiGetForValue(keys, args)`", "List, NamespaceArgs", "`List&lt;T&gt;`", "批量获取"],
+                  [<InlineCode>putObject(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "存储对象"],
+                  [<InlineCode>putObject(args, value, duration)</InlineCode>, "KeyArgs, Object, Duration", <InlineCode>{"BaseResult<?>"}</InlineCode>, "存储对象并设过期时间"],
+                  [<InlineCode>getObject(args)</InlineCode>, "KeyArgs", <InlineCode>{"<T>"}</InlineCode>, "获取对象"],
+                  [<InlineCode>multiSetForValue(map, args)</InlineCode>, "Map, NamespaceArgs", <InlineCode>{"BaseResult<?>"}</InlineCode>, "批量设置"],
+                  [<InlineCode>multiSetIfNotExistsForValue(map, args)</InlineCode>, "Map, NamespaceArgs", <InlineCode>{"BaseResult<?>"}</InlineCode>, "批量设置（仅全部不存在时，原子操作）"],
+                  [<InlineCode>multiGetForValue(keys, args)</InlineCode>, "List, NamespaceArgs", <InlineCode>{"List<T>"}</InlineCode>, "批量获取"],
                 ]}
               />
 
               <H3>5.4 Hash 操作</H3>
 
-                            <DocTable
-                headers={["`putValueToHash(args, hashKey, obj)`", "KeyArgs, String, Object", "`BaseResult&lt;?&gt;`", "存储单个字段值"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`putMapToHash(args, map)`", "KeyArgs, Map", "`BaseResult&lt;?&gt;`", "将 Map 存储为 Hash"],
-                  ["`getValueFromHash(args, hashKey)`", "KeyArgs, String", "`&lt;T&gt;`", "获取单个字段值"],
-                  ["`getMapFromHash(args)`", "KeyArgs", "`Map&lt;String, Object&gt;`", "获取整个 Hash 为 Map"],
-                  ["`getObjectFromHash(args, clazz)`", "KeyArgs, Class", "`&lt;T&gt;`", "获取 Hash 并转为 Java 对象"],
-                  ["`getAllValuesFromHash(args)`", "KeyArgs", "`List&lt;Object&gt;`", "获取所有字段值"],
-                  ["`getValuesFromHash(args, hashKeys)`", "KeyArgs, List", "`List&lt;Object&gt;`", "批量获取指定字段值"],
-                  ["`getHashSize(args)`", "KeyArgs", "`Long`", "获取字段数量"],
-                  ["`existHashKey(args, hashKey)`", "KeyArgs, String", "`boolean`", "检查字段是否存在"],
-                  ["`deleteObjectFromHash(args, hashKeys...)`", "KeyArgs, String...", "`BaseResult&lt;?&gt;`", "删除指定字段"],
+                  [<InlineCode>putValueToHash(args, hashKey, obj)</InlineCode>, "KeyArgs, String, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "存储单个字段值"],
+                  [<InlineCode>putObjectToHash(args, obj)</InlineCode>, "KeyArgs, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "将 Java 对象存储为 Hash"],
+                  [<InlineCode>putMapToHash(args, map)</InlineCode>, "KeyArgs, Map", <InlineCode>{"BaseResult<?>"}</InlineCode>, "将 Map 存储为 Hash"],
+                  [<InlineCode>getValueFromHash(args, hashKey)</InlineCode>, "KeyArgs, String", <InlineCode>{"<T>"}</InlineCode>, "获取单个字段值"],
+                  [<InlineCode>getMapFromHash(args)</InlineCode>, "KeyArgs", <InlineCode>{"Map<String, Object>"}</InlineCode>, "获取整个 Hash 为 Map"],
+                  [<InlineCode>getObjectFromHash(args, clazz)</InlineCode>, "KeyArgs, Class", <InlineCode>{"<T>"}</InlineCode>, "获取 Hash 并转为 Java 对象"],
+                  [<InlineCode>getAllValuesFromHash(args)</InlineCode>, "KeyArgs", <InlineCode>{"List<Object>"}</InlineCode>, "获取所有字段值"],
+                  [<InlineCode>getValuesFromHash(args, hashKeys)</InlineCode>, "KeyArgs, List", <InlineCode>{"List<Object>"}</InlineCode>, "批量获取指定字段值"],
+                  [<InlineCode>getHashSize(args)</InlineCode>, "KeyArgs", <InlineCode>Long</InlineCode>, "获取字段数量"],
+                  [<InlineCode>existHashKey(args, hashKey)</InlineCode>, "KeyArgs, String", <InlineCode>boolean</InlineCode>, "检查字段是否存在"],
+                  [<InlineCode>deleteObjectFromHash(args, hashKeys...)</InlineCode>, "KeyArgs, String...", <InlineCode>{"BaseResult<?>"}</InlineCode>, "删除指定字段"],
                 ]}
               />
 
               <H3>5.5 List 操作</H3>
 
-                            <DocTable
-                headers={["`putObjectToList(args, value)`", "KeyArgs, Object", "`BaseResult&lt;?&gt;`", "尾部添加元素"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`putObjectToListAtIndex(args, value, index)`", "KeyArgs, Object, long", "`BaseResult&lt;?&gt;`", "指定索引位置设置"],
-                  ["`getObjectFromList(args, index)`", "KeyArgs, long", "`&lt;T&gt;`", "获取指定索引元素"],
-                  ["`getAllObjectFromList(args)`", "KeyArgs", "`List&lt;T&gt;`", "获取所有元素"],
-                  ["`getRangeFromList(args, start, end)`", "KeyArgs, long, long", "`List&lt;T&gt;`", "获取指定范围元素"],
-                  ["`getPageFromList(args, page, pageSize)`", "KeyArgs, int, int", "`List&lt;T&gt;`", "分页获取"],
-                  ["`getAndRemoveFirstObjectFromList(args)`", "KeyArgs", "`&lt;T&gt;`", "左端弹出"],
-                  ["`getAndRemoveLastObjectFromList(args)`", "KeyArgs", "`&lt;T&gt;`", "右端弹出"],
-                  ["`deleteObjectFromList(args, value)`", "KeyArgs, Object", "`BaseResult&lt;?&gt;`", "删除指定值元素"],
-                  ["`getListSize(args)`", "KeyArgs", "`Long`", "获取列表长度"],
+                  [<InlineCode>putObjectToList(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "尾部添加元素"],
+                  [<InlineCode>putObjectsToList(args, values)</InlineCode>, "KeyArgs, List", <InlineCode>{"BaseResult<?>"}</InlineCode>, "批量尾部添加"],
+                  [<InlineCode>putObjectToListAtIndex(args, value, index)</InlineCode>, "KeyArgs, Object, long", <InlineCode>{"BaseResult<?>"}</InlineCode>, "指定索引位置设置"],
+                  [<InlineCode>getObjectFromList(args, index)</InlineCode>, "KeyArgs, long", <InlineCode>{"<T>"}</InlineCode>, "获取指定索引元素"],
+                  [<InlineCode>getAllObjectFromList(args)</InlineCode>, "KeyArgs", <InlineCode>{"List<T>"}</InlineCode>, "获取所有元素"],
+                  [<InlineCode>getRangeFromList(args, start, end)</InlineCode>, "KeyArgs, long, long", <InlineCode>{"List<T>"}</InlineCode>, "获取指定范围元素"],
+                  [<InlineCode>getPageFromList(args, page, pageSize)</InlineCode>, "KeyArgs, int, int", <InlineCode>{"List<T>"}</InlineCode>, "分页获取"],
+                  [<InlineCode>getAndRemoveFirstObjectFromList(args)</InlineCode>, "KeyArgs", <InlineCode>{"<T>"}</InlineCode>, "左端弹出"],
+                  [<InlineCode>getAndRemoveLastObjectFromList(args)</InlineCode>, "KeyArgs", <InlineCode>{"<T>"}</InlineCode>, "右端弹出"],
+                  [<InlineCode>deleteObjectFromList(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "删除指定值元素"],
+                  [<InlineCode>getListSize(args)</InlineCode>, "KeyArgs", <InlineCode>Long</InlineCode>, "获取列表长度"],
                 ]}
               />
 
               <H3>5.6 Set 操作</H3>
 
-                            <DocTable
-                headers={["`putObjectToSet(args, value)`", "KeyArgs, Object", "`BaseResult&lt;?&gt;`", "添加元素"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`getAllObjectFromSet(args)`", "KeyArgs", "`Set&lt;T&gt;`", "获取所有元素"],
-                  ["`getSetSize(args)`", "KeyArgs", "`Long`", "获取元素数量"],
-                  ["`objectIsSetMember(args, value)`", "KeyArgs, Object", "`Boolean`", "检查元素是否存在"],
-                  ["`deleteObjectFromSet(args, value...)`", "KeyArgs, Object...", "`BaseResult&lt;?&gt;`", "删除指定元素"],
+                  [<InlineCode>putObjectToSet(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>{"BaseResult<?>"}</InlineCode>, "添加元素"],
+                  [<InlineCode>putObjectsToSet(args, values)</InlineCode>, "KeyArgs, Set", <InlineCode>{"BaseResult<?>"}</InlineCode>, "批量添加"],
+                  [<InlineCode>getAllObjectFromSet(args)</InlineCode>, "KeyArgs", <InlineCode>{"Set<T>"}</InlineCode>, "获取所有元素"],
+                  [<InlineCode>getSetSize(args)</InlineCode>, "KeyArgs", <InlineCode>Long</InlineCode>, "获取元素数量"],
+                  [<InlineCode>objectIsSetMember(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>Boolean</InlineCode>, "检查元素是否存在"],
+                  [<InlineCode>deleteObjectFromSet(args, value...)</InlineCode>, "KeyArgs, Object...", <InlineCode>{"BaseResult<?>"}</InlineCode>, "删除指定元素"],
                 ]}
               />
 
               <H3>5.7 ZSet（有序集合）操作</H3>
 
-                            <DocTable
-                headers={["`putObjectToZSet(args, value, score)`", "KeyArgs, Object, double", "`BaseResult&lt;?&gt;`", "添加带分数的元素"]}
+              <DocTable
+                headers={["方法", "参数", "返回值", "说明"]}
                 rows={[
-                  ["`getAllObjectFromZSet(args)`", "KeyArgs", "`Set&lt;T&gt;`", "获取所有元素（分数升序）"],
-                  ["`getZSetSize(args)`", "KeyArgs", "`Long`", "获取元素数量"],
-                  ["`objectIsZSetMember(args, value)`", "KeyArgs, Object", "`Boolean`", "检查元素是否存在"],
-                  ["`getPageFromZSet(args, page, pageSize)`", "KeyArgs, int, int", "`Set&lt;T&gt;`", "分页获取"],
-                  ["`getRangeFromZSet(args, min, max)`", "KeyArgs, double, double", "`Set&lt;T&gt;`", "按分数范围获取"],
-                  ["`getRangeFromZSet(args, min, max, page, pageSize)`", "KeyArgs, double, double, int, int", "`Set&lt;T&gt;`", "分数范围+分页获取"],
-                  ["`deleteObjectFromZSet(args, value...)`", "KeyArgs, Object...", "`BaseResult&lt;?&gt;`", "删除指定元素"],
+                  [<InlineCode>putObjectToZSet(args, value, score)</InlineCode>, "KeyArgs, Object, double", <InlineCode>{"BaseResult<?>"}</InlineCode>, "添加带分数的元素"],
+                  [<InlineCode>{"putObjectsToZSet(args, values)"}</InlineCode>, "KeyArgs, Set<TypedTuple>", <InlineCode>{"BaseResult<?>"}</InlineCode>, "批量添加"],
+                  [<InlineCode>getAllObjectFromZSet(args)</InlineCode>, "KeyArgs", <InlineCode>{"Set<T>"}</InlineCode>, "获取所有元素（分数升序）"],
+                  [<InlineCode>getZSetSize(args)</InlineCode>, "KeyArgs", <InlineCode>Long</InlineCode>, "获取元素数量"],
+                  [<InlineCode>objectIsZSetMember(args, value)</InlineCode>, "KeyArgs, Object", <InlineCode>Boolean</InlineCode>, "检查元素是否存在"],
+                  [<InlineCode>getPageFromZSet(args, page, pageSize)</InlineCode>, "KeyArgs, int, int", <InlineCode>{"Set<T>"}</InlineCode>, "分页获取"],
+                  [<InlineCode>getRangeFromZSet(args, min, max)</InlineCode>, "KeyArgs, double, double", <InlineCode>{"Set<T>"}</InlineCode>, "按分数范围获取"],
+                  [<InlineCode>getRangeFromZSet(args, min, max, page, pageSize)</InlineCode>, "KeyArgs, double, double, int, int", <InlineCode>{"Set<T>"}</InlineCode>, "分数范围+分页获取"],
+                  [<InlineCode>deleteObjectFromZSet(args, value...)</InlineCode>, "KeyArgs, Object...", <InlineCode>{"BaseResult<?>"}</InlineCode>, "删除指定元素"],
                 ]}
               />
 
@@ -413,22 +436,26 @@ publishSubscribe.punsubscribe("order:*");`}</CodeBlock>
               <H3>6.4 消息重试机制</H3>
               <P>发布订阅内置消息重试机制，支持指数退避策略：</P>
 
-                            <DocTable
-                headers={["`enabled`", "`true`", "是否启用重试"]}
+              <DocTable
+                headers={["配置项", "默认值", "说明"]}
                 rows={[
-                  ["`initialDelay`", "`1s`", "初始重试间隔"],
-                  ["`maxDelay`", "`60s`", "最大重试间隔"],
-                  ["`multiplier`", "`2.0`", "间隔倍数（指数退避）"],
-                  ["`queueSize`", "`1000`", "重试队列大小"],
-                  ["`deadLetterQueueSize`", "`100`", "死信队列大小"],
+                  [<InlineCode>enabled</InlineCode>, <InlineCode>true</InlineCode>, "是否启用重试"],
+                  [<InlineCode>maxRetries</InlineCode>, <InlineCode>3</InlineCode>, "最大重试次数"],
+                  [<InlineCode>initialDelay</InlineCode>, <InlineCode>1s</InlineCode>, "初始重试间隔"],
+                  [<InlineCode>maxDelay</InlineCode>, <InlineCode>60s</InlineCode>, "最大重试间隔"],
+                  [<InlineCode>multiplier</InlineCode>, <InlineCode>2.0</InlineCode>, "间隔倍数（指数退避）"],
+                  [<InlineCode>queueSize</InlineCode>, <InlineCode>1000</InlineCode>, "重试队列大小"],
+                  [<InlineCode>deadLetterQueueSize</InlineCode>, <InlineCode>100</InlineCode>, "死信队列大小"],
                 ]}
               />
               <P>内置三种预设配置：</P>
 
-                            <DocTable
-                headers={["`RetryConfig.defaultConfig()`", "默认配置"]}
+              <DocTable
+                headers={["配置", "说明"]}
                 rows={[
-                  ["`RetryConfig.fastFailConfig()`", "快速失败（1 次重试，100ms）"],
+                  [<InlineCode>RetryConfig.defaultConfig()</InlineCode>, "默认配置"],
+                  [<InlineCode>RetryConfig.highReliabilityConfig()</InlineCode>, "高可靠性（5 次重试，500ms 起步，4 线程）"],
+                  [<InlineCode>RetryConfig.fastFailConfig()</InlineCode>, "快速失败（1 次重试，100ms）"],
                 ]}
               />
 
@@ -529,11 +556,13 @@ redisOptManager.executeLuaScript(
               {/* ============== 8. 自动配置机制 ============== */}
               <H2 id="sec-7">8. 自动配置机制</H2>
 
-                            <DocTable
-                headers={["`RedisDbConfig`", "—", "自动配置入口，注册 `RedisConnectionManager`、`RedisOptManager`、`RedisArgsHelper`"]}
+              <DocTable
+                headers={["配置类", "条件", "说明"]}
                 rows={[
-                  ["`SimpleRedisConfig`", "`enable-dynamic = false`", "简单模式，使用 Spring Boot 默认配置"],
-                  ["`PubSubConfig`", "—", "发布订阅基础设施和重试机制配置"],
+                  [<InlineCode>RedisDbConfig</InlineCode>, "—", "自动配置入口，注册 RedisConnectionManager、RedisOptManager、RedisArgsHelper"],
+                  [<InlineCode>DynamicRedisConfig</InlineCode>, <InlineCode>enable-dynamic = true</InlineCode>, "动态多数据源模式配置"],
+                  [<InlineCode>SimpleRedisConfig</InlineCode>, <InlineCode>enable-dynamic = false</InlineCode>, "简单模式，使用 Spring Boot 默认配置"],
+                  [<InlineCode>PubSubConfig</InlineCode>, "—", "发布订阅基础设施和重试机制配置"],
                 ]}
               />
               <BulletList items={["通过 Spring Boot `AutoConfiguration.imports` 声明自动配置入口", "动态模式下自动阻止 Spring Boot 默认 Redis 自动配置，避免数据源冲突", "简单模式下复用 Spring Boot 默认 `RedisConnectionFactory`，应用自定义序列化策略"]} />
@@ -586,7 +615,7 @@ redisOptManager.executeLuaScript(
 
               {/* ============== 10. 最佳实践 ============== */}
               <H2 id="sec-9">10. 最佳实践</H2>
-              <P>1. <Strong>合理选择配置模式</Strong>：单数据源用简单模式，多数据源/多数据库用动态模式。动态模式下不要配置 <InlineCode>spring.data.redis.*</InlineCode>，统一使用 <InlineCode>easyfk.config.db.redisson.datasource.*</InlineCode>。</P>
+              <P>1. <Strong>合理选择配置模式</Strong>：单数据源用简单模式，多数据源/多数据库用动态模式。动态模式下不要配置 <InlineCode>spring.data.redis.*</InlineCode>，统一使用 <InlineCode>easyfk.config.db.redis.datasource.*</InlineCode>。</P>
               <P>2. <Strong>使用命名空间隔离 key</Strong>：不同业务模块使用不同的 namespace，避免 key 冲突。</P>
               <P>3. <Strong>选择合适的序列化器</Strong>：通用场景用 Jackson（DEFAULT），追求速度用 FastJSON，追求极致性能用 KRYO。</P>
               <P>4. <Strong>善用批量操作</Strong>：<InlineCode>multiSet</InlineCode>/<InlineCode>multiGet</InlineCode> 和 Pipeline 大幅减少网络往返，提升吞吐。</P>

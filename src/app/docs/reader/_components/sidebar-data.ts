@@ -13,6 +13,7 @@ export const sidebarSections: SidebarSection[] = [
   { title: "缓存组件", items: [{ label: "Caffeine 缓存", href: "/docs/reader/cache-caffeine" },{ label: "Redis 缓存", href: "/docs/reader/cache-redis" },{ label: "多级缓存", href: "/docs/reader/cache-mult" }]},
   { title: "消息队列", items: [{ label: "RocketMQ", href: "/docs/reader/mq-rocket" },{ label: "RabbitMQ", href: "/docs/reader/mq-rabbit" },{ label: "Kafka", href: "/docs/reader/mq-kafka" }]},
   { title: "RPC 远程调用", items: [{ label: "Dubbo", href: "/docs/reader/rpc-dubbo" },{ label: "Spring Cloud", href: "/docs/reader/rpc-cloud" }]},
+  { title: "存储", items: [{ label: "OSS 文件存储", href: "/docs/reader/oss" }]},
   { title: "分布式锁", items: [{ label: "Redisson 分布式锁", href: "/docs/reader/lock-redisson" }]},
   { title: "高性能组件", items: [{ label: "线程池", href: "/docs/reader/thread" },{ label: "Disruptor", href: "/docs/reader/disruptor" },{ label: "Fory 序列化", href: "/docs/reader/fory" },{ label: "Chronicle Map", href: "/docs/reader/chronicle-map" },{ label: "Chronicle Queue", href: "/docs/reader/chronicle-queue" }]},
 ]
