@@ -17,6 +17,13 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    files: ["src/app/docs/reader/**/_content.tsx"],
+    rules: {
+      "react/jsx-key": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;
