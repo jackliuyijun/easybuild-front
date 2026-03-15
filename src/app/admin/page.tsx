@@ -350,7 +350,6 @@ export default function AdminPage() {
             </div>
           </div>
         </section>
-
         {/* Component System */}
         <section className={`${gradientBg} px-0 py-16`}>
           <div className="mx-auto w-full max-w-[1280px] px-6 md:px-8 xl:px-10">
