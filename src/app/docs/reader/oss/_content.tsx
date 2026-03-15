@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 
 import { DocLayout } from "../_components/doc-layout"
-import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong } from "../_components/doc-components"
+import { CodeBlock, DocTable, H2, H3, H4, P, BulletList, NumberList, InlineCode } from "../_components/doc-components"
 
 const outlineItems = [
   { id: "sec-intro", label: "项目介绍" },
