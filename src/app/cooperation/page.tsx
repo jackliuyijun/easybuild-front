@@ -9,6 +9,36 @@ export const metadata: Metadata = {
   title: "合作咨询 — 商业授权与技术服务",
   description:
     "EasyBuild 提供商业源码授权、项目外包开发、技术顾问驻场、企业内训等多种合作模式，灵活长期保障，助力团队快速交付。",
+  keywords: [
+    "EasyBuild合作",
+    "商业源码授权",
+    "Java外包开发",
+    "技术顾问",
+    "兼职CTO",
+    "企业内训",
+    "AI私有化部署",
+    "MVP定制开发",
+    "渠道分销",
+    "技术合伙人",
+  ],
+  alternates: {
+    canonical: "/cooperation",
+  },
+  openGraph: {
+    title: "合作咨询 — 商业授权与技术服务 | EasyBuild 易构",
+    description:
+      "EasyBuild 提供商业源码授权、MVP 极速定制开发、兼职 CTO、AI 私有化部署等多种合作模式，助力团队快速交付。",
+    url: "/cooperation",
+    type: "website",
+    locale: "zh_CN",
+    siteName: "EasyBuild 易构",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "合作咨询 — 商业授权与技术服务 | EasyBuild 易构",
+    description:
+      "EasyBuild 提供商业源码授权、MVP 极速定制开发、兼职 CTO、AI 私有化部署等多种合作模式，助力团队快速交付。",
+  },
 }
 
 const heroStats = [
@@ -156,14 +186,60 @@ const steps = [
   { num: "03", color: "#A78BFA", title: "保障服务", desc: "负责到底，后顾无忧" },
 ]
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      name: "合作咨询 — 商业授权与技术服务",
+      description:
+        "EasyBuild 提供商业源码授权、项目外包开发、技术顾问驻场、企业内训等多种合作模式，灵活长期保障，助力团队快速交付。",
+      url: "https://easybuild.pro/cooperation",
+      isPartOf: { "@type": "WebSite", name: "EasyBuild 易构", url: "https://easybuild.pro" },
+    },
+    {
+      "@type": "Service",
+      name: "商业源码授权",
+      description: "100% 源码交付，含后端 EasyFK、前端 Admin、代码生成器、业务模块，签订正规授权合同，允许无限次商业使用。",
+      provider: { "@type": "Organization", name: "EasyBuild" },
+      serviceType: "商业源码授权",
+    },
+    {
+      "@type": "Service",
+      name: "MVP 极速定制开发",
+      description: "基于 EasyBuild 底座，节省 80% 重复开发时间，Web 后台 + 小程序 + APP 一站式打通。",
+      provider: { "@type": "Organization", name: "EasyBuild" },
+      serviceType: "软件定制开发",
+    },
+    {
+      "@type": "Service",
+      name: "兼职 CTO / 架构顾问",
+      description: "架构设计与评审、代码审计、疑难杂症攻坚、团队面试，1/5 成本雇佣十年大厂级架构师。",
+      provider: { "@type": "Organization", name: "EasyBuild" },
+      serviceType: "技术顾问",
+    },
+    {
+      "@type": "Service",
+      name: "AI 项目落地与私有化部署",
+      description: "企业 AI 私有部署、知识库搭建、智能客服系统，让 AI 能力真正服务于业务场景。",
+      provider: { "@type": "Organization", name: "EasyBuild" },
+      serviceType: "AI 私有化部署",
+    },
+  ],
+}
+
 export default function CooperationPage() {
   return (
     <div className="relative isolate min-h-screen bg-[#0B0C0E] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(0,255,136,0.08),transparent_28%),radial-gradient(circle_at_80%_20%,rgba(254,188,46,0.08),transparent_20%),linear-gradient(180deg,#0b0c0e_0%,#0b0c0e_100%)]" />
       <SiteHeader />
 
       <main className="relative">
-        <section className="pt-[120px] pb-[100px]">
+        <section aria-label="合作咨询介绍" className="pt-[120px] pb-[100px]">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-10 text-center">
               <div className="flex flex-col items-center gap-5">
@@ -191,7 +267,7 @@ export default function CooperationPage() {
           </div>
         </section>
 
-        <section style={{ background: "linear-gradient(180deg, #0B0C0E 0%, #0D1117 50%, #0B0C0E 100%)" }} className="pb-16">
+        <section aria-label="核心产品与服务" style={{ background: "linear-gradient(180deg, #0B0C0E 0%, #0D1117 50%, #0B0C0E 100%)" }} className="pb-16">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-10">
               <div className="flex flex-col items-center gap-2 text-center">
@@ -258,7 +334,7 @@ export default function CooperationPage() {
           </div>
         </section>
 
-        <section className="bg-[#0B0C0E] py-16">
+        <section aria-label="生态合作与专业服务" className="bg-[#0B0C0E] py-16">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-10">
               <div className="flex flex-col items-center gap-2 text-center">
@@ -387,7 +463,7 @@ export default function CooperationPage() {
           </div>
         </section>
 
-        <section style={{ background: "linear-gradient(180deg, #0B0C0E 0%, #0D1117 50%, #0B0C0E 100%)" }} className="py-16">
+        <section aria-label="合作流程" style={{ background: "linear-gradient(180deg, #0B0C0E 0%, #0D1117 50%, #0B0C0E 100%)" }} className="py-16">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-12">
               <div className="flex flex-col items-center gap-2 text-center">
@@ -425,7 +501,7 @@ export default function CooperationPage() {
           </div>
         </section>
 
-        <section id="contact" className="py-20">
+        <section id="contact" aria-label="联系我们" className="py-20">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-10">
               <div className="flex flex-col items-center gap-3 text-center">
