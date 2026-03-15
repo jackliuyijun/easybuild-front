@@ -263,12 +263,12 @@ export const footerMeta = {
   copyright: "© 2026 EasyBuild. All rights reserved.",
   primaryCta: {
     label: "立即体验",
-    href: "#home",
+    href: "/docs/reader/dev-env",
     icon: Rocket,
   },
   secondaryCta: {
     label: "合作咨询",
-    href: "#footer",
+    href: "/cooperation",
     icon: Phone,
   },
 }

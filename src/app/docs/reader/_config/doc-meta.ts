@@ -197,4 +197,10 @@ export const docMeta: Record<string, DocMetaItem> = {
       "EasyBuild Chronicle Map 堆外高性能键值存储模块，零 GC 压力，适用于超大数据集缓存。",
     keywords: ["Chronicle Map", "堆外存储", "零GC", "高性能缓存"],
   },
+  "admin": {
+    title: "EasyBuild Admin 中后台开发文档",
+    description:
+      "EasyBuild Admin (易构) 中后台前端项目开发文档，涵盖架构设计、技术栈选型、开发规范及核心逻辑实现细节。",
+    keywords: ["EasyBuild Admin", "中后台", "Next.js", "React", "Shadcn/ui", "前端脚手架"],
+  },
 }

@@ -409,7 +409,7 @@ export default function ModulesPage() {
                   查看技术文档
                 </Link>
                 <Link
-                  href="#"
+                  href="/cooperation"
                   className="inline-flex items-center justify-center rounded-lg border border-[#374151] px-8 py-3.5 text-[16px] font-medium text-white transition-colors hover:bg-white/[0.06]"
                 >
                   合作咨询

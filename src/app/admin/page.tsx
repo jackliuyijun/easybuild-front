@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { BookOpen, Phone } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -495,10 +496,12 @@ export default function AdminPage() {
                 新模块开发从&ldquo;一周&rdquo;缩短到&ldquo;一天&rdquo;，让团队把时间花在真正的业务创新上
               </p>
               <div className="flex gap-4 pt-4">
-                <Link href="#" className="inline-flex items-center justify-center rounded-lg bg-[#00FF88] px-8 py-3.5 text-[16px] font-semibold text-[#0B0C0E] transition-colors hover:bg-[#3aff9f]">
+                <Link href="/docs/reader/admin" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#00FF88] px-8 py-3.5 text-[16px] font-semibold text-[#0B0C0E] transition-colors hover:bg-[#3aff9f]">
+                  <BookOpen className="size-4" />
                   查看技术文档
                 </Link>
-                <Link href="#" className="inline-flex items-center justify-center rounded-lg border border-[#374151] px-8 py-3.5 text-[16px] font-medium text-white transition-colors hover:bg-white/[0.06]">
+                <Link href="/cooperation" className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#374151] px-8 py-3.5 text-[16px] font-medium text-white transition-colors hover:bg-white/[0.06]">
+                  <Phone className="size-4" />
                   合作咨询
                 </Link>
               </div>

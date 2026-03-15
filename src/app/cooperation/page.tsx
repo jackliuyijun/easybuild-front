@@ -216,19 +216,21 @@ export default function CooperationPage() {
                         </div>
                       </div>
                       {c.btnStyle === "filled" ? (
-                        <div
+                        <a
+                          href="#contact"
                           className="flex h-11 w-full items-center justify-center rounded-lg text-[14px] font-semibold text-[#0B0C0E]"
                           style={{ backgroundColor: c.btnColor }}
                         >
                           {c.btnText}
-                        </div>
+                        </a>
                       ) : (
-                        <div
+                        <a
+                          href="#contact"
                           className="flex h-11 w-full items-center justify-center rounded-lg text-[14px] font-semibold"
                           style={{ color: c.btnColor, border: `1px solid ${c.btnColor}` }}
                         >
                           {c.btnText}
-                        </div>
+                        </a>
                       )}
                     </div>
                   )
@@ -293,12 +295,13 @@ export default function CooperationPage() {
                           </div>
                         </div>
 
-                        <div
+                        <a
+                          href="#contact"
                           className="flex h-10 w-full shrink-0 items-center justify-center rounded-lg text-[13px] font-semibold"
                           style={{ color: c.btnColor, border: `1px solid ${c.btnColor}` }}
                         >
                           {c.btnText}
-                        </div>
+                        </a>
                       </div>
                     </div>
                   )
@@ -346,7 +349,7 @@ export default function CooperationPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section id="contact" className="py-20">
           <div className="mx-auto w-full max-w-[1440px] px-6 md:px-20">
             <div className="flex flex-col items-center gap-10">
               <div className="flex flex-col items-center gap-3 text-center">

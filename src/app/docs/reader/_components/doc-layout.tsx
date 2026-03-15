@@ -7,7 +7,7 @@ import { Search, ArrowDown, ArrowUp } from "lucide-react"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import { tabs, sidebarSections } from "./sidebar-data"
+import { tabs, tabSidebarSections } from "./sidebar-data"
 
 export type OutlineItem = { id: string; label: string }
 
@@ -22,7 +22,14 @@ interface DocLayoutProps {
 
 export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTime, children }: DocLayoutProps) {
   const pathname = usePathname()
-  const [activeTab, setActiveTab] = useState(0)
+  const resolveTab = () => {
+    for (let i = 0; i < tabs.length; i++) {
+      const sections = tabSidebarSections[tabs[i]] ?? []
+      if (sections.some(s => s.items.some(item => item.href === pathname))) return i
+    }
+    return 0
+  }
+  const [activeTab, setActiveTab] = useState(resolveTab)
   const [atTop, setAtTop] = useState(true)
   const [atBottom, setAtBottom] = useState(false)
   const [activeSection, setActiveSection] = useState(outlineItems[0]?.id ?? "")
@@ -83,7 +90,7 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
         <div className="flex items-center gap-2 text-[13px] text-[#525252]">
           <span>文档</span>
           <span>/</span>
-          <span>后端</span>
+          <span>{tabs[activeTab]}</span>
           <span>/</span>
           <span className="font-medium text-[#9CA3AF]">{breadcrumb}</span>
         </div>
@@ -120,7 +127,7 @@ export function DocLayout({ outlineItems, breadcrumb, title, subtitle, readingTi
           </div>
           <ScrollArea className="h-[calc(100vh-56px-40px)]">
             <nav className="flex flex-col gap-0.5 py-4">
-              {sidebarSections.map((section, si) => (
+              {(tabSidebarSections[tabs[activeTab]] ?? []).map((section, si) => (
                 <div key={si}>
                   {section.title && (
                     <div className="flex h-9 items-center px-4">

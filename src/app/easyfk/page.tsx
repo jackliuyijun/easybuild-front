@@ -233,13 +233,13 @@ export default function EasyFkPage() {
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button asChild size="lg" className="h-auto border-0 bg-[#00FF88] px-8 py-3.5 text-[#0B0C0E] hover:bg-[#31ff9d]">
-                  <a href="#core-framework">
+                  <a href="/docs/reader/dev-env">
                     <Rocket className="size-4" />
                     快速开始
                   </a>
                 </Button>
                 <Button asChild size="lg" className="h-auto border border-white/20 bg-white/[0.08] px-8 py-3.5 text-white hover:bg-white/[0.12]">
-                  <a href="#get-started">
+                  <a href="/docs/reader/dev-env">
                     <BookOpen className="size-4" />
                     查看文档
                   </a>
@@ -563,10 +563,16 @@ export default function EasyFkPage() {
               </p>
               <div className="flex flex-col gap-4 pt-4 sm:flex-row">
                 <Button asChild size="lg" className="h-auto border-0 bg-[#00FF88] px-8 py-3.5 text-[#0B0C0E] hover:bg-[#31ff9d]">
-                  <a href="#core-framework">快速开始</a>
+                  <a href="/docs/reader/dev-env">
+                    <Rocket className="size-4" />
+                    快速开始
+                  </a>
                 </Button>
                 <Button asChild size="lg" className="h-auto border border-[#374151] bg-transparent px-8 py-3.5 text-[#D1D5DB] hover:bg-white/[0.04]">
-                  <a href="#get-started">查看文档</a>
+                  <a href="/docs/reader/dev-env">
+                    <BookOpen className="size-4" />
+                    查看文档
+                  </a>
                 </Button>
               </div>
             </div>
