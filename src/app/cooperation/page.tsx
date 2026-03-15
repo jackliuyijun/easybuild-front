@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { GraduationCap, Handshake, Package, Rocket, UserCog, Users } from "lucide-react"
+import { Brain, GraduationCap, Handshake, Package, Rocket, UserCog, Users } from "lucide-react"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -34,7 +34,7 @@ const coreCards = [
       { emoji: "🛡️", text: "专属社群：加入 VIP 开发者群，优先技术支持" },
     ],
     targets: ["软件外包", "企业 IT", "独立开发者"],
-    btnText: "查看定价方案",
+    btnText: "立即咨询",
     btnStyle: "filled" as const,
     btnColor: "#00FF88",
   },
@@ -112,6 +112,24 @@ const ecoCards = [
     targets: ["购买源码的团队", "提升技术氛围"],
     btnText: "预约沟通",
     btnColor: "#F472B6",
+  },
+  {
+    icon: Brain,
+    iconColor: "#10B981",
+    title: "AI 项目落地与私有化部署",
+    slogan: "让 AI 能力真正服务于你的业务场景",
+    sloganColor: "#10B98190",
+    border: "#10B98125",
+    highlight: { emoji: "🤖", text: "企业级 AI 私有化，数据不出门", color: "#10B981", bg: "#10B9810A", border: "#10B98120", fontSize: 14 },
+    items: [
+      { emoji: "🧠", text: "企业 AI 私有部署：大模型本地化部署，数据安全可控" },
+      { emoji: "📚", text: "知识库搭建：企业文档智能检索与 AI 问答系统" },
+      { emoji: "💬", text: "智能客服系统：7×24 AI 自动应答，人机无缝协同" },
+      { emoji: "🦞", text: "\u201C小龙虾\u201D本地安装：AI 开发工具链一键私有化部署" },
+    ],
+    targets: ["需要AI赋能的企业", "数字化转型团队"],
+    btnText: "咨询AI方案",
+    btnColor: "#10B981",
   },
   {
     icon: Users,
@@ -248,8 +266,8 @@ export default function CooperationPage() {
                 <h2 className="font-display text-[36px] font-bold tracking-[-1px] text-white">生态合作与专业服务</h2>
               </div>
 
-              <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-                {ecoCards.map((c) => {
+              <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {ecoCards.slice(0, 3).map((c) => {
                   const Icon = c.icon
                   return (
                     <div
@@ -303,6 +321,64 @@ export default function CooperationPage() {
                           {c.btnText}
                         </a>
                       </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+                {ecoCards.slice(3).map((c) => {
+                  const Icon = c.icon
+                  return (
+                    <div
+                      key={c.title}
+                      className="flex min-h-[460px] flex-col gap-5 rounded-2xl bg-white/[0.024] p-8"
+                      style={{ border: `1px solid ${c.border}` }}
+                    >
+                      <div className="flex size-10 items-center justify-center">
+                        <Icon size={40} style={{ color: c.iconColor }} />
+                      </div>
+                      <h3 className="font-display text-[24px] font-bold text-white">{c.title}</h3>
+                      <p className="text-[14px] font-medium italic" style={{ color: c.sloganColor }}>{c.slogan}</p>
+
+                      {c.highlight && (
+                        <div
+                          className="flex w-full items-center justify-center rounded-lg px-4 py-3"
+                          style={{ backgroundColor: c.highlight.bg, border: `1px solid ${c.highlight.border}` }}
+                        >
+                          <span className="font-display font-bold" style={{ color: c.highlight.color, fontSize: c.highlight.fontSize }}>
+                            {c.highlight.emoji} {c.highlight.text}
+                          </span>
+                        </div>
+                      )}
+
+                      <div className="h-px w-full bg-[#1F2937]" />
+
+                      <div className="flex flex-1 flex-col gap-3">
+                        {c.items.map((item) => (
+                          <div key={item.text} className="flex gap-2.5">
+                            <span className="shrink-0 text-[14px]">{item.emoji}</span>
+                            <span className="text-[13px] leading-[1.6] text-[#9CA3AF]">{item.text}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-[12px] text-[#525252]">适合：</span>
+                        <div className="flex items-center gap-2">
+                          {c.targets.map((t) => (
+                            <span key={t} className="rounded bg-white/[0.03] px-2 py-[3px] text-[11px] text-[#737373]">{t}</span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <a
+                        href="#contact"
+                        className="flex h-11 w-full items-center justify-center rounded-lg text-[14px] font-semibold"
+                        style={{ color: c.btnColor, border: `1px solid ${c.btnColor}` }}
+                      >
+                        {c.btnText}
+                      </a>
                     </div>
                   )
                 })}
