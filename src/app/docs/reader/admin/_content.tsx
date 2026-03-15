@@ -1,7 +1,7 @@
 "use client"
 
 import { DocLayout } from "../_components/doc-layout"
-import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong, Highlight } from "../_components/doc-components"
+import { CodeBlock, DocTable, TipBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong } from "../_components/doc-components"
 
 const outlineItems = [
   { id: "sec-intro", label: "项目简介" },
@@ -49,7 +49,7 @@ export default function AdminDocContent() {
       <P>
         按提示依次输入项目描述、选择包管理器即可完成创建。也可以通过参数跳过交互，直接创建：
       </P>
-      <CodeBlock lang="bash">npx easybuild-admin my-project -d "我的管理后台" --pm yarn</CodeBlock>
+      <CodeBlock lang="bash">{`npx easybuild-admin my-project -d "我的管理后台" --pm yarn`}</CodeBlock>
 
       <H4>常用命令参考</H4>
       <CodeBlock lang="bash">{`# 交互式创建（逐步引导）
@@ -210,8 +210,8 @@ yarn lint`}</CodeBlock>
       <DocTable
         headers={["文件", "需改动项", "说明"]}
         rows={[
-          [<InlineCode>package.json</InlineCode>, <><InlineCode>name</InlineCode>、<InlineCode>version</InlineCode></>, <>将 <InlineCode>"easybuild-admin"</InlineCode> 改为你的项目名称，版本号按需设置。</>],
-          [<InlineCode>src/app/layout.tsx</InlineCode>, <><InlineCode>metadata.title</InlineCode>、<InlineCode>metadata.description</InlineCode></>, <>修改浏览器标签页标题与 SEO 描述，替换 <InlineCode>"EasyBuild Admin - 易构"</InlineCode> 为你的项目名称。</>],
+          [<InlineCode>package.json</InlineCode>, <><InlineCode>name</InlineCode>、<InlineCode>version</InlineCode></>, <>将 <InlineCode>&quot;easybuild-admin&quot;</InlineCode> 改为你的项目名称，版本号按需设置。</>],
+          [<InlineCode>src/app/layout.tsx</InlineCode>, <><InlineCode>metadata.title</InlineCode>、<InlineCode>metadata.description</InlineCode></>, <>修改浏览器标签页标题与 SEO 描述，替换 <InlineCode>&quot;EasyBuild Admin - 易构&quot;</InlineCode> 为你的项目名称。</>],
           [<InlineCode>src/config/login/login-config.ts</InlineCode>, <><InlineCode>name</InlineCode>、<InlineCode>description</InlineCode>、<InlineCode>subDescription</InlineCode></>, "登录页的品牌名称和描述文案，直接替换即可。"],
           [<InlineCode>public/favicon.ico</InlineCode>, "网站图标", "替换为你自己的 Favicon。"],
         ]}
