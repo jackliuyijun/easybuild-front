@@ -1,15 +1,14 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Autoplay from "embla-carousel-autoplay"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel"
 
@@ -25,11 +24,17 @@ const slides = [
 export function ShowcaseCarousel() {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
+  const autoplayRef = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+  )
 
   const scrollTo = useCallback(
     (index: number) => api?.scrollTo(index),
     [api],
   )
+
+  const scrollPrev = useCallback(() => api?.scrollPrev(), [api])
+  const scrollNext = useCallback(() => api?.scrollNext(), [api])
 
   useEffect(() => {
     if (!api) return
@@ -42,35 +47,43 @@ export function ShowcaseCarousel() {
   return (
     <Carousel
       setApi={setApi}
-      opts={{ loop: true }}
-      plugins={[Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })]}
+      opts={{ loop: true, duration: 25 }}
+      plugins={[autoplayRef.current]}
       className="w-full"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-[#1F293780] bg-[#0D1117]">
+      <div className="group relative overflow-hidden rounded-2xl border border-[#1F293780] bg-[#0D1117]">
         <CarouselContent className="-ml-0">
-          {slides.map((slide) => (
+          {slides.map((slide, i) => (
             <CarouselItem key={slide.src} className="pl-0">
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                width={1920}
-                height={869}
-                className="w-full"
-                sizes="(max-width: 1280px) 100vw, 1280px"
-              />
+              <div className="relative aspect-[1920/869]">
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={i === 0}
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                />
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        {/* Prev / Next */}
-        <CarouselPrevious
-          className="absolute left-4 top-1/2 z-10 size-10 -translate-y-1/2 border-white/10 bg-black/50 text-white/70 opacity-0 backdrop-blur-sm transition-opacity hover:border-[#00FF8840] hover:bg-black/60 hover:text-[#00FF88] group-hover:opacity-100 [div:hover>&]:opacity-100"
-        />
-        <CarouselNext
-          className="absolute right-4 top-1/2 z-10 size-10 -translate-y-1/2 border-white/10 bg-black/50 text-white/70 opacity-0 backdrop-blur-sm transition-opacity hover:border-[#00FF8840] hover:bg-black/60 hover:text-[#00FF88] group-hover:opacity-100 [div:hover>&]:opacity-100"
-        />
+        <button
+          onClick={scrollPrev}
+          className="absolute left-4 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white/70 backdrop-blur-sm transition-all duration-200 hover:border-[#00FF8840] hover:bg-black/60 hover:text-[#00FF88] md:opacity-0 md:group-hover:opacity-100"
+          aria-label="上一张"
+        >
+          <ChevronLeftIcon className="size-5" />
+        </button>
+        <button
+          onClick={scrollNext}
+          className="absolute right-4 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white/70 backdrop-blur-sm transition-all duration-200 hover:border-[#00FF8840] hover:bg-black/60 hover:text-[#00FF88] md:opacity-0 md:group-hover:opacity-100"
+          aria-label="下一张"
+        >
+          <ChevronRightIcon className="size-5" />
+        </button>
 
-        {/* Bottom dots */}
         <div className="absolute bottom-3 left-0 right-0 z-10 flex items-center justify-center gap-2">
           {slides.map((_, i) => (
             <button
