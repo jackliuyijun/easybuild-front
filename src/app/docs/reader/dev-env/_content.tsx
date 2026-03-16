@@ -28,7 +28,7 @@ export default function DevEnvContent() {
 
       {/* ============== 2. Maven 配置 ============== */}
       <H2 id="sec-maven">2. Maven 配置</H2>
-      <P>请将以下配置添加到您的 Maven settings.xml 中，仓库凭证请扫码入群获取：</P>
+      <P>请将以下配置添加到您的 Maven settings.xml 中，仓库凭证请扫码关注公众号获取：</P>
       <CredentialGate />
       <CodeBlock lang="xml">{`<?xml version="1.0" encoding="UTF-8"?>
 
@@ -47,8 +47,8 @@ export default function DevEnvContent() {
   <servers>
     <server>
       <id>jackorg-easybuild</id>
-      <username>【扫码入群获取】</username>
-      <password>【扫码入群获取】</password>
+      <username>【关注公众号获取】</username>
+      <password>【关注公众号获取】</password>
     </server>
   </servers>
   <profiles>
@@ -58,7 +58,7 @@ export default function DevEnvContent() {
         <repository>
           <!-- 须与 server 的 id 一致 -->
           <id>jackorg-easybuild</id>
-          <url>【扫码入群获取仓库地址】</url>
+          <url>【关注公众号获取仓库地址】</url>
         </repository>
       </repositories>
       <activation>
@@ -71,13 +71,13 @@ export default function DevEnvContent() {
 
       {/* ============== 3. Gradle 配置 ============== */}
       <H2 id="sec-gradle">3. Gradle 配置</H2>
-      <P>请将下列配置添加到您项目的 build.gradle 文件中或全局配置文件中，仓库凭证同样在群内获取</P>
+      <P>请将下列配置添加到您项目的 build.gradle 文件中或全局配置文件中，仓库凭证同样关注公众号获取</P>
       <CodeBlock lang="groovy">{`repositories {
      maven {
-         url 【扫码入群获取仓库地址】
+         url 【关注公众号获取仓库地址】
          credentials {
-         username = 【扫码入群获取】
-         password = 【扫码入群获取】
+         username = 【关注公众号获取】
+         password = 【关注公众号获取】
      }
 }`}</CodeBlock>
 
