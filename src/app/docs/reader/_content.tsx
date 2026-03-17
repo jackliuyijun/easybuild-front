@@ -72,19 +72,19 @@ export default function DocReaderPage() {
 
               <H4>3.1.1 安装</H4>
               <a
-                href="/downloads/efg-3.2.12.zip"
+                href="/downloads/efg-3.2.12-001.zip"
                 download
                 className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
               >
                 <Download className="size-5 shrink-0 text-[#00FF88]" />
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[14px] font-semibold text-white">下载 efg-3.2.12.zip</span>
+                  <span className="text-[14px] font-semibold text-white">下载 efg.zip</span>
                   <span className="text-[12px] text-[#9CA3AF]">CLI 安装包 · 约 31 MB</span>
                 </div>
               </a>
               <NumberList items={[
-                <>下载上方安装包 <InlineCode>efg-3.2.12.zip</InlineCode> 并解压</>,
-                <>进入 <InlineCode>efg-3.2.12</InlineCode> 目录执行安装</>,
+                <>下载上方安装包 <InlineCode>efg.zip</InlineCode> 并解压</>,
+                <>进入 <InlineCode>efg</InlineCode> 目录执行安装</>,
               ]} />
               <P><Strong>Windows：</Strong></P>
               <CodeBlock lang="bat">{`双击 install.bat`}</CodeBlock>
