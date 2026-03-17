@@ -35,7 +35,8 @@ export default function DevEnvContent() {
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
-  <localRepository>C:\\repository\\maven</localRepository>
+  <!-- 本地仓库路径配置 -->
+  <localRepository>【本地仓库路径配置】</localRepository>
   <mirrors>
     <mirror>
       <id>aliyun</id>
