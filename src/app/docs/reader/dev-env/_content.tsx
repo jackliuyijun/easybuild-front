@@ -115,6 +115,18 @@ export default function DevEnvContent() {
 </dependencyManagement>
 
 <dependencies>
+    <!-- Lombok 注解处理器 -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>compile</scope>
+    </dependency>
+    <!-- Spring Boot 配置处理器 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-configuration-processor</artifactId>
+        <scope>compile</scope>
+    </dependency>
     <!-- 示例模块 -->
     <dependency>
         <groupId>com.mcst</groupId>
