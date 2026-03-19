@@ -133,3 +133,23 @@ export function Strong({ children }: { children: React.ReactNode }) {
 export function Highlight({ children }: { children: React.ReactNode }) {
   return <span className="rounded bg-[#00FF8820] px-1 py-0.5 text-[#00FF88]">{children}</span>
 }
+
+export function CopyText({ text, children }: { text: string; children?: React.ReactNode }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="group/copy inline-flex items-center gap-1.5 rounded bg-[#1F2937] px-1.5 py-0.5 font-mono text-[13px] text-[#00FF88] transition-colors hover:bg-[#2A3444]"
+    >
+      {children ?? text}
+      {copied ? <Check className="size-3 text-[#00FF88]" /> : <Copy className="size-3 text-[#525252] group-hover/copy:text-[#9CA3AF]" />}
+    </button>
+  )
+}

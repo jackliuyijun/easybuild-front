@@ -3,7 +3,7 @@
 import { Download } from "lucide-react"
 
 import { DocLayout } from "./_components/doc-layout"
-import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong } from "./_components/doc-components"
+import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong, CopyText } from "./_components/doc-components"
 
 const outlineItems = [
   { id: "sec-overview", label: "概述" },
@@ -241,7 +241,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
               <NumberList items={[
                 <>打开 IntelliJ IDEA，进入 <InlineCode>File → Settings → Plugins</InlineCode>（macOS：<InlineCode>IntelliJ IDEA → Preferences → Plugins</InlineCode>）</>,
                 <>选择 <Strong>Marketplace</Strong> 标签页</>,
-                <>搜索 <Strong>EasyFK Generator</Strong></>,
+                <>搜索 <CopyText text="EasyFK Generator" /></>,
                 <>点击 <Strong>Install</Strong>，安装完成后重启 IDE</>,
               ]} />
               <P><Strong>方式二：从本地磁盘安装</Strong></P>
