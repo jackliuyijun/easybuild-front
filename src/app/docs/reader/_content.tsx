@@ -256,7 +256,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
               <BulletList items={[
                 <><Strong>可视化配置</Strong>：通过对话框填写项目配置、模型配置、代码配置，无需手写 YAML</>,
                 <><Strong>数据库导入</Strong>：可视化连接数据库，勾选需要导入的表，自动生成模型定义</>,
-                <><Strong>分步生成</Strong>：对话框底部提供 "生成项目"、"生成模型"、"生成业务代码"、"生成自动装配" 四个独立按钮</>,
+                <><Strong>分步生成</Strong>：对话框底部提供 &ldquo;生成项目&rdquo;、&ldquo;生成模型&rdquo;、&ldquo;生成业务代码&rdquo;、&ldquo;生成自动装配&rdquo; 四个独立按钮</>,
                 <><Strong>工具窗口</Strong>：右侧面板快速入口，按场景分组（新建项目 / 增量生成 / 单独生成）</>,
                 <><Strong>配置持久化</Strong>：自动保存 <InlineCode>.easyfk-generator.json</InlineCode> 到项目根目录，下次打开自动加载</>,
                 <><Strong>快捷键</Strong>：<InlineCode>Ctrl + Alt + Z</InlineCode> 快速打开代码生成对话框</>,
