@@ -67,12 +67,12 @@ export default function DocReaderPage() {
               {/* ============== 3. 使用方式 ============== */}
               <H2 id="sec-usage">3. 使用方式</H2>
 
-              <H3>3.1 方式一：CLI 命令行工具（推荐）</H3>
+              <H3>3.1 方式一：CLI 命令行工具</H3>
               <P>CLI 工具独立运行，不依赖 Spring Boot 项目环境，适合从零创建新项目或在任意目录快速生成代码。</P>
 
               <H4>3.1.1 安装</H4>
               <a
-                href="/downloads/efg-3.2.12-002.zip"
+                href="/downloads/efg-3.2.12.zip"
                 download
                 className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
               >
@@ -233,7 +233,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
                 ]}
               />
 
-              <H3>3.3 方式三：IntelliJ IDEA 插件</H3>
+              <H3>3.3 方式三：IntelliJ IDEA 插件（推荐）</H3>
               <P>EasyFK Generator 提供了 IntelliJ IDEA 插件 <Strong>EasyFK Generator</Strong>，支持可视化操作界面。</P>
 
               <H4>插件安装</H4>
