@@ -72,7 +72,7 @@ export default function DocReaderPage() {
 
               <H4>3.1.1 安装</H4>
               <a
-                href="/downloads/efg-3.2.12.zip"
+                href="/downloads/efg-3.2.12-100.zip"
                 download
                 className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
               >
