@@ -12,7 +12,6 @@ const outlineItems = [
   { id: "sec-config", label: "配置文件详解" },
   { id: "sec-arch", label: "项目架构类型详解" },
   { id: "sec-codegen", label: "生成代码详解" },
-  { id: "sec-commands", label: "生成命令与 API 参考" },
   { id: "sec-db", label: "数据库支持与类型映射" },
   { id: "sec-annotation", label: "Entity 自定义注解" },
   { id: "sec-overwrite", label: "文件覆盖策略" },
@@ -47,10 +46,11 @@ export default function DocReaderPage() {
                 <><Strong>多构建工具</Strong>：Maven、Gradle Groovy DSL、Gradle Kotlin DSL 三种构建方式</>,
                 <><Strong>增量安全</Strong>：已有文件不覆盖，仅 DTO/Param 类随表结构刷新</>,
               ]} />
-              <H4>两种使用方式</H4>
+              <H4>三种使用方式</H4>
               <NumberList items={[
                 <><Strong>CLI 命令行工具</Strong>（推荐）：脱离 IDE，一条命令完成全栈生成</>,
                 <><Strong>Spring Boot Starter 集成</Strong>：通过单元测试驱动生成，适合已有 Spring Boot 项目</>,
+                <><Strong>IntelliJ IDEA 插件</Strong>：可视化操作界面，支持数据库导入表结构、分步生成、配置持久化</>,
               ]} />
 
               {/* ============== 2. 环境要求 ============== */}
@@ -72,7 +72,7 @@ export default function DocReaderPage() {
 
               <H4>3.1.1 安装</H4>
               <a
-                href="/downloads/efg-3.2.12-001.zip"
+                href="/downloads/efg-3.2.12-002.zip"
                 download
                 className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
               >
@@ -107,10 +107,57 @@ mkdir my-project && cd my-project
 # 2. 生成配置模板
 efg init
 
-# 3. 用编辑器打开 generator.yml，填入项目信息和数据库配置
+# 3. 用编辑器打开 generator.yml，填入项目信息、app-type 和数据库配置
 
 # 4. 执行全量生成
 efg`}</CodeBlock>
+
+              <H4>3.1.4 命令参考</H4>
+              <P><Strong>基本语法：</Strong></P>
+              <CodeBlock lang="bash">{`efg [选项]
+efg init [-o 文件名]`}</CodeBlock>
+
+              <P><Strong>生成命令：</Strong></P>
+              <DocTable
+                headers={["命令", "说明"]}
+                rows={[
+                  ["efg", "全量生成（项目骨架 + Entity + Mapper + 业务代码 + 自动装配配置）"],
+                  ["efg -p", "仅生成项目骨架（目录结构 + 构建文件）"],
+                  ["efg -m", "仅生成 Entity + Mapper（包含 Mapper XML）"],
+                  ["efg -s", "仅生成业务代码（Repository / Service / API / Remote / Controller + DTO/Param 等）"],
+                  ["efg -a", "仅生成自动装配配置（AutoConfiguration）"],
+                  ["efg -d", "仅刷新 DTO 和 Param（数据库表结构变更后使用，不影响其他代码）"],
+                ]}
+              />
+
+              <P><Strong>组合使用：</Strong> Flag 可以组合使用：</P>
+              <DocTable
+                headers={["命令", "说明"]}
+                rows={[
+                  ["efg -pm", "项目骨架 + Entity + Mapper（新项目初始化第一步）"],
+                  ["efg -sa", "业务代码 + 自动装配配置（新增业务表后的第二步）"],
+                  ["efg -pms", "项目骨架 + Entity + 全部业务代码"],
+                ]}
+              />
+
+              <P><Strong>其他选项：</Strong></P>
+              <DocTable
+                headers={["选项", "说明"]}
+                rows={[
+                  ["-c <文件>", "指定配置文件路径（默认读取当前目录下的 generator.yml）"],
+                  ["-h, --help", "查看帮助信息"],
+                  ["-V, --version", "查看版本号"],
+                ]}
+              />
+
+              <P><Strong>init 子命令：</Strong></P>
+              <DocTable
+                headers={["命令", "说明"]}
+                rows={[
+                  ["efg init", "在当前目录生成 generator.yml 配置模板"],
+                  ["efg init -o my-config.yml", "指定输出文件名"],
+                ]}
+              />
 
               <H3>3.2 方式二：Spring Boot Starter 集成</H3>
               <P>适合在已有 Spring Boot 项目中使用，通过单元测试驱动代码生成。</P>
@@ -137,6 +184,7 @@ efg`}</CodeBlock>
         project-name: my-app
         base-package: com.example.myapp
         project-type: smart
+        app-type: BMS
       code:
         module-name: myapp
         model-list:
@@ -166,6 +214,78 @@ public class TestApp {
     }
 }`}</CodeBlock>
               <P>运行测试方法即可触发代码生成。</P>
+
+              <H4>3.2.5 Java API 参考</H4>
+              <P>通过 Spring 注入 <InlineCode>EasyfkGenerator</InlineCode> 使用：</P>
+              <CodeBlock lang="java">{`@Resource
+private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
+              <DocTable
+                headers={["方法", "对应 CLI", "说明"]}
+                rows={[
+                  ["generateAll()", "efg", "全量生成（项目 + Model + 代码 + 自动装配）"],
+                  ["generateProject()", "efg -p", "仅生成项目骨架"],
+                  ["generateModel()", "efg -m", "仅生成 Entity + Mapper"],
+                  ["generateProjectAndModel()", "efg -pm", "生成项目骨架 + Entity + Mapper"],
+                  ["generateCode()", "efg -s", "生成业务代码"],
+                  ["generateCodeAndConfig()", "efg -sa", "生成业务代码 + 自动装配配置"],
+                  ["generateConfig()", "efg -a", "仅生成自动装配配置"],
+                  ["updateDtoAndParam()", "efg -d", "仅刷新 DTO 和 Param"],
+                ]}
+              />
+
+              <H3>3.3 方式三：IntelliJ IDEA 插件</H3>
+              <P>EasyFK Generator 提供了 IntelliJ IDEA 插件 <Strong>EasyFK Generator</Strong>，支持可视化操作界面。</P>
+
+              <H4>插件安装</H4>
+              <P><Strong>方式一：从插件市场安装（推荐）</Strong></P>
+              <NumberList items={[
+                <>打开 IntelliJ IDEA，进入 <InlineCode>File → Settings → Plugins</InlineCode>（macOS：<InlineCode>IntelliJ IDEA → Preferences → Plugins</InlineCode>）</>,
+                <>选择 <Strong>Marketplace</Strong> 标签页</>,
+                <>搜索 <Strong>EasyFK Generator</Strong></>,
+                <>点击 <Strong>Install</Strong>，安装完成后重启 IDE</>,
+              ]} />
+              <P><Strong>方式二：从本地磁盘安装</Strong></P>
+              <NumberList items={[
+                <>获取插件安装包 <InlineCode>easyfk-generator-idea-x.x.x.zip</InlineCode></>,
+                <>打开 IntelliJ IDEA，进入 <InlineCode>File → Settings → Plugins</InlineCode></>,
+                <>点击齿轮图标 ⚙ → <Strong>Install Plugin from Disk...</Strong></>,
+                <>选择本地的<InlineCode>.zip</InlineCode> 文件，安装完成后重启 IDE</>,
+              ]} />
+
+              <H4>核心特性</H4>
+              <BulletList items={[
+                <><Strong>可视化配置</Strong>：通过对话框填写项目配置、模型配置、代码配置，无需手写 YAML</>,
+                <><Strong>数据库导入</Strong>：可视化连接数据库，勾选需要导入的表，自动生成模型定义</>,
+                <><Strong>分步生成</Strong>：对话框底部提供 "生成项目"、"生成模型"、"生成业务代码"、"生成自动装配" 四个独立按钮</>,
+                <><Strong>工具窗口</Strong>：右侧面板快速入口，按场景分组（新建项目 / 增量生成 / 单独生成）</>,
+                <><Strong>配置持久化</Strong>：自动保存 <InlineCode>.easyfk-generator.json</InlineCode> 到项目根目录，下次打开自动加载</>,
+                <><Strong>快捷键</Strong>：<InlineCode>Ctrl + Alt + Z</InlineCode> 快速打开代码生成对话框</>,
+              ]} />
+
+              <H4>插件入口</H4>
+              <DocTable
+                headers={["入口", "说明"]}
+                rows={[
+                  ["File → New → EasyFK Project", "新建项目，创建项目骨架并生成代码"],
+                  ["Generate → EasyFK 增量生成", "在已有项目中生成代码，已有文件不覆盖（Ctrl + Alt + Z）"],
+                  ["Generate → EasyFK 生成业务代码", "仅生成 Repository / Service / API / Remote / Controller"],
+                  ["Generate → EasyFK 刷新模型 (字段变更)", "重新生成 Entity / Mapper + DTO / Param"],
+                  ["Generate → EasyFK 刷新 DTO/Param", "仅重新生成 DTO 和 Param 类"],
+                  ["Generate → EasyFK 生成自动装配", "生成 Spring Boot AutoConfiguration"],
+                  ["右侧工具窗口 → EasyFK", "按场景分组的快捷操作面板"],
+                ]}
+              />
+
+              <H4>全局设置（File → Settings → Tools → EasyFK Generator）</H4>
+              <DocTable
+                headers={["设置项", "说明", "默认值"]}
+                rows={[
+                  ["默认作者", "代码注释中的 @author", "eb-jack"],
+                  ["默认框架版本", "EasyFK 框架版本号", "{最新版}"],
+                  ["生成后自动刷新项目树", "生成完成后自动刷新 IDEA 项目目录", "开启"],
+                  ["生成后弹出结果统计", "生成完成后弹出结果信息对话框", "开启"],
+                ]}
+              />
 
               {/* ============== 4. 配置文件详解 ============== */}
               <H2 id="sec-config">4. 配置文件详解</H2>
@@ -200,7 +320,9 @@ public class TestApp {
                   ["project-version", "否", "String", "1.0.0-SNAPSHOT", "生成的项目版本号"],
                   ["create-prd-project", "否", "Boolean", "true", "是否生成 PRD（Controller）子项目"],
                   ["create-repository", "否", "Boolean", "false", "是否生成独立的 Repository 子项目"],
+                  ["app-type", "是", "枚举", "-", "应用类型，决定生成的项目模板和配置风格。可选值：BMS（后台管理端）、CLIENT（面向 C 端）"],
                   ["controller-auto-config", "否", "Boolean", "false", "是否为 Controller 层生成 AutoConfiguration 自动装配配置"],
+                  ["modules", "否", "List", "-", "业务模块列表，用于多模块项目的依赖管理。每个模块可单独配置 PRD、Server、ORM 等依赖策略，详见 4.5 Module 业务模块配置"],
                 ]}
               />
 
@@ -222,7 +344,7 @@ public class TestApp {
                 headers={["配置项", "必填", "类型", "默认值", "说明"]}
                 rows={[
                   ["module-name", "是", "String", "-", "模块名称，用于配置类名、远程调用 serviceId、Controller 路径前缀等。例：myapp"],
-                  ["author", "否", "String", "liu yijun", "代码注释中的作者信息"],
+                  ["author", "否", "String", "eb-jack", "代码注释中的作者信息"],
                   ["orm-type", "否", "枚举", "MYBATIS", "ORM 类型：MYBATIS / MYBATIS_FLEX / HIBERNATE"],
                   ["spring-annotation", "否", "Boolean", "true", "是否在实现类上添加 Spring 注解（如 @Repository、@Service）。project-type 为 smart 时无效"],
                   ["create-controller", "否", "Boolean", "true", "是否生成 Controller 层代码（全局控制，可被 Model 级别覆盖）"],
@@ -234,7 +356,7 @@ public class TestApp {
               <DocTable
                 headers={["配置项", "必填", "类型", "默认值", "说明"]}
                 rows={[
-                  ["db-type", "否", "枚举", "MYSQL", "数据库类型，完整可选值见第 8.1 节"],
+                  ["db-type", "否", "枚举", "MYSQL", "数据库类型，完整可选值见第 7.1 节"],
                   ["db-short-url", "条件必填", "String", "-", "数据库短连接地址，格式：host:port/database。仅使用 from-db-tables 时必填"],
                   ["db-user", "否", "String", "root", "数据库用户名"],
                   ["db-pwd", "条件必填", "String", "-", "数据库密码。仅使用 from-db-tables 时必填"],
@@ -289,7 +411,35 @@ public class TestApp {
                 <Strong>from-db-tables 和 model-list 的关系：</Strong> 两者可以同时使用。<InlineCode>from-db-tables</InlineCode> 自动从数据库读取表结构生成 Model 信息。如果同一个 Model 在 <InlineCode>model-list</InlineCode> 中也有定义，则 <InlineCode>model-list</InlineCode> 中的配置作为覆盖项优先生效。这允许你通过数据库自动解析基本结构，同时手动微调特定 Model 的配置。
               </TipBox>
 
-              <H3>4.5 资源权限配置</H3>
+              <H3>4.5 Module 业务模块配置</H3>
+              <P>用于在多模块项目中定义各业务模块的依赖策略。配置在 <InlineCode>project.modules</InlineCode> 节点下，是一个列表。</P>
+              <CodeBlock lang="yaml">{`project:
+  modules:
+    - name: auth
+      prd-split: false
+    - name: trading
+      has-orm: false
+    - name: payment`}</CodeBlock>
+
+              <H4>Module 配置项详解</H4>
+              <DocTable
+                headers={["配置项", "必填", "类型", "默认值", "说明"]}
+                rows={[
+                  ["name", "是", "String", "-", "模块名称，如 auth、trading、payment。用于构建子模块的 artifactId"],
+                  ["has-prd", "否", "Boolean", "true", "是否包含 PRD（Controller）子依赖"],
+                  ["prd-split", "否", "Boolean", "true", "PRD 是否区分 bms / client。true → 生成 {module}-prd-bms 和 {module}-prd-client；false → 生成 {module}-prd"],
+                  ["has-server", "否", "Boolean", "true", "是否包含 Server 子依赖"],
+                  ["has-orm", "否", "Boolean", "true", "是否包含 ORM 持久化子依赖（如 MyBatis 等）"],
+                ]}
+              />
+              <H4>典型场景</H4>
+              <BulletList items={[
+                <><Strong>网关模块</Strong>：<InlineCode>has-server: false, has-orm: false</InlineCode>（仅路由转发，无业务逻辑和数据库）</>,
+                <><Strong>认证模块</Strong>：<InlineCode>prd-split: false</InlineCode>（不区分 B 端 / C 端，统一入口）</>,
+                <><Strong>交易模块</Strong>：<InlineCode>has-orm: false</InlineCode>（通过 RPC 调用其他服务，自身不直接操作数据库）</>,
+              ]} />
+
+              <H3>4.6 资源权限配置</H3>
               <P>用于在 Controller 接口上自动生成 EasyFK 框架的资源权限注解（<InlineCode>@ResourceController</InlineCode>、<InlineCode>@AuthResource</InlineCode>），与框架权限体系对接。</P>
               <P>配置前缀：<InlineCode>easyfk.config.generator.code</InlineCode></P>
               <DocTable
@@ -406,8 +556,9 @@ public class ProductController {
         ├── ClientApp.java                          # 启动类
         └── controller/
             └── ProductController.java              # Controller（通过 Remote 调用 Server）`}</CodeBlock>
-              <P>当 <InlineCode>prd-type: separation</InlineCode> 时，PRD 层会分为两个子项目：</P>
-              <CodeBlock lang="plaintext">{`my-app-prd/
+              <P>当 <InlineCode>prd-type: separation</InlineCode> 时，PRD 层会分为两个独立项目（与 server 平级）：</P>
+              <CodeBlock lang="plaintext">{`my-app/
+├── ...
 ├── my-app-prd-client/    # C 端 / 用户端 Controller
 │   ├── ClientApp.java
 │   └── controller/ProductController.java
@@ -461,11 +612,11 @@ public class ProductController {
 │       └── com/example/myapp/remote/provider/
 │           └── impl/ProductRemoteImpl.java
 │
-└── my-app-prd/                                     # PRD / Controller 层
-    ├── my-app-prd-client/
-    │   └── controller/ProductController.java
-    └── my-app-prd-bms/
-        └── controller/ProductBmsController.java`}</CodeBlock>
+├── my-app-prd-client/                                 # PRD / Controller 层（C 端）
+│   └── controller/ProductController.java
+│
+└── my-app-prd-bms/                                    # PRD / Controller 层（B 端）
+    └── controller/ProductBmsController.java`}</CodeBlock>
               <H4>SMART 架构的关键特点</H4>
               <BulletList items={[
                 <>定义了统一的 <InlineCode>IProductApi</InlineCode> 接口</>,
@@ -712,79 +863,10 @@ public interface IProductRemote extends IBaseRemote<ProductResp, String, Product
                 <><Strong>日志配置</Strong>：<InlineCode>logback.xml</InlineCode> 或 <InlineCode>log4j2.xml</InlineCode>（根据 <InlineCode>log-type</InlineCode> 配置）</>,
               ]} />
 
-              {/* ============== 7. 生成命令与 API 参考 ============== */}
-              <H2 id="sec-commands">7. 生成命令与 API 参考</H2>
+              {/* ============== 7. 数据库支持与类型映射 ============== */}
+              <H2 id="sec-db">7. 数据库支持与类型映射</H2>
 
-              <H3>7.1 CLI 命令参考</H3>
-              <H4>基本语法</H4>
-              <CodeBlock lang="bash">{`efg [选项]
-efg init [-o 文件名]`}</CodeBlock>
-
-              <H4>生成命令</H4>
-              <DocTable
-                headers={["命令", "说明"]}
-                rows={[
-                  ["efg", "全量生成（项目骨架 + Entity + Mapper + 业务代码 + 自动装配配置）"],
-                  ["efg -p", "仅生成项目骨架（目录结构 + 构建文件）"],
-                  ["efg -m", "仅生成 Entity + Mapper（包含 Mapper XML）"],
-                  ["efg -s", "仅生成业务代码（Repository / Service / API / Remote / Controller + DTO/Param 等）"],
-                  ["efg -a", "仅生成自动装配配置（AutoConfiguration）"],
-                  ["efg -d", "仅刷新 DTO 和 Param（数据库表结构变更后使用，不影响其他代码）"],
-                ]}
-              />
-
-              <H4>组合使用</H4>
-              <P>Flag 可以组合使用：</P>
-              <DocTable
-                headers={["命令", "说明"]}
-                rows={[
-                  ["efg -pm", "项目骨架 + Entity + Mapper（新项目初始化第一步）"],
-                  ["efg -sa", "业务代码 + 自动装配配置（新增业务表后的第二步）"],
-                  ["efg -pms", "项目骨架 + Entity + 全部业务代码"],
-                ]}
-              />
-
-              <H4>其他选项</H4>
-              <DocTable
-                headers={["选项", "说明"]}
-                rows={[
-                  ["-c <文件>", "指定配置文件路径（默认读取当前目录下的 generator.yml）"],
-                  ["-h, --help", "查看帮助信息"],
-                  ["-V, --version", "查看版本号"],
-                ]}
-              />
-
-              <H4>init 子命令</H4>
-              <DocTable
-                headers={["命令", "说明"]}
-                rows={[
-                  ["efg init", "在当前目录生成 generator.yml 配置模板"],
-                  ["efg init -o my-config.yml", "指定输出文件名"],
-                ]}
-              />
-
-              <H3>7.2 Java API 参考</H3>
-              <P>通过 Spring 注入 <InlineCode>EasyfkGenerator</InlineCode> 使用：</P>
-              <CodeBlock lang="java">{`@Resource
-private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
-              <DocTable
-                headers={["方法", "对应 CLI", "说明"]}
-                rows={[
-                  ["generateAll()", "efg", "全量生成（项目 + Model + 代码 + 自动装配）"],
-                  ["generateProject()", "efg -p", "仅生成项目骨架"],
-                  ["generateModel()", "efg -m", "仅生成 Entity + Mapper"],
-                  ["generateProjectAndModel()", "efg -pm", "生成项目骨架 + Entity + Mapper"],
-                  ["generateCode()", "efg -s", "生成业务代码"],
-                  ["generateCodeAndConfig()", "efg -sa", "生成业务代码 + 自动装配配置"],
-                  ["generateConfig()", "efg -a", "仅生成自动装配配置"],
-                  ["updateDtoAndParam()", "efg -d", "仅刷新 DTO 和 Param"],
-                ]}
-              />
-
-              {/* ============== 8. 数据库支持与类型映射 ============== */}
-              <H2 id="sec-db">8. 数据库支持与类型映射</H2>
-
-              <H3>8.1 支持的数据库</H3>
+              <H3>7.1 支持的数据库</H3>
               <DocTable
                 headers={["数据库类型（db-type 值）", "说明"]}
                 rows={[
@@ -814,7 +896,7 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
                 ]}
               />
 
-              <H3>8.2 字段类型映射规则</H3>
+              <H3>7.2 字段类型映射规则</H3>
               <P>从数据库读取表结构时，字段类型会按以下规则自动映射为 Java 类型：</P>
               <DocTable
                 headers={["数据库字段类型", "Java 类型"]}
@@ -837,8 +919,8 @@ private EasyfkGenerator easyfkGenerator;`}</CodeBlock>
                 框架基类已包含 <InlineCode>deleted</InlineCode>、<InlineCode>insertTime</InlineCode>、<InlineCode>lastUpdateTime</InlineCode> 字段，从数据库读取时会自动排除这三个字段，不会重复生成。
               </WarnBox>
 
-              {/* ============== 9. Entity 自定义注解 ============== */}
-              <H2 id="sec-annotation">9. Entity 自定义注解说明</H2>
+              {/* ============== 8. Entity 自定义注解 ============== */}
+              <H2 id="sec-annotation">8. Entity 自定义注解说明</H2>
               <P>在已生成的 Entity 文件中，可以手动添加以下 EasyFK 框架提供的自定义注解。再次执行代码生成（<InlineCode>efg -s</InlineCode> 或 <InlineCode>efg -d</InlineCode>）时，生成器会自动解析这些注解并在 DTO、Param、Controller 层生成对应的逻辑。</P>
 
               <H3>@SingleUniqueField — 单字段唯一校验</H3>
@@ -864,8 +946,8 @@ private LocalDateTime createTime;`}</CodeBlock>
               <P>此注解标注在 Entity 类级别（非字段级别），标识该 Model 具有启用/禁用功能。</P>
               <P><Strong>效果：</Strong> Controller 层会额外生成 <InlineCode>disable</InlineCode> 接口（启用/禁用），通过修改指定字段值实现。</P>
 
-              {/* ============== 10. 文件覆盖策略 ============== */}
-              <H2 id="sec-overwrite">10. 文件覆盖策略</H2>
+              {/* ============== 9. 文件覆盖策略 ============== */}
+              <H2 id="sec-overwrite">9. 文件覆盖策略</H2>
               <P>生成器使用两种文件创建策略来保护开发者的手动修改：</P>
               <DocTable
                 headers={["策略", "涉及文件", "行为"]}
@@ -881,10 +963,10 @@ private LocalDateTime createTime;`}</CodeBlock>
                 <><Strong>AutoConfiguration 文件：</Strong> 每次执行 <InlineCode>efg -a</InlineCode> 或 <InlineCode>efg</InlineCode> 时都会重建，因为需要扫描当前已有的实现类来生成完整的配置。</>,
               ]} />
 
-              {/* ============== 11. 完整配置示例 ============== */}
-              <H2 id="sec-examples">11. 完整配置示例</H2>
+              {/* ============== 10. 完整配置示例 ============== */}
+              <H2 id="sec-examples">10. 完整配置示例</H2>
 
-              <H3>11.1 单体项目（最小配置）</H3>
+              <H3>10.1 单体项目（最小配置）</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -894,6 +976,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         project-name: my-app
         base-package: com.example.myapp
         project-type: single
+        app-type: BMS
       code:
         module-name: myapp
         model-list:
@@ -902,7 +985,7 @@ private LocalDateTime createTime;`}</CodeBlock>
           - model-name: Order
             model-desc: 订单信息`}</CodeBlock>
 
-              <H3>11.2 微服务项目（Spring Cloud）</H3>
+              <H3>10.2 微服务项目（Spring Cloud）</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -915,6 +998,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         rpc-type: cloud
         prd-type: single
         build-type: gradle
+        app-type: CLIENT
         framework-version: {最新版}
       code:
         module-name: order
@@ -926,7 +1010,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         from-db-tables: t_order,t_order_item
         table-prefix: t_`}</CodeBlock>
 
-              <H3>11.3 微服务项目（Dubbo）</H3>
+              <H3>10.3 微服务项目（Dubbo）</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -939,6 +1023,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         rpc-type: dubbo
         prd-type: separation
         build-type: maven
+        app-type: BMS
         framework-version: {最新版}
       code:
         module-name: user
@@ -954,7 +1039,7 @@ private LocalDateTime createTime;`}</CodeBlock>
           - model-name: UserAddress
             model-desc: 收货地址`}</CodeBlock>
 
-              <H3>11.4 多栈微服务项目（SMART）</H3>
+              <H3>10.4 多栈微服务项目（SMART）</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -969,10 +1054,15 @@ private LocalDateTime createTime;`}</CodeBlock>
         gradle-type: groovy
         orm-type: MYBATIS
         log-type: LOGBACK
+        app-type: BMS
         framework-version: {最新版}
         project-version: 1.0.0-SNAPSHOT
         create-prd-project: true
         controller-auto-config: true
+        modules:
+          - name: trading
+          - name: payment
+            prd-split: false
       code:
         module-name: trading
         author: 开发团队
@@ -997,7 +1087,7 @@ private LocalDateTime createTime;`}</CodeBlock>
             model-desc: 支付记录
             create-controller: false`}</CodeBlock>
 
-              <H3>11.5 从数据库自动解析表结构</H3>
+              <H3>10.5 从数据库自动解析表结构</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -1007,6 +1097,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         project-name: my-app
         base-package: com.example.myapp
         project-type: single
+        app-type: BMS
       code:
         module-name: myapp
         db-type: MYSQL
@@ -1025,7 +1116,7 @@ private LocalDateTime createTime;`}</CodeBlock>
                 <>读取字段注释作为 <InlineCode>@Schema</InlineCode> 和 <InlineCode>@Column</InlineCode> 的描述</>,
               ]} />
 
-              <H3>11.6 带资源权限注解的配置</H3>
+              <H3>10.6 带资源权限注解的配置</H3>
               <CodeBlock lang="yaml">{`easyfk:
   config:
     generator:
@@ -1037,6 +1128,7 @@ private LocalDateTime createTime;`}</CodeBlock>
         project-type: smart
         prd-type: separation
         build-type: gradle
+        app-type: BMS
         create-prd-project: true
       code:
         module-name: user
@@ -1064,8 +1156,8 @@ private LocalDateTime createTime;`}</CodeBlock>
                 <>UserAccount: <InlineCode>modelResourceSort = 10000 + 300 = 10300</InlineCode></>,
               ]} />
 
-              {/* ============== 12. 典型使用场景 ============== */}
-              <H2 id="sec-scenarios">12. 典型使用场景</H2>
+              {/* ============== 11. 典型使用场景 ============== */}
+              <H2 id="sec-scenarios">11. 典型使用场景</H2>
 
               <H3>场景一：从零创建新项目</H3>
               <CodeBlock lang="bash">{`mkdir my-project && cd my-project
@@ -1120,14 +1212,14 @@ public void refreshDtoAndParam() {
     easyfkGenerator.updateDtoAndParam();        // 表结构变更后刷新
 }`}</CodeBlock>
 
-              {/* ============== 13. 常见问题 ============== */}
-              <H2 id="sec-faq">13. 常见问题（FAQ）</H2>
+              {/* ============== 12. 常见问题 ============== */}
+              <H2 id="sec-faq">12. 常见问题（FAQ）</H2>
 
               <H3>Q1: 提示&ldquo;找不到 java&rdquo;</H3>
               <P>请安装 JDK 21 或更高版本。安装后确认 <InlineCode>java -version</InlineCode> 输出的版本 &gt;= 21。</P>
 
               <H3>Q2: 生成的代码会覆盖我手动修改的文件吗？</H3>
-              <P>不会（大部分情况下）。参见第 10 节文件覆盖策略：</P>
+              <P>不会（大部分情况下）。参见第 9 节文件覆盖策略：</P>
               <BulletList items={[
                 <><Strong>不会覆盖的文件：</Strong> Mapper 接口、Mapper XML、Repository、Service、API、Controller、Remote、Req、Resp、EditReq、启动类、配置文件</>,
                 <><Strong>会覆盖的文件：</Strong> Entity、DTO、Param、AutoConfiguration 配置类</>,
@@ -1146,7 +1238,7 @@ public void refreshDtoAndParam() {
               <P>两者可同时使用。相同 Model 在两处都有定义时，<InlineCode>model-list</InlineCode> 中的配置优先。</P>
 
               <H3>Q4: 支持哪些数据库？</H3>
-              <P>支持 22 种数据库，完整列表见第 8.1 节。</P>
+              <P>支持 22 种数据库，完整列表见第 7.1 节。</P>
 
               <H3>Q5: 配置文件格式和 Spring Boot 的 application.yml 一样吗？</H3>
               <P>完全一致。CLI 的 <InlineCode>generator.yml</InlineCode> 和 Spring Boot 的 <InlineCode>application.yml</InlineCode> 使用相同的配置节点结构。如果你已有 Spring Boot 项目中的生成器配置，可以直接复制到 <InlineCode>generator.yml</InlineCode> 中使用。</P>
@@ -1199,14 +1291,15 @@ public void refreshDtoAndParam() {
               ]} />
               <P>无需修改任何业务代码。</P>
 
-              {/* ============== 14. 附录 ============== */}
-              <H2 id="sec-appendix">14. 附录</H2>
+              {/* ============== 13. 附录 ============== */}
+              <H2 id="sec-appendix">13. 附录</H2>
 
-              <H3>14.1 枚举值速查表</H3>
+              <H3>13.1 枚举值速查表</H3>
               <DocTable
                 headers={["配置项", "可选值", "说明"]}
                 rows={[
                   ["project-type", "single, microservice, smart", "项目架构类型"],
+                  ["app-type", "BMS, CLIENT", "应用类型"],
                   ["rpc-type", "cloud, dubbo", "RPC 协议类型"],
                   ["build-type", "maven, gradle", "构建工具"],
                   ["gradle-type", "groovy, kotlin", "Gradle DSL 类型"],
@@ -1217,7 +1310,7 @@ public void refreshDtoAndParam() {
                 ]}
               />
 
-              <H3>14.2 生成文件清单</H3>
+              <H3>13.2 生成文件清单</H3>
               <P>以下是一个 Model（如 <InlineCode>Product</InlineCode>）在不同架构下可能生成的全部文件：</P>
               <DocTable
                 headers={["文件", "SINGLE", "MICRO", "SMART", "覆盖策略"]}
