@@ -3,7 +3,7 @@
 import { Download } from "lucide-react"
 
 import { DocLayout } from "./_components/doc-layout"
-import { CodeBlock, DocTable, TipBox, WarnBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong, CopyText } from "./_components/doc-components"
+import { CodeBlock, DocTable, TipBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong, CopyText } from "./_components/doc-components"
 
 const outlineItems = [
   { id: "sec-overview", label: "1. 概述" },
@@ -1063,7 +1063,7 @@ private LocalDateTime createTime;`}</CodeBlock>
 
       {/* ============== 11. 常见问题（FAQ） ============== */}
       <H2 id="sec-faq">11. 常见问题（FAQ）</H2>
-      <H4>Q1: 提示"找不到 java"</H4>
+      <H4>Q1: 提示&quot;找不到 java&quot;</H4>
       <P>请安装 JDK 21 或更高版本：<a href="https://adoptium.net/zh-CN/" target="_blank" className="text-blue-500 hover:underline">adoptium.net</a></P>
       <P>安装后确认 <InlineCode>java -version</InlineCode> 输出的版本 {`>=`} 21。</P>
 
