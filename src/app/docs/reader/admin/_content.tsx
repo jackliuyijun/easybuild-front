@@ -4,14 +4,13 @@ import { DocLayout } from "../_components/doc-layout"
 import { CodeBlock, DocTable, TipBox, H2, H3, H4, P, BulletList, NumberList, InlineCode, Strong } from "../_components/doc-components"
 
 const outlineItems = [
-  { id: "sec-intro", label: "项目简介" },
+  { id: "sec-project-intro", label: "项目定位" },
+  { id: "sec-highlights", label: "核心亮点" },
+  { id: "sec-tech-stack", label: "技术架构概览" },
+  { id: "sec-components", label: "自定义组件体系" },
   { id: "sec-get-project", label: "获取项目" },
-  { id: "sec-tech-stack", label: "技术栈选型" },
-  { id: "sec-architecture", label: "核心架构设计" },
   { id: "sec-structure", label: "目录结构说明" },
-  { id: "sec-standards", label: "开发规范" },
-  { id: "sec-implementation", label: "核心技术实现" },
-  { id: "sec-commands", label: "开发环境命令" },
+  { id: "sec-standards", label: "开发规范与技术细节" },
   { id: "sec-template", label: "模版使用指南" },
 ]
 
@@ -20,23 +19,92 @@ export default function AdminDocContent() {
     <DocLayout
       outlineItems={outlineItems}
       breadcrumb="EasyBuild-Admin"
-      title="EasyBuild Admin 开发文档"
-      subtitle="中后台前端项目 — 架构设计、技术栈与开发规范"
-      readingTime="~15 min"
+      title="中台管理系统前端项目介绍与开发手册"
+      subtitle="新一代中后台管理系统前端脚手架说明文档"
+      readingTime="~25 min"
     >
 
-      {/* ============== 项目简介 ============== */}
-      <H2 id="sec-intro">项目简介</H2>
+      {/* ============== 项目介绍 ============== */}
+      <H2 id="sec-project-intro">一、项目定位</H2>
       <P>
-        本文档旨在为开发者提供 <Strong>EasyBuild Admin</Strong>（易构）前端项目的技术全景视图，涵盖架构设计、技术栈选型、开发规范及核心逻辑实现细节。
+        <Strong>EasyBuild Admin</Strong> 是一套业务无关的企业级中后台前端脚手架。它提供的不是某一个具体的业务系统，而是一套 <Strong>可复用、可扩展、可快速交付</Strong> 的通用中后台解决方案。
       </P>
+      <P>
+        无论是零售电商、仓储物流、内容运营、企业 OA，还是任何需要后台管理的业务场景，都可以基于此脚手架快速搭建，实现从 0 到 1 的高效落地。
+      </P>
+      <BulletList items={[
+        <><Strong>业务无关</Strong>：所有菜单、页面、权限均由后端动态下发，前端不硬编码任何业务逻辑。更换一套后端接口，它就是另一个全新的管理平台。</>,
+        <><Strong>按需组装</Strong>：脚手架内置了多种通用业务模块（权限管理、基础数据、内容运营、系统配置等），均可根据实际业务自由选择、裁剪或扩展。后端决定“有哪些模块”，前端自动生成对应菜单与导航。</>,
+        <><Strong>即插即用</Strong>：新增一个业务模块，只需创建页面文件 + 后端注册菜单资源，前端侧边栏自动出现新菜单，无需修改任何路由配置文件。</>,
+      ]} />
       <BulletList items={[
         <>GitHub 仓库：<InlineCode>https://github.com/jackliuyijun/easybuild-admin</InlineCode></>,
         <>npm 包：<InlineCode>https://www.npmjs.com/package/easybuild-admin</InlineCode></>,
       ]} />
 
+      {/* ============== 核心亮点 ============== */}
+      <H2 id="sec-highlights">二、核心亮点 — 动态菜单与业务模块灵活组装</H2>
+      
+      <H3>后端驱动的动态菜单系统</H3>
+      <P>这是本脚手架 <Strong>最核心的设计理念</Strong> —— <Strong>前端不决定“有什么菜单”，后端说了算。</Strong></P>
+      <NumberList items={[
+        "用户登录成功后，前端自动向后端请求菜单资源接口",
+        "后端根据当前用户的角色和权限，返回该用户可见的菜单资源树（包含菜单名称、路径、排序、层级关系等）",
+        "前端自动将后端返回的菜单数据转换为路由配置，动态渲染侧边栏导航",
+        "菜单数据智能缓存 30 分钟，避免重复请求，页面切换零延迟",
+      ]} />
+
+      <H3>开箱即用的企业级能力</H3>
+      <BulletList items={[
+        <><Strong>动态菜单 & 权限</Strong>：前端零配置即可实现菜单级权限控制。</>,
+        <><Strong>多主题 & 暗黑模式</Strong>：内置 20+ 精心调校的主题色，深浅模式一键切换。</>,
+        <><Strong>统一 CRUD 模式</Strong>：搜索 + 表格 + 分页 + CRUD 操作，统一交互范式。</>,
+        <><Strong>类型安全全链路</Strong>：从 API 响应类型及 Store 状态到组件 Props，TypeScript 全覆盖。</>,
+      ]} />
+
+      {/* ============== 技术架构概览 ============== */}
+      <H2 id="sec-tech-stack">三、技术架构概览</H2>
+      <P>
+        坚持 <Strong>“选最新的、用最稳的”</Strong> 原则，所有技术选型均为当前社区最活跃、生态最健全的方案：
+      </P>
+      <DocTable
+        headers={["领域", "技术方案", "核心优势"]}
+        rows={[
+          [<Strong>应用框架</Strong>, <Strong>Next.js 15 + React 19</Strong>, "利用 React Server Components (RSC) 优化首屏并行渲染。"],
+          [<Strong>类型系统</Strong>, <Strong>TypeScript 5.x</Strong>, "全链路类型安全，从 API 到组件一气呵成。"],
+          [<Strong>UI 体系</Strong>, <Strong>Shadcn/ui + Radix UI + Tailwind CSS</Strong>, "无障碍合规、主题灵活、零运行时 CSS 开销。"],
+          [<Strong>状态管理</Strong>, <Strong>Zustand + TanStack React Query v5</Strong>, "极简 Store + 智能服务端缓存，告别样板代码。"],
+          [<Strong>表单引擎</Strong>, <Strong>React Hook Form + Zod</Strong>, "高性能非受控表单 + 声明式校验。"],
+          [<Strong>数据表格</Strong>, <Strong>TanStack Table v8</Strong>, "配置化表格逻辑，支持虚拟滚动及复杂元数据渲染。"],
+          [<Strong>HTTP 通信</Strong>, <Strong>Axios (统一封装)</Strong>, "拦截器链式处理，Token 自动注入，异常统一兜底。"],
+        ]}
+      />
+      <H3>六层解耦架构</H3>
+      <NumberList items={[
+        <><Strong>Middleware 层</Strong>：负责全局路由守卫、权限拦截及请求预处理。</>,
+        <><Strong>Layout 层</Strong>：侧边栏、顶栏、面包屑、主题引擎、通知中心。</>,
+        <><Strong>业务模块层 (后端动态驱动)</Strong>：后端下发菜单 → 前端自动渲染 → 模块自由组合。</>,
+        <><Strong>通用能力层</Strong>：高级组件封装，如 CustomTable、CustomForm、FileUpload 等。</>,
+        <><Strong>基础 UI 层 (Shadcn/ui)</Strong>：40+ 无障碍基础组件，统一设计语言。</>,
+        <><Strong>数据通信与状态管理层</Strong>：Axios 封装，Zustand (App/Sidebar) 与 React Query 缓存。</>,
+      ]} />
+
+      {/* ============== 组件体系 ============== */}
+      <H2 id="sec-components">四、自定义组件体系</H2>
+      <P>
+        脚手架内置了一套精心设计的 <Strong>高级业务组件</Strong>，封装了中后台最常见的交互模式：
+      </P>
+      <BulletList items={[
+        <><Strong>CustomForm（声明式表单引擎）</Strong>：支持 JSON 配置，涵盖16+字段类型，内置Zod校验。支持Grid自适应布局、字段联动、数据转换及远程搜索。</>,
+        <><Strong>CustomTable（配置化数据表格）</Strong>：列配置驱动，支持虚拟化、自定义渲染、左右固定列、分页与行选择集成，并支持边框样式定制及其专属空状态展现。</>,
+        <><Strong>CustomDialog / ConfirmDialog</Strong>：多尺寸内置最大化切换机制，独立区分区(Header/Content/Footer)以响应不同弹窗状态；二次操作提供安全确认流的危险预警。</>,
+        <><Strong>FileUpload（文件上传组件）</Strong>：支持图/视/文等多种流文件的精准控制，开放多图排序与直观播放和阅览接口。</>,
+        <><Strong>MultiSelect & DateRangePicker</Strong>：支持远程抗抖多段搜索，日历端全面对准中英文系统精确锁定时间颗粒度。</>,
+        <><Strong>Notifications（统一通知系统）</Strong>：四形态语义囊括场景应用：<InlineCode>showMessage</InlineCode>、<InlineCode>showError</InlineCode>、<InlineCode>showWarning</InlineCode>、<InlineCode>showLoading</InlineCode>。</>,
+      ]} />
+
       {/* ============== 获取项目 ============== */}
-      <H2 id="sec-get-project">获取项目</H2>
+      <H2 id="sec-get-project">五、获取项目</H2>
       <TipBox>
         环境要求：<Strong>Node.js {">"}= 18.17.0</Strong>
       </TipBox>
@@ -46,82 +114,34 @@ export default function AdminDocContent() {
         一行命令即可创建项目，自动完成模板下载、项目信息替换、Git 初始化和依赖安装：
       </P>
       <CodeBlock lang="bash">npx easybuild-admin my-project</CodeBlock>
-      <P>
-        按提示依次输入项目描述、选择包管理器即可完成创建。也可以通过参数跳过交互，直接创建：
-      </P>
-      <CodeBlock lang="bash">{`npx easybuild-admin my-project -d "我的管理后台" --pm yarn`}</CodeBlock>
-
-      <H4>常用命令参考</H4>
-      <CodeBlock lang="bash">{`# 交互式创建（逐步引导）
-npx easybuild-admin
-
-# 指定项目名 + 描述 + 包管理器
-npx easybuild-admin my-project -d "项目描述" --pm pnpm
+      <P>也可以通过参数跳过交互，直接创建：</P>
+      <CodeBlock lang="bash">{`# 指定项目名 + 描述 + 包管理器
+npx easybuild-admin my-project -d "我的管理后台" --pm yarn
 
 # 只下载模板，不初始化 git 也不安装依赖
 npx easybuild-admin my-project --skip-git --skip-install`}</CodeBlock>
 
-      <H4>可用参数</H4>
-      <DocTable
-        headers={["参数", "说明", "默认值"]}
-        rows={[
-          [<InlineCode>[project-name]</InlineCode>, "项目名称", "交互输入"],
-          [<InlineCode>-d, --description {"<desc>"}</InlineCode>, "项目描述", "交互输入"],
-          [<InlineCode>--pm {"<pm>"}</InlineCode>, "包管理器：yarn / pnpm / npm", "交互选择"],
-          [<InlineCode>--skip-install</InlineCode>, "跳过依赖安装", <InlineCode>false</InlineCode>],
-          [<InlineCode>--skip-git</InlineCode>, "跳过 Git 初始化", <InlineCode>false</InlineCode>],
-          [<InlineCode>--repo {"<repo>"}</InlineCode>, <>自定义模板仓库（<InlineCode>owner/repo#branch</InlineCode>）</>, <InlineCode>jackliuyijun/easybuild-admin</InlineCode>],
-        ]}
-      />
-
       <H3>方式二：手动下载</H3>
       <P>如果不使用 CLI，也可以直接从 GitHub 获取代码：</P>
-      <CodeBlock lang="bash">{`# 下载代码
-git clone https://github.com/jackliuyijun/easybuild-admin.git my-project
-
-# 进入目录并安装依赖
+      <CodeBlock lang="bash">{`git clone https://github.com/jackliuyijun/easybuild-admin.git my-project
 cd my-project
 yarn install`}</CodeBlock>
-      <TipBox>
-        推荐使用 <Strong>方式一</Strong>（CLI），自动完成项目名替换和初始化，省去手动修改的步骤。
-      </TipBox>
 
-      {/* ============== 技术栈选型 ============== */}
-      <H2 id="sec-tech-stack">一、技术栈选型</H2>
-      <P>
-        项目基于现代前端生态构建，坚持 <Strong>全链路类型安全</Strong> 与 <Strong>高性能</Strong> 原则：
-      </P>
-      <DocTable
-        headers={["领域", "选型", "说明"]}
-        rows={[
-          [<Strong>基础框架</Strong>, <Strong>Next.js 15 (App Router) + React 19</Strong>, "利用 React Server Components (RSC) 优化首屏并行渲染。"],
-          [<Strong>语言</Strong>, <Strong>TypeScript 5.x</Strong>, "严格模式，确保从 API 定义到 UI 组件的端到端类型安全。"],
-          [<Strong>样式体系</Strong>, <Strong>Tailwind CSS 3 + Lucide React</Strong>, "原子化 CSS，零运行时开销，配合 CSS Variables 实现动态主题。"],
-          [<Strong>组件库</Strong>, <Strong>Shadcn/ui (Radix UI)</Strong>, "无头 (Headless) 组件驱动，源码级可控，符合 WAI-ARIA 无障碍标准。"],
-          [<Strong>状态管理</Strong>, <Strong>Zustand</Strong>, "极简的状态流转，用于全局 UI 状态及同步的菜单数据管理。"],
-          [<Strong>异步数据流</Strong>, <Strong>TanStack React Query v5</Strong>, "自动化的服务端状态同步、缓存失效及并发请求控制。"],
-          [<Strong>表单方案</Strong>, <Strong>React Hook Form + Zod</Strong>, "基于非受控组件的高性能表单，通过 Zod 实现声明式 Schema 校验。"],
-          [<Strong>表格解析</Strong>, <Strong>TanStack Table v8</Strong>, "配置化表格逻辑，支持虚拟滚动、列排序及复杂元数据渲染。"],
-          [<Strong>包管理</Strong>, <Strong>Yarn 4 (Plug{"'"}n{"'"}Play)</Strong>, "提升依赖解析速度与磁盘占用率。"],
-        ]}
-      />
+      <H3>开发环境常用命令</H3>
+      <CodeBlock lang="bash">{`# 安装依赖 (Yarn v4)
+yarn install
 
-      {/* ============== 核心架构设计 ============== */}
-      <H2 id="sec-architecture">二、核心架构设计</H2>
-      <P>
-        项目采用 <Strong>六层解耦架构</Strong>，确保业务逻辑与基础能力的隔离：
-      </P>
-      <NumberList items={[
-        <><Strong>Middleware 层</Strong>：负责全局路由守卫、JWT Token 校验与非法请求重定向。</>,
-        <><Strong>Layout 系统</Strong>：基于 Next.js Layout 特性，实现嵌套布局、侧边栏自适应及平滑的主题切换引擎。</>,
-        <><Strong>驱动架构 (Driver-Based)</Strong>：前端不维护静态路由表。菜单由后端下发 Resource Tree，前端运行时动态将其映射为应用路由。</>,
-        <><Strong>业务组件层 (Higher-Order Components)</Strong>：对 Shadcn/ui 进行二次封装，提供 <InlineCode>CustomForm</InlineCode> 和 <InlineCode>CustomTable</InlineCode> 等配置化组件，覆盖 90% 的 CRUD 场景。</>,
-        <><Strong>数据通信层 (API Internal)</Strong>：基于 Axios 的拦截器管道，统一处理 Token 注入、多环境 BaseURL 切换及全局异常捕获。</>,
-        <><Strong>状态映射层 (State Matrix)</Strong>：Zustand 负责跨组件的同步状态，React Query 负责 Server State 的本地缓存副本。</>,
-      ]} />
+# 启动开发服务器 (默认端口: 4000)
+yarn dev
 
-      {/* ============== 目录结构说明 ============== */}
-      <H2 id="sec-structure">三、目录结构说明</H2>
+# 生成生产环境构建产物
+yarn build:prod
+
+# 静态代码检查与质量控制
+yarn lint`}</CodeBlock>
+
+      {/* ============== 目录结构 ============== */}
+      <H2 id="sec-structure">六、目录结构说明</H2>
       <CodeBlock lang="text">{`src/
 ├── api/             # API 模块化定义，按业务域拆分文件 (e.g., auth.ts, user.ts)
 ├── app/             # App Router 路由。包含 layout.tsx, page.tsx 及 api 路由
@@ -139,72 +159,38 @@ yarn install`}</CodeBlock>
 └── middleware.ts    # Next.js 中间件逻辑`}</CodeBlock>
 
       {/* ============== 开发规范 ============== */}
-      <H2 id="sec-standards">四、开发规范</H2>
-
+      <H2 id="sec-standards">七、开发规范与技术细节</H2>
+      
       <H3>1. 编码约定</H3>
       <BulletList items={[
         <><Strong>组件定义</Strong>：统一使用函数组件与 Arrow Functions。</>,
         <><Strong>文件命名</Strong>：组件目录使用 PascalCase；Hooks 使用 camelCase 且以 <InlineCode>use</InlineCode> 开头；类型文件以 <InlineCode>.types.ts</InlineCode> 结尾。</>,
         <><Strong>Props 调用</Strong>：必须声明接口 (Interface) 或类型 (Type)，严禁使用 <InlineCode>any</InlineCode>。</>,
+        <><Strong>优先解耦</Strong>：尽量编写 Dumb Components，将业务逻辑抽离至自定义 Hooks。</>,
+        <><Strong>配置驱动</Strong>：高级组件必须支持通过 JSON 配置项完全控制其渲染行为。</>,
       ]} />
 
-      <H3>2. API 通信规范</H3>
-      <BulletList items={[
-        "所有接口必须定义请求参数与响应数据的 TS 类型。",
-        <>业务异常必须通过 HTTP Interceptor 统一拦截处理，禁止在页面内重复编写 <InlineCode>try-catch</InlineCode>。</>,
-      ]} />
-
-      <H3>3. 组件封装原则</H3>
-      <BulletList items={[
-        <><Strong>优先解耦</Strong>：尽量编写 Dumb Components（展示性组件），将业务逻辑（Side Effects）抽离至自定义 Hooks。</>,
-        <><Strong>配置驱动</Strong>：高级组件（CustomForm/Table）必须支持通过 JSON 配置项完全控制其渲染行为。</>,
-      ]} />
-
-      {/* ============== 核心技术实现细节 ============== */}
-      <H2 id="sec-implementation">五、核心技术实现细节</H2>
-
-      <H3>动态菜单与路由映射</H3>
+      <H3>2. 与后端对接规范设计</H3>
       <P>
-        项目在初始化时调用 <InlineCode>queryMenu</InlineCode> 接口。通过递归算法解析后端返回的 <InlineCode>{"Resource[]"}</InlineCode> 数组：
-      </P>
-      <NumberList items={[
-        <>提取 <InlineCode>path</InlineCode> 与 <InlineCode>component</InlineCode> 的对应关系。</>,
-        <>注入 <InlineCode>Lucide</InlineCode> 图标动态加载。</>,
-        "状态持久化至 Zustand 及本地 Storage，实现 30 分钟缓存机制。",
-      ]} />
-
-      <H3>配置化表单引擎 (CustomForm)</H3>
-      <P>
-        基于 <InlineCode>react-hook-form</InlineCode> 的 Controller 设计：
+        所有 API 请求遵循统一的 <Strong>请求-响应-异常</Strong> 三层处理机制：
       </P>
       <BulletList items={[
-        <>支持 <InlineCode>Grid</InlineCode> 布局自适应。</>,
-        <>内置 <InlineCode>Zod</InlineCode> 进行异步/同步字段联动校验。</>,
-        "采用非受控模式，显著降低大表单输入的渲染延迟。",
+        <><Strong>请求层</Strong>：Axios 拦截器自动注入 Token 请求头，后端无需关心前端如何传递认证信息。</>,
+        <><Strong>异常层</Strong>：前端自动处理 <InlineCode>UN_LOGIN</InlineCode> (跳回登录)、网络超时、业务错误弹窗兜底，禁止在页面内重复编写 <InlineCode>try-catch</InlineCode>。</>,
       ]} />
+      <CodeBlock lang="json">{`// 后端接口统一返回标准结构：
+{
+  "code": "OK",          // 状态码：OK / UN_LOGIN / UN_AUTH / ERROR
+  "data": { ... },       // 业务数据
+  "msg": "操作成功",      // 提示信息
+  "count": 100           // 分页总数（列表接口）
+}`}</CodeBlock>
+      <P>所有业务模块的接口遵循 <Strong>统一命名规范</Strong>，例如 <InlineCode>{"/{domain}/{module}/queryPage"}</InlineCode> (分页查询)、<InlineCode>{"/{domain}/{module}/addOrEdit"}</InlineCode> (新增/修改)、<InlineCode>{"/{domain}/{module}/disable"}</InlineCode> (状态切换)、<InlineCode>{"/{domain}/{module}/delete"}</InlineCode> (删除)。</P>
 
-      {/* ============== 开发环境常用命令 ============== */}
-      <H2 id="sec-commands">六、开发环境常用命令</H2>
-      <CodeBlock lang="bash">{`# 安装依赖 (Yarn v4)
-yarn install
 
-# 启动开发服务器 (默认端口: 4000)
-yarn dev
-
-# 生成生产环境构建产物
-yarn build:prod
-
-# 静态代码检查与质量控制
-yarn lint`}</CodeBlock>
-      <TipBox>
-        环境要求：<InlineCode>Node.js {">"}= 18.17.0</InlineCode>
-      </TipBox>
-
-      {/* ============== 模版使用指南 ============== */}
-      <H2 id="sec-template">七、模版使用指南 — 创建后需改动的文件</H2>
-      <P>
-        使用本模版创建新项目后，请按照以下清单逐一修改，完成项目初始化。
-      </P>
+      {/* ============== 模版指南 ============== */}
+      <H2 id="sec-template">八、模版使用指南 — 创建后需改动的文件</H2>
+      <P>使用本模版创建新项目后，请按照以下清单逐一修改，完成项目初始化。</P>
 
       <H3>1. 项目基础信息</H3>
       <DocTable
@@ -224,7 +210,7 @@ yarn lint`}</CodeBlock>
           [<InlineCode>.env.development</InlineCode>, <><InlineCode>NEXT_PUBLIC_API_URL</InlineCode>、<InlineCode>NEXT_PUBLIC_APP_NAME</InlineCode>、<InlineCode>NEXT_PUBLIC_UPLOAD_API_URL</InlineCode></>, "开发环境的后端 API 地址和文件上传地址。"],
           [<InlineCode>.env.test</InlineCode>, "同上", "测试环境配置。"],
           [<InlineCode>.env.production</InlineCode>, "同上", "生产环境配置。"],
-          [<InlineCode>src/config/api-url.ts</InlineCode>, <><InlineCode>API_URLS</InlineCode> 对象</>, <>核心文件。删除模版中的示例接口路径，替换为你自己的业务接口地址。<InlineCode>auth</InlineCode> 部分如果后端遵循相同登录协议则可保留。</>],
+          [<InlineCode>src/config/api-url.ts</InlineCode>, <><InlineCode>API_URLS</InlineCode> 对象</>, <><Strong>核心文件</Strong>。删除模版中的示例接口路径（如 brand、banner 等），替换为你自己的业务接口地址。auth 部分如果后端的规则相同可以保留。</>],
         ]}
       />
 
@@ -242,8 +228,8 @@ yarn lint`}</CodeBlock>
           [<InlineCode>src/app/customer/</InlineCode>, "示例：用户/会员管理页面"],
           [<InlineCode>src/app/businesses/</InlineCode>, "示例：商超管理页面"],
           [<InlineCode>src/app/system/</InlineCode>, "示例：字典管理页面"],
-          [<><InlineCode>src/api/</InlineCode> 中的业务文件</>, <>如 goods.ts、banner.ts、order.ts 等，删除后按需新增自己的 API 模块。<Strong>保留</Strong> http.ts（Axios 封装）和 upload.ts（文件上传）。</>],
-          [<><InlineCode>src/types/</InlineCode> 中的业务类型</>, <>如 goods.ts、order.ts、category.ts 等，删除后新增自己的类型定义。<Strong>保留</Strong> api.ts（通用响应类型）和 token.ts（Token 类型）。</>],
+          [<><InlineCode>src/api/</InlineCode> 中的业务文件</>, <>如 goods.ts、banner.ts 等。按需新增API。请 <Strong>保留</Strong> <InlineCode>http.ts</InlineCode>（Axios 封装）和 <InlineCode>upload.ts</InlineCode>（文件上传）。</>],
+          [<><InlineCode>src/types/</InlineCode> 中的业务类型</>, <>如 goods.ts 等。请 <Strong>保留</Strong> <InlineCode>api.ts</InlineCode>（通用响应）和 <InlineCode>token.ts</InlineCode>（Token）。</>],
         ]}
       />
       <TipBox>
@@ -254,7 +240,7 @@ yarn lint`}</CodeBlock>
       <DocTable
         headers={["文件", "需改动项", "说明"]}
         rows={[
-          [<InlineCode>src/config/routes.ts</InlineCode>, <><InlineCode>iconMap</InlineCode>、<InlineCode>colorMap</InlineCode></>, <>菜单图标和颜色由后端下发的 <InlineCode>resourceId</InlineCode> 匹配。删除模版中的示例映射，新增你自己的菜单 <InlineCode>resourceId</InlineCode> 对应的图标和颜色。图标从 <InlineCode>lucide-react</InlineCode> 中按需导入。</>],
+          [<InlineCode>src/config/routes.ts</InlineCode>, <><InlineCode>iconMap</InlineCode>、<InlineCode>colorMap</InlineCode></>, <>菜单图标和颜色由后端下发的 <InlineCode>resourceId</InlineCode> 匹配。删除示例映射，新增对应的图标（从 lucide-react 导入）和颜色。</>],
         ]}
       />
 
@@ -262,12 +248,12 @@ yarn lint`}</CodeBlock>
       <DocTable
         headers={["文件", "需改动项", "说明"]}
         rows={[
-          [<InlineCode>src/config/constants.ts</InlineCode>, <InlineCode>API_CODE</InlineCode>, "如果后端返回的响应状态码字段不同（如用 SUCCESS 替代 OK），需要在此修改。"],
+          [<InlineCode>src/config/constants.ts</InlineCode>, <InlineCode>API_CODE</InlineCode>, "如果后端返回的响应状态码不同（如 SUCCESS 替代 OK），需在此修改。"],
           [<InlineCode>src/config/theme-colors.ts</InlineCode>, "主题色配置", "可新增/删除主题配色方案，或修改默认主题。"],
-          [<InlineCode>src/config/pagination.ts</InlineCode>, <><InlineCode>DEFAULT_PAGE_SIZE</InlineCode>、<InlineCode>PAGE_SIZE_OPTIONS</InlineCode></>, "分页默认值，按业务需要调整。"],
-          [<InlineCode>src/middleware.ts</InlineCode>, "路由守卫规则", <>当前仅放行 <InlineCode>/login</InlineCode>，如需增加公开路由或加入 Token 校验逻辑，请在此修改。</>],
-          [<InlineCode>src/lib/auth.ts</InlineCode>, "Token 存储键名", <>如果 Token 的 localStorage 键名需与后端约定不同，在此修改 <InlineCode>access-token</InlineCode> 和 <InlineCode>user-info</InlineCode>。</>],
-          [<InlineCode>src/api/http.ts</InlineCode>, "请求头 / 超时配置", <>如需调整 Token 请求头名称（默认 <InlineCode>Access-Token</InlineCode>）或超时时间（默认 <InlineCode>10000ms</InlineCode>），在此修改。</>],
+          [<InlineCode>src/config/pagination.ts</InlineCode>, <><InlineCode>DEFAULT_PAGE_SIZE</InlineCode>、<InlineCode>PAGE_SIZE_OPTIONS</InlineCode></>, "分页默认值调整。"],
+          [<InlineCode>src/middleware.ts</InlineCode>, "路由守卫规则", <>当前仅放行 <InlineCode>/login</InlineCode>，如需配置请修改。</>],
+          [<InlineCode>src/lib/auth.ts</InlineCode>, "Token 存储键名", "如果 localStorage 键名不同需调整。"],
+          [<InlineCode>src/api/http.ts</InlineCode>, "请求头 / 超时配置", "调整 Token 请求头名称及默认超时。"],
         ]}
       />
 
