@@ -136,8 +136,11 @@ export default function DocReaderPage() {
 
       <H3>4.1 安装</H3>
       <a
-        href="/downloads/efg-3.2.12.zip"
-        download
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          window.open(`https://easybuild-1319546928.cos.ap-guangzhou.myqcloud.com/easybuild/efg-3.2.12.zip?t=${Date.now()}`, "_self");
+        }}
         className="flex items-center gap-3 rounded-[10px] border border-[#00FF8830] bg-[#00FF880A] px-5 py-4 transition-colors hover:border-[#00FF8860] hover:bg-[#00FF8814]"
       >
         <Download className="size-5 shrink-0 text-[#00FF88]" />
