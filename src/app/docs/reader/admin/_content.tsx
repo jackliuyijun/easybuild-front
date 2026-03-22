@@ -12,6 +12,7 @@ const outlineItems = [
   { id: "sec-structure", label: "目录结构说明" },
   { id: "sec-standards", label: "开发规范与技术细节" },
   { id: "sec-template", label: "模版使用指南" },
+  { id: "sec-backend", label: "后端接口配合" },
 ]
 
 export default function AdminDocContent() {
@@ -266,6 +267,15 @@ yarn lint`}</CodeBlock>
 ✅ 6. 在 api-url.ts 中定义自己的接口路径
 ✅ 7. 在 routes.ts 中配置菜单图标映射
 ✅ 8. 替换 public/favicon.ico`}</CodeBlock>
+
+      {/* ============== 后端接口配合 ============== */}
+      <H2 id="sec-backend">九、后端接口配合说明</H2>
+      <P>
+        需要后端接口配合，后端接口示例项目地址：<Strong><InlineCode>https://github.com/jackliuyijun/easybuild-admin-api.git</InlineCode></Strong>
+      </P>
+      <TipBox>
+        clone 项目到本地，启动项目接口为 <Strong>easybuild-admin</Strong> 示例项目提供接口服务。
+      </TipBox>
 
     </DocLayout>
   )
