@@ -5,7 +5,7 @@ export type SidebarSection = { title?: string; items: SidebarItem[] }
 
 export const tabSidebarSections: Record<string, SidebarSection[]> = {
   "后端": [
-    { title: "环境配置", items: [{ label: "开发环境", href: "/docs/reader/dev-env" }]},
+    { title: "项目体验", items: [{ label: "快速上手", href: "/docs/reader/dev-env" }]},
     { title: "基础模块", items: [{ label: "基础核心", href: "/docs/reader/core" },{ label: "BOM", href: "/docs/reader/bom" },{ label: "认证鉴权", href: "/docs/reader/auth" },{ label: "网关", href: "/docs/reader/gateway" },{ label: "Redis 自增ID", href: "/docs/reader/autoid-redis" }]},
     { title: "代码生成", items: [{ label: "代码生成器", href: "/docs/reader" }]},
     { title: "Web 开发", items: [{ label: "Web 应用", href: "/docs/reader/web-prd" },{ label: "微服务 Web", href: "/docs/reader/web-micro" },{ label: "WebSocket", href: "/docs/reader/websocket" }]},

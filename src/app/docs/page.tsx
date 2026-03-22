@@ -43,7 +43,7 @@ const bottomCards = [
     title: "中后台",
     desc: "Web 端管理系统开发指南\n与最佳实践",
     border: "#FBBF2425",
-    href: "/docs/reader",
+    href: "/docs/reader/admin",
   },
   {
     icon: Smartphone,
