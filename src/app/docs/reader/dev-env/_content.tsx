@@ -62,8 +62,8 @@ export default function QuickStartContent() {
   <servers>
     <server>
       <id>jackorg-easybuild</id>
-      <username>【关注公众号获取】</username>
-      <password>【关注公众号获取】</password>
+      <username>【由上述方式获取】</username>
+      <password>【由上述方式获取】</password>
     </server>
   </servers>
 
@@ -73,7 +73,7 @@ export default function QuickStartContent() {
       <repositories>
         <repository>
           <id>jackorg-easybuild</id>
-          <url>【关注公众号获取仓库地址】</url>
+          <url>【由上述方式获取仓库地址】</url>
         </repository>
       </repositories>
       <activation>
