@@ -29,7 +29,7 @@ export default function QuickStartContent() {
       {/* ============== 1. 环境准备 ============== */}
       <H2 id="sec-env">1. 环境准备</H2>
       <P>请确保本机已安装以下软件：</P>
-      <DocTable 
+      <DocTable
         headers={["软件", "版本要求", "用途"]}
         rows={[
           ["JDK", <Strong key="jdk">{"≥ 21"}</Strong>, "后端运行环境"],
@@ -48,7 +48,7 @@ export default function QuickStartContent() {
       <P>EasyBuild 的依赖包托管在私有 Maven 仓库，需要在 Maven 的 <InlineCode>settings.xml</InlineCode> 中添加仓库配置。</P>
       <P>找到你的 Maven 配置文件（通常在 <InlineCode>~/.m2/settings.xml</InlineCode>），将以下内容合并进去：</P>
       <CredentialGate />
-      
+
       <CodeBlock lang="xml">{`<settings>
   <mirrors>
     <mirror>
@@ -111,9 +111,9 @@ export default function QuickStartContent() {
 
       <H3>4.1 克隆项目</H3>
       <CodeBlock lang="bash">{`# GitHub
-git clone https://github.com/jackliuyijun/demo-bms.git
+git clone https://github.com/jackliuyijun/easybuild-admin-api.git
 
-cd demo-bms`}</CodeBlock>
+cd easybuild-admin-api`}</CodeBlock>
 
       <H3>4.2 修改数据库连接</H3>
       <P><Strong>MySQL 用户</Strong> — 编辑 <InlineCode>config/application-dev.yml</InlineCode>：</P>
@@ -145,10 +145,11 @@ cd demo-bms`}</CodeBlock>
       <H3>4.3 修改 Redis 连接（如非默认配置）</H3>
       <P>在 <InlineCode>config/application-dev.yml</InlineCode>（或 <InlineCode>application-pgDev.yml</InlineCode>）中：</P>
       <CodeBlock lang="yaml">{`spring:
-  redis:
-    database: 11
-    host: 127.0.0.1
-    port: 6379`}</CodeBlock>
+  data:
+    redis:
+      database: 11
+      host: 127.0.0.1
+      port: 6379`}</CodeBlock>
 
       <H3>4.4 执行数据库脚本</H3>
       <P>用数据库客户端工具执行 <InlineCode>doc/sql/</InlineCode> 目录下对应的 SQL 脚本（参见第三步 3.2）。</P>
@@ -156,13 +157,13 @@ cd demo-bms`}</CodeBlock>
       <H3>4.5 编译并启动</H3>
       <P><Strong>方式一：IDE 启动（推荐开发时使用）</Strong></P>
       <NumberList items={[
-        <>用 IntelliJ IDEA 打开 <InlineCode>demo-bms</InlineCode> 项目</>,
+        <>用 IntelliJ IDEA 打开 <InlineCode>easybuild-admin-api</InlineCode> 项目</>,
         "等待 Maven 依赖下载完成",
         <>运行启动类 <InlineCode>com.easybuild.admin.bms.ServerApp</InlineCode></>,
       ]} />
       <P><Strong>方式二：命令行启动</Strong></P>
       <CodeBlock lang="bash">{`mvn clean package -DskipTests
-java -jar target/demo-bms-server.jar`}</CodeBlock>
+java -jar target/easybuild-admin-api.jar`}</CodeBlock>
 
       <H3>4.6 验证后端启动</H3>
       <P>看到控制台输出 Spring Boot 启动成功日志后，打开浏览器访问接口文档：</P>
