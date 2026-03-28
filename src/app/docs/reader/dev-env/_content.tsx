@@ -14,7 +14,6 @@ const outlineItems = [
   { id: "sec-faq", label: "常见问题" },
   { id: "sec-done", label: "完成" },
 ]
-
 export default function QuickStartContent() {
   return (
     <DocLayout
@@ -107,7 +106,7 @@ export default function QuickStartContent() {
       <P>确保 Redis 服务已启动，默认连接 <InlineCode>127.0.0.1:6379</InlineCode>，无需额外配置。</P>
 
       {/* ============== 4. 启动后端项目 ============== */}
-      <H2 id="sec-backend">4. 启动后端项目（demo-bms）</H2>
+      <H2 id="sec-backend">4. 启动后端项目（easybuid-admin-api）</H2>
 
       <H3>4.1 克隆项目</H3>
       <CodeBlock lang="bash">{`# GitHub
@@ -230,13 +229,14 @@ yarn install`}</CodeBlock>
       {/* ============== 完成 ============== */}
       <H2 id="sec-done">完成！</H2>
       <P>到这里，你已经跑通了 EasyBuild Admin 的完整流程：</P>
-      <CodeBlock lang="text">{`MySQL/PostgreSQL + Redis  →  demo-bms（后端 :5001）  →  easybuild-admin（前端 :4000）`}</CodeBlock>
+      <CodeBlock lang="text">{`MySQL/PostgreSQL + Redis  →  easybuid-admin-api :5001）  →  easybuild-admin（前端 :4000）`}</CodeBlock>
       <P>你可以：</P>
       <BulletList items={[
         <>在 <InlineCode>http://localhost:5001/doc.html</InlineCode> 查看和测试所有后端接口</>,
         <>在 <InlineCode>http://localhost:4000</InlineCode> 体验完整的中后台管理功能</>,
-        "基于 demo-bms 和 easybuild-admin 模板，开始开发自己的业务模块",
+        "基于 easybuid-admin-api 和 easybuild-admin 模板，开始开发自己的业务模块",
       ]} />
     </DocLayout>
   )
+
 }
